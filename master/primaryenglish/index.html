@@ -1,0 +1,2422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aim High Tuition — Master English Baseline</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand:      #4C1D95;
+    --brand-dark: #2E1065;
+    --gold:       #C8860A;
+    --gold-light: #FFF8E7;
+    --gold-mid:   #FFE9A0;
+    --green:      #1B5E20;
+    --green-light:#E8F5E9;
+    --amber:      #E65100;
+    --amber-light:#FFF3E0;
+    --red-c:      #B71C1C;
+    --red-light:  #FFEBEE;
+    --grey-light: #F5F5F5;
+    --grey-mid:   #E0E0E0;
+    --text:       #1A1A1A;
+    --text-soft:  #555;
+    --white:      #FFFFFF;
+    --radius:     12px;
+    --shadow:     0 4px 20px rgba(0,0,0,0.10);
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--gold-light);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── HEADER ── */
+  header {
+    width: 100%;
+    background: var(--brand);
+    color: white;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-star { font-size: 28px; }
+  .logo-text { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+  .logo-sub  { font-size: 11px; opacity: 0.8; }
+
+  /* ── MAIN CARD ── */
+  .card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px 28px;
+    width: 100%;
+    max-width: 640px;
+    margin: 24px 16px;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    background: var(--grey-mid);
+    border-radius: 99px;
+    height: 10px;
+    margin-bottom: 6px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    background: linear-gradient(90deg, var(--brand), var(--gold));
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--text-soft);
+    text-align: right;
+    margin-bottom: 20px;
+  }
+
+  /* ── SECTION BADGE ── */
+  .section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--brand);
+    color: white;
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  /* ── QUESTION ── */
+  .q-number {
+    font-size: 13px;
+    color: var(--text-soft);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .q-text {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .q-hint {
+    font-size: 14px;
+    color: var(--brand);
+    background: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  .q-display {
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--brand-dark);
+    text-align: center;
+    margin: 12px 0 24px;
+    background: var(--gold-light);
+    border-radius: 12px;
+    padding: 16px;
+    letter-spacing: 1px;
+  }
+
+  /* ── OPTIONS ── */
+  .options {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .options.two-col   { grid-template-columns: 1fr 1fr; }
+  .options.three-col { grid-template-columns: 1fr 1fr 1fr; }
+  .options.four-col  { grid-template-columns: 1fr 1fr; }
+
+  .opt-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 2px solid var(--grey-mid);
+    border-radius: 10px;
+    background: var(--grey-light);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    transition: all 0.15s;
+    color: var(--text);
+    width: 100%;
+  }
+  .opt-btn:hover { border-color: var(--brand); background: var(--gold-light); }
+  .opt-btn.selected {
+    border-color: var(--brand);
+    background: var(--gold-mid);
+    font-weight: 700;
+  }
+  .opt-btn.correct {
+    border-color: var(--green);
+    background: var(--green-light);
+    color: var(--green);
+  }
+  .opt-btn.wrong {
+    border-color: var(--red-c);
+    background: var(--red-light);
+    color: var(--red-c);
+    text-decoration: line-through;
+    opacity: 0.8;
+  }
+  .opt-letter {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 6px;
+    background: var(--brand);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  .opt-btn.correct .opt-letter { background: var(--green); }
+  .opt-btn.wrong   .opt-letter { background: var(--red-c); }
+
+  /* ── I DON'T KNOW BUTTON ── */
+  .btn-speak {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold-light);
+    border: 2px solid var(--gold);
+    color: var(--brand-dark);
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+  .btn-speak:hover { background: var(--gold-mid); }
+  .btn-speak:active { transform: scale(0.97); }
+
+  .btn-idk {
+    width: 100%;
+    padding: 11px;
+    background: white;
+    color: var(--text-soft);
+    border: 2px dashed var(--grey-mid);
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 14px;
+    transition: all 0.15s;
+  }
+  .btn-idk:hover { border-color: var(--text-soft); color: var(--text); }
+
+  /* ── NEXT BUTTON ── */
+  .btn-next {
+    width: 100%;
+    padding: 16px;
+    background: var(--brand);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-next:hover { background: var(--brand-dark); }
+  .btn-next:disabled { background: var(--grey-mid); color: var(--text-soft); cursor: not-allowed; }
+
+  /* ── CHECKPOINT ── */
+  .checkpoint {
+    background: var(--gold-mid);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--brand-dark);
+  }
+  .checkpoint .emoji { font-size: 28px; display: block; margin-bottom: 6px; }
+
+  /* ── COVER PAGE ── */
+  .cover-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--brand-dark);
+    margin-bottom: 6px;
+  }
+  .cover-sub {
+    font-size: 15px;
+    color: var(--text-soft);
+    margin-bottom: 24px;
+  }
+  .instr-box {
+    background: var(--gold-light);
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 24px;
+  }
+  .instr-box h3 {
+    color: var(--brand-dark);
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+  .instr-box li {
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 6px;
+    margin-left: 16px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group label { font-size: 13px; font-weight: 600; color: var(--text-soft); }
+  .form-group input, .form-group select {
+    padding: 10px 12px;
+    border: 2px solid var(--grey-mid);
+    border-radius: 8px;
+    font-size: 15px;
+    color: var(--text);
+    background: white;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--brand); }
+
+  /* ── RESULTS PAGE ── */
+  .result-hero {
+    text-align: center;
+    padding: 24px 0 16px;
+  }
+  .result-emoji { font-size: 64px; line-height: 1; margin-bottom: 12px; }
+  .result-score {
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .result-score.green { color: var(--green); }
+  .result-score.amber { color: var(--amber); }
+  .result-score.red-c { color: var(--red-c); }
+  .rag-pill {
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 99px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .rag-pill.green { background: var(--green-light); color: var(--green); }
+  .rag-pill.amber { background: var(--amber-light); color: var(--amber); }
+  .rag-pill.red-c { background: var(--red-light);   color: var(--red-c); }
+  .placement-box {
+    background: var(--brand);
+    color: white;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    text-align: center;
+  }
+  .placement-box .label { font-size: 12px; opacity: 0.8; margin-bottom: 4px; }
+  .placement-box .value { font-size: 22px; font-weight: 900; }
+
+  .section-breakdown {
+    margin-top: 20px;
+  }
+  .section-breakdown h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+  .sec-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .sec-letter {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    border-radius: 6px;
+    background: var(--brand);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 13px;
+  }
+  .sec-info { flex: 1; }
+  .sec-name { font-size: 13px; font-weight: 600; }
+  .sec-bar-wrap { height: 8px; background: var(--grey-mid); border-radius: 99px; margin-top: 4px; overflow: hidden; }
+  .sec-bar { height: 100%; border-radius: 99px; transition: width 0.6s ease; }
+  .sec-bar.green { background: var(--green); }
+  .sec-bar.amber { background: var(--amber); }
+  .sec-bar.red-c { background: var(--red-c); }
+  .sec-score { font-size: 13px; font-weight: 700; min-width: 36px; text-align: right; }
+
+  .summary-box {
+    background: var(--grey-light);
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .submit-status {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .submit-status.sending { background: var(--gold-light); color: var(--brand); }
+  .submit-status.sent    { background: var(--green-light); color: var(--green); }
+  .submit-status.error   { background: var(--red-light);   color: var(--red-c); }
+
+  .frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 3px;
+    font-size: 0.9em;
+    line-height: 1.1;
+    position: relative;
+    top: 0.05em;
+  }
+  .frac .num { padding: 0 4px 2px; border-bottom: 1.5px solid currentColor; }
+  .frac .den { padding: 2px 4px 0; }
+
+  @media (max-width: 480px) {
+    .card { padding: 20px 16px; margin: 12px 10px; }
+    .q-text { font-size: 18px; }
+    .q-display { font-size: 32px; }
+    .form-row { grid-template-columns: 1fr; }
+    .options.two-col { grid-template-columns: 1fr; }
+    .options.three-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-star">🏆</div>
+  <div>
+    <div class="logo-text">AIM HIGH TUITION</div>
+    <div class="logo-sub">Master English Baseline Assessment</div>
+  </div>
+</header>
+
+<div class="card" id="app"></div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────────
+// Paste your Google Apps Script Web App URL here after deploying
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx3fV04Zw0ftgaUA-xK384lxIfEOr0Ml-0aXCoUmIkDzLRmdZx6vSYbBbNoAPpd0H3o/exec";
+
+// ── QUESTION DATA ────────────────────────────────────────────────────────────
+function frac(num, den) {
+  return `<span class="frac"><span class="num">${num}</span><span class="den">${den}</span></span>`;
+}
+
+const SECTIONS = {
+  A: { name: "Spelling & Vocabulary",                    color: "#4C1D95", noAudio: true },
+  B: { name: "Grammar: Word Classes, Clauses & Elements", color: "#1565C0" },
+  C: { name: "Punctuation",                              color: "#2E7D32" },
+  D: { name: "Sentence Construction & Language Devices", color: "#AD1457" },
+  E: { name: "Reading Comprehension: Retrieval",         color: "#00695C" },
+  F: { name: "Reading Comprehension: Inference & Vocabulary", color: "#6A1B9A" },
+  G: { name: "Grammar in Context",                       color: "#E65100" },
+  H: { name: "Challenge Questions",                      color: "#37474F" },
+};
+// noAudio (Section A only): this section tests decoding/spelling itself, so
+// hearing the word spoken aloud would give the answer away. Every other
+// section has read-aloud available.
+
+// Teacher-facing notes on common wrong-answer reasoning, shown only in Teacher Mode
+const MISCONCEPTIONS = {
+  1: "necessary has one 'c' and two 's'. Common error: doubling the wrong letter or adding an extra 'c'.",
+  2: "embarrass has double 'r' and double 's'. Common error: missing one of the doubled letters.",
+  3: "'Accidental' means happening by chance/unplanned. Common error: confusing with 'deliberate' (its opposite) or an unrelated synonym.",
+  4: "The prefix 'ir-' negates words starting with 'r' (irresponsible). Common error: using 'un-', 'dis-' or 'non-' instead, which don't attach correctly here.",
+  5: "'Colossal' means extremely large, a synonym for enormous. Common error: picking an antonym or unrelated word.",
+  6: "government has a silent 'n' before 'ment'. Common error: dropping the 'n' or doubling the 'm'.",
+  7: "The main verb carries the main action of the sentence — 'played'. Common error: picking the verb inside the subordinate clause ('raining' or 'was') instead.",
+  8: "A complete sentence needs a subject and a verb and must make sense on its own. The other options are fragments — they start with a subordinating word (although/because/when) and can't stand alone. Common error: picking a fragment that 'sounds' like part of a sentence.",
+  9: "Modal verbs like 'might' combine with 'have + past participle' for past possibility. Common error: adding '-ed' to a modal, or using double modals like 'will can'.",
+  10: "Passive voice puts the object first with 'was/were + past participle + by'. Common error: picking an active-voice sentence instead.",
+  11: "'Which' refers back to 'the book' and introduces extra information — a relative pronoun. Common error: picking a verb or noun instead.",
+  12: "Adverbs of possibility (probably, perhaps, certainly, surely) show how likely something is. Common error: picking the main verb or a noun instead of the adverb.",
+  13: "'Quickly' describes how she finished — an adverb. Common error: confusing adverbs with adjectives, which describe nouns not verbs.",
+  14: "A colon introduces a list after a complete statement. Common error: using a comma instead, or missing punctuation entirely.",
+  15: "A semicolon joins two related complete sentences without a conjunction. Common error: using a comma alone (a comma splice) or adding 'and' as well.",
+  16: "Brackets enclose extra information that could be removed without changing the core sentence. Common error: missing one bracket or misplacing the comma.",
+  17: "Compound adjectives before a noun take a hyphen: 'well-known'. Common error: missing the hyphen or over-hyphenating.",
+  18: "For a plural noun already ending in 's', the apostrophe goes after the 's': dogs'. Common error: treating it like a singular possessive.",
+  19: "A comma before a name being spoken to (a vocative comma) changes the meaning entirely — without it, 'Grandma' becomes the thing being eaten rather than the person being addressed. Common error: missing the comma, or placing it in the wrong spot.",
+  20: "An expanded noun phrase adds extra description before a noun, often with two or more adjectives ('the terrified, muddy dog'). Common error: picking a plain, undescribed noun phrase instead.",
+  21: "'Therefore' shows a logical result, matching the cause-effect relationship here. Common error: picking a contrasting or unrelated connective.",
+  22: "Formal writing avoids casual intensifiers like 'super' or 'really really' — 'extremely' is more formal. Common error: picking informal phrasing.",
+  23: "Alliteration repeats the same starting sound across nearby words — 'busy bees buzzed by the blossoms' repeats the 'b' sound. Common error: picking a sentence with no repeated sound.",
+  24: "Combining short repetitive sentences into one avoids unnecessary repetition. Common error: keeping the repeated wording or breaking the flow further.",
+  25: "Onomatopoeia is a word that sounds like the noise it describes — 'sizzle' imitates the sound of frying. Common error: picking a word that just describes a feeling or quality instead.",
+  26: "A metaphor says something IS something else, without using 'like' or 'as' — 'the classroom was a zoo' means it was chaotic, not literally a zoo. Common error: picking the simile version ('like a zoo'), which is a different device.",
+  27: "Directly stated at the start of the passage. Common error: confusing with other details mentioned later.",
+  28: "The passage states 'over fifty years'. Common error: picking a different number mentioned elsewhere or not mentioned at all.",
+  29: "Directly stated: 'a faint light flickering from the top window'. Common error: confusing with other passage details not actually stated.",
+  30: "Her fascination and curiosity, stated earlier in the passage, explain her decision. Common error: picking an option not supported by the text.",
+  31: "'Fascinated' means deeply interested, shown by her wanting to investigate. Common error: confusing with unrelated emotions like fear or boredom.",
+  32: "A flickering light in a supposedly abandoned building suggests something/someone is there. Common error: assuming the opposite despite the clue in the text.",
+  33: "Standard English uses single negatives: 'were not', not double negatives like 'weren't never' or non-standard forms like 'wasn't'/'ain't'. Common error: using non-standard dialect forms.",
+  34: "'He' correctly refers back to Leo (singular, male) for cohesion. Common error: using a pronoun that doesn't match in number or gender.",
+  35: "'Fewer' is used with countable nouns like biscuits; 'less' is for uncountable nouns. Common error: using 'less' with a countable noun.",
+  36: "'Relentless' means continuing without stopping. Common error: confusing with words suggesting mild or occasional rain.",
+  37: "A simile compares using 'like' or 'as'; a metaphor states something IS something else without 'like/as'. Common error: picking the metaphor instead of the simile.",
+  38: "Persuasive language uses emotive, exaggerated words like 'incredible' and 'life-changing' to convince the reader. Common error: picking a plain factual statement instead.",
+};
+
+// Shared reading-comprehension passage (Sections E and F)
+const PASSAGE_HTML_MASTER = `
+  <div style="background:var(--gold-light);border:2px solid var(--gold);border-radius:12px;padding:14px 16px;margin-bottom:14px;text-align:left">
+    <div style="font-size:11px;font-weight:800;color:var(--brand-dark);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Read this, then answer below</div>
+    <div id="passage-text-master" style="font-size:16px;line-height:1.6;color:var(--text)">Maya had always been fascinated by the old lighthouse that stood at the edge of the cliff. Its white paint was peeling, and local legend said it had been abandoned for over fifty years. One stormy evening, she noticed a faint light flickering from the top window. Her curiosity got the better of her, and she decided to investigate the very next morning.</div>
+    <button type="button" class="btn-speak" data-speak-target="passage-text-master" style="margin-top:10px">🔊 Read the story aloud</button>
+  </div>
+`;
+
+const QUESTIONS = [
+  // A — Spelling & Vocabulary (Q1-6) — gating section, no read-aloud
+  { id:1, sec:"A", text:"Which spelling is correct?",
+    opts:["neccessary","necessery","necessary","neccesary"], ans:"C" },
+  { id:2, sec:"A", text:"Which spelling is correct?",
+    opts:["embarass","embarrass","imbarrass","embarras"], ans:"B" },
+  { id:3, sec:"A", text:"Which word means \"happening by chance\"?",
+    opts:["deliberate","planned","intentional","accidental"], ans:"D" },
+  { id:4, sec:"A", text:"Add the correct prefix to make this word mean \"not responsible\".", display:"responsible → ?",
+    opts:["unresponsible","irresponsible","disresponsible","nonresponsible"], ans:"B" },
+  { id:5, sec:"A", text:"Which word means the SAME as \"enormous\"?",
+    opts:["minute","average","colossal","modest"], ans:"C" },
+  { id:6, sec:"A", text:"Which spelling is correct?",
+    opts:["goverment","governement","govermment","government"], ans:"D",
+    checkpoint:"Great start! Keep going! 🌟" },
+
+  // B — Grammar: Word Classes, Clauses & Elements (Q7-13)
+  { id:7, sec:"B", text:"Which word is the MAIN VERB in this sentence?", display:"Although it was raining, the children played outside.",
+    opts:["played","raining","was","outside"], ans:"A" },
+  { id:8, sec:"B", text:"Which of these is a COMPLETE sentence?",
+    opts:["Although it was raining","Because she was tired","The children played outside.","When the bell rang"], ans:"C" },
+  { id:9, sec:"B", text:"Which sentence uses a MODAL VERB correctly?",
+    opts:["She mighted finish her homework.","She has might finish.","She will can finish.","She might have finished her homework."], ans:"D" },
+  { id:10, sec:"B", text:"Which sentence is written in the PASSIVE voice?",
+    opts:["The dog ate the cake.","The cake was eaten by the dog.","The dog is eating the cake.","The dog will eat the cake."], ans:"B" },
+  { id:11, sec:"B", text:"Which word is the RELATIVE PRONOUN in this sentence?", display:"The book, which I borrowed from the library, was excellent.",
+    opts:["borrowed","library","excellent","which"], ans:"D" },
+  { id:12, sec:"B", text:"Which word is the ADVERB OF POSSIBILITY in this sentence?", display:"The team will probably win the match.",
+    opts:["team","probably","win","match"], ans:"B" },
+  { id:13, sec:"B", text:"Which word class is \"quickly\" in this sentence?", display:"She quickly finished her homework.",
+    opts:["Adjective","Adverb","Noun","Preposition"], ans:"B" },
+
+  // C — Punctuation (Q14-19)
+  { id:14, sec:"C", text:"Which sentence uses a COLON correctly to introduce a list?",
+    opts:["I need three things, a pencil, a ruler and an eraser.","I need three things: a pencil a ruler and an eraser.","I need three things a pencil, a ruler and an eraser.","I need three things: a pencil, a ruler and an eraser."], ans:"D" },
+  { id:15, sec:"C", text:"Which sentence uses a SEMICOLON correctly?",
+    opts:["I like tea; my brother likes coffee.","I like tea, my brother likes coffee.","I like tea; and my brother likes coffee.","I like tea: my brother likes coffee."], ans:"A" },
+  { id:16, sec:"C", text:"Which sentence uses BRACKETS correctly to add extra information?",
+    opts:["The trip which was cancelled upset everyone.","The trip (which was cancelled) upset everyone.","The trip, (which was cancelled), upset everyone.","The trip (which was cancelled, upset everyone)."], ans:"B" },
+  { id:17, sec:"C", text:"Which sentence uses a HYPHEN correctly?",
+    opts:["It was a well known fact.","It was a well-known-fact.","It was a well-known fact.","It was a well, known fact."], ans:"C" },
+  { id:18, sec:"C", text:"Which sentence uses an APOSTROPHE correctly for a plural possessive?",
+    opts:["The dog's bowls were empty.","The dogs's bowls were empty.","The dogs bowls' were empty.","The dogs' bowls were empty."], ans:"D" },
+  { id:19, sec:"C", text:"Which sentence uses a comma correctly to make the meaning clear?",
+    opts:["Let's eat Grandma!","Let's, eat Grandma!","Let's eat, Grandma!","Let's eat Grandma, please!"], ans:"C" },
+
+  // D — Sentence Construction & Cohesion (Q20-26)
+  { id:20, sec:"D", text:"Which sentence contains an EXPANDED NOUN PHRASE?",
+    opts:["The dog ran.","The dog is happy.","A dog ran away.","The terrified, muddy dog ran through the field."], ans:"D" },
+  { id:21, sec:"D", text:"Which word best joins these two sentences?", display:"It was raining. We decided to stay indoors.",
+    opts:["But","Or","Therefore","Meanwhile"], ans:"C" },
+  { id:22, sec:"D", text:"Which sentence is the most FORMAL way to say this?", display:"\"The homework was really hard.\"",
+    opts:["The homework was super hard.","The homework was really really hard.","The homework was hard, like, really hard.","The homework was extremely challenging."], ans:"D" },
+  { id:23, sec:"D", text:"Which sentence uses ALLITERATION?",
+    opts:["The busy bees buzzed by the blossoms.","The bees flew over the flowers.","The insects moved quickly.","The garden was very colourful."], ans:"A" },
+  { id:24, sec:"D", text:"Which sentence avoids repeating the same wording unnecessarily?", display:"The dog ran to the park. The dog played in the park. The dog was happy in the park.",
+    opts:["The dog. The dog. The dog.","The dog ran, the dog played, the dog was happy in the park.","The dog ran to the park, played there, and was happy.","The dog ran to the park. The dog played in the park. The dog was happy in the park."], ans:"C" },
+  { id:25, sec:"D", text:"Which word is an example of ONOMATOPOEIA?",
+    opts:["happy","sizzle","quickly","beautiful"], ans:"B" },
+  { id:26, sec:"D", text:"Which sentence contains a METAPHOR?",
+    opts:["The classroom was noisy.","The classroom was like a zoo.","The classroom was a zoo during the fire drill.","The classroom was very big."], ans:"C" },
+
+  // E — Reading Comprehension: Retrieval (Q27-29) — shared passage
+  { id:27, sec:"E", text:"What had always fascinated Maya?", display:PASSAGE_HTML_MASTER,
+    opts:["The stormy weather","Her school","The old lighthouse","A local legend"], ans:"C" },
+  { id:28, sec:"E", text:"According to local legend, how long had the lighthouse been abandoned?", display:PASSAGE_HTML_MASTER,
+    opts:["Ten years","Over fifty years","A year","It was never abandoned"], ans:"B" },
+  { id:29, sec:"E", text:"What did Maya notice one stormy evening?", display:PASSAGE_HTML_MASTER,
+    opts:["A ship at sea","Another person on the cliff","The paint peeling","A flickering light from the top window"], ans:"D" },
+
+  // F — Reading Comprehension: Inference & Vocabulary in Context (Q30-32)
+  { id:30, sec:"F", text:"Why do you think Maya decided to investigate rather than ignore what she saw?", display:PASSAGE_HTML_MASTER,
+    opts:["She was curious and wanted to find out more","She was scared and wanted to leave","She didn't notice the light at all","She was told to by someone else"], ans:"A" },
+  { id:31, sec:"F", text:"In the passage, what does \"fascinated\" most likely mean?", display:PASSAGE_HTML_MASTER,
+    opts:["Frightened","Bored","Deeply interested","Confused"], ans:"C" },
+  { id:32, sec:"F", text:"What might the flickering light suggest about the lighthouse?", display:PASSAGE_HTML_MASTER,
+    opts:["It was definitely empty","Someone or something might be inside","It had been destroyed","It was still working as a lighthouse"], ans:"B" },
+
+  // G — Grammar in Context (Q33-35)
+  { id:33, sec:"G", text:"Which sentence uses standard English correctly?",
+    opts:["We wasn't going to the shop.","We weren't never going to the shop.","We ain't going to the shop.","We were not going to the shop."], ans:"D" },
+  { id:34, sec:"G", text:"Which pronoun correctly completes this sentence?", display:"Leo forgot his lunch, so ___ had to borrow some money.",
+    opts:["they","she","he","it"], ans:"C" },
+  { id:35, sec:"G", text:"Which sentence uses the correct word?",
+    opts:["There were less biscuits left than yesterday.","There were fewer biscuits left than yesterday.","There was fewer biscuit left.","There was less biscuit left."], ans:"B" },
+
+  // H — Challenge Questions (Q36-38)
+  { id:36, sec:"H", text:"\"The relentless rain battered the windows all night.\" What does \"relentless\" suggest about the rain?",
+    opts:["It was light and gentle","It happened only once","It was warm","It didn't stop or ease up"], ans:"D" },
+  { id:37, sec:"H", text:"Which sentence contains a SIMILE?",
+    opts:["The moon was a silver coin.","The moon shone brightly.","The moon was like a silver coin in the sky.","The moon rose slowly."], ans:"C" },
+  { id:38, sec:"H", text:"Which sentence best demonstrates PERSUASIVE language?",
+    opts:["This is a recipe.","You simply must try this incredible, life-changing recipe today!","The recipe has five ingredients.","The recipe takes twenty minutes."], ans:"B" },
+];
+
+// Unscored practice question — familiarises pupils with the format
+const PRACTICE_QUESTION_MASTER = {
+  text: "Let's try one together first. This one does not count.",
+  q2: "Which word means the SAME as \"quick\"?",
+  opts: ["slow","rapid","quiet","heavy"],
+  ans: "B"
+};
+
+// Correct answers map
+const ANSWER_KEY = {};
+QUESTIONS.forEach(q => { ANSWER_KEY[q.id] = q.ans; });
+
+// Section max scores
+const SEC_MAX = { A:6, B:7, C:6, D:7, E:3, F:3, G:3, H:3 };
+
+// ── PLACEMENT LOGIC ──────────────────────────────────────────────────────────
+// True if the pupil's year group is BELOW this baseline's target range (e.g.
+// a rising Year 5 currently finishing Year 4, tested ahead of their cohort).
+// Used to stop the placement logic recommending a downgrade to a lower
+// baseline purely because a younger pupil hasn't been taught Y5/6-only
+// content yet — that's developmentally expected, not a sign of falling behind.
+function isYearBelowBaselineTarget(year) {
+  if (!year) return false;
+  const targetNums = BASELINE_TARGET_YEARS.map(y => parseInt(y.match(/\d+/)[0]));
+  const minTarget = Math.min(...targetNums);
+  const yearNum = year === "Reception" ? 0 : (year.match(/\d+/) ? parseInt(year.match(/\d+/)[0]) : null);
+  return yearNum !== null && yearNum < minTarget;
+}
+
+function getPlacement(total, secA, year) {
+  if (total >= 29 && secA >= 5) return {
+    rag: "GREEN", cls: "green", emoji: "🏆",
+    group: "Master 2 / SATs Track",
+    detail: "Strong score with secure spelling and vocabulary knowledge.",
+    teacherNote: "Score 29+, Sec A " + secA + "/6. Strong — Master 2 / SATs track. Confirm with Check-In Week 2."
+  };
+  if (total >= 29 && secA <= 4) return {
+    rag: "GREEN", cls: "green", emoji: "🏆",
+    group: "Master 1",
+    detail: "Strong overall score but spelling/vocabulary needs consolidation.",
+    teacherNote: "Score 29+ but Sec A only " + secA + "/6. Place in Master 1 — spelling gaps to address despite strong overall score."
+  };
+  if (total >= 20 && secA >= 4) return {
+    rag: "AMBER", cls: "amber", emoji: "⭐",
+    group: "Master 2",
+    detail: "Developing well. Spelling and vocabulary are secure.",
+    teacherNote: "Score 20-28, Sec A " + secA + "/6. Place in Master 2. Use QLA to target gaps."
+  };
+  if (total >= 20 && secA <= 3) return {
+    rag: "AMBER", cls: "amber", emoji: "⭐",
+    group: "Master 1",
+    detail: "Developing. Spelling and vocabulary need more support.",
+    teacherNote: "Score 20-28, Sec A only " + secA + "/6. Place in Master 1."
+  };
+  // Below this point the score would normally trigger a downgrade
+  // recommendation. If the pupil is younger than this baseline's target
+  // year range, override that recommendation — a low score here reflects
+  // not having been taught Y5/6-only content yet, not a real learning gap.
+  if (isYearBelowBaselineTarget(year)) return {
+    rag: "AMBER", cls: "amber", emoji: "📈",
+    group: "On Track for Age — Retest at Start of Year 5",
+    detail: "Currently below this baseline's Y5/6 target year group. This score reflects unfamiliarity with Y5/6-only content (passive voice, semicolons, Standard English, etc.), not a learning gap.",
+    teacherNote: "Score " + total + "/38, Sec A " + secA + "/6. Pupil is in a year BELOW this baseline's Y5/6 target range. Do NOT administer Ignite English Baseline based on this score alone — a low score here is expected for a rising Y5/6 pupil. Revisit placement once they begin the target year group."
+  };
+  if (secA <= 2 && total <= 10) return {
+    rag: "RED", cls: "red-c", emoji: "💪",
+    group: "Consider Ignite English 2",
+    detail: "Significant gaps. Verbal check recommended immediately.",
+    teacherNote: "Score 0-19, Sec A " + secA + "/6 (≤2). Significant gaps — verbal check recommended immediately. Contact parent."
+  };
+  return {
+    rag: "RED", cls: "red-c", emoji: "💪",
+    group: "Consider Ignite English 2",
+    detail: "Gaps identified across several areas.",
+    teacherNote: "Score 0-19, Sec A " + secA + "/6. Consider Ignite English 2 — gaps identified. Contact parent."
+  };
+}
+
+function getSectionRag(score, max) {
+  const pct = score / max;
+  if (pct >= 0.8) return "green";
+  if (pct >= 0.5) return "amber";
+  return "red-c";
+}
+
+// Plain-English "expected standard" labels for teachers/parents, mapped from
+// the existing RAG logic (GREEN/AMBER/RED already represent Above/At/Below).
+function getStandardLabel(rag) {
+  if (rag === "GREEN") return "Working Above Expected Standard";
+  if (rag === "AMBER") return "Working At Expected Standard";
+  return "Working Below Expected Standard";
+}
+function getSectionStandardLabel(cls) {
+  if (cls === "green") return "Above Expected";
+  if (cls === "amber") return "At Expected";
+  return "Below Expected";
+}
+
+// This baseline's designed target year group — used to flag when a child's
+// entered Year doesn't match, since the Expected Standard label only means
+// what it says when the content matches the child's actual year group.
+const BASELINE_TARGET_YEARS = ["Year 5", "Year 6"];
+function getYearMismatchNote(year) {
+  if (!year) return "";
+  const targetNums = BASELINE_TARGET_YEARS.map(y => parseInt(y.match(/\d+/)[0]));
+  const minTarget = Math.min(...targetNums), maxTarget = Math.max(...targetNums);
+  const m = year.match(/\d+/);
+  const yearNum = year === "Reception" ? 0 : (m ? parseInt(m[0]) : null);
+  if (yearNum === null) return ""; // "Other" or unrecognised — can't compare
+  if (yearNum < minTarget) {
+    return `⚠️ ${year} tested on a ${BASELINE_TARGET_YEARS.join('/')} baseline — this reflects performance on content above their normal year group, not their standing within ${year}.`;
+  }
+  if (yearNum > maxTarget) {
+    return `⚠️ ${year} tested on a ${BASELINE_TARGET_YEARS.join('/')} baseline — this reflects performance on content below their normal year group, not their standing within ${year}.`;
+  }
+  return "";
+}
+
+// ── ACADEMIC YEAR / TERM — auto-derived from the sitting date, UK school-year cycle ──
+function getAcademicYear(dateStr) {
+  const d = dateStr ? new Date(dateStr) : new Date();
+  if (isNaN(d)) return "";
+  const y = d.getFullYear(), m = d.getMonth() + 1; // 1-12
+  return (m >= 9) ? `${y}-${String(y + 1).slice(-2)}` : `${y - 1}-${String(y).slice(-2)}`;
+}
+function getTerm(dateStr) {
+  const d = dateStr ? new Date(dateStr) : new Date();
+  if (isNaN(d)) return "";
+  const m = d.getMonth() + 1;
+  if (m >= 9) return "Autumn";
+  if (m <= 4) return "Spring";
+  return "Summer";
+}
+
+// ── TUTOR LIST — fetched from the "Tutors" Google Sheet tab, editable by admin ──
+let tutorListCache = null;
+function fetchTutorList() {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) return Promise.resolve([]);
+  return fetch(APPS_SCRIPT_URL + "?action=getTutors")
+    .then(res => res.json())
+    .then(names => Array.isArray(names) ? names : [])
+    .catch(() => []);
+}
+function populateTutorSelect() {
+  const sel = document.getElementById("f-teacher");
+  if (!sel) return;
+  fetchTutorList().then(names => {
+    tutorListCache = names;
+    if (!names.length) return;
+    const otherOpt = sel.querySelector('option[value="__other__"]');
+    names.forEach(n => {
+      const opt = document.createElement("option");
+      opt.value = n; opt.textContent = n;
+      sel.insertBefore(opt, otherOpt);
+    });
+  });
+}
+
+function buildSummary(student, total, secScores, placement) {
+  const strong = [], weak = [];
+  Object.entries(secScores).forEach(([sec, sc]) => {
+    const pct = sc / SEC_MAX[sec];
+    if (pct >= 0.8) strong.push(SECTIONS[sec].name);
+    else if (pct < 0.5) weak.push(SECTIONS[sec].name);
+  });
+  const secA = secScores["A"];
+
+  let text = `${student.name} scored ${total}/38 on the Master English Baseline (${student.year}, ${student.school}). `;
+  text += `PLACEMENT: ${placement.group}. ${placement.teacherNote} `;
+  if (strong.length) text += `Strong sections: ${strong.join(", ")}. `;
+  if (weak.length)   text += `Weak sections needing support: ${weak.join(", ")}. `;
+  text += `Section A (Spelling & Vocabulary): ${secA}/6. `;
+  if (secA <= 2 && total <= 10) text += `Verbal check strongly recommended before first lesson. `;
+  return text;
+}
+
+// ── TEACHER MODE ─────────────────────────────────────────────────────────────
+const TEACHER_PIN = "2468";
+const RESULTS_STORE_KEY = "aimhigh_master_english_all_results";
+let teacherResultsCache = null; // null = not fetched yet / fetch failed, use local fallback
+let dashboardFilters = { search: "", year: "", rag: "", teacher: "", dateFrom: "", dateTo: "", academicYear: getAcademicYear(), term: "", status: "real" };
+
+function saveResultsToStore(studentData) {
+  try {
+    const all = getStoredResults();
+    all.unshift(studentData); // newest first
+    if (all.length > 50) all.splice(50);
+    localStorage.setItem(RESULTS_STORE_KEY, JSON.stringify(all));
+  } catch(e) {}
+}
+
+function getStoredResults() {
+  try {
+    const raw = localStorage.getItem(RESULTS_STORE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+// Compares this device's local results against the synced list from the
+// Sheet, by timestamp, and returns any that only exist locally — e.g. a
+// submission made during a wifi dropout that never actually reached Google.
+function findUnsyncedLocalResults() {
+  try {
+    const local = getStoredResults();
+    const remoteTimestamps = new Set(teacherResultsCache.map(r => String(r.timestamp)));
+    return local.filter(r => r.timestamp && !remoteTimestamps.has(String(r.timestamp)));
+  } catch(e) { return []; }
+}
+
+// Rebuilds a full submission payload from a locally-saved result and POSTs
+// it, same as a normal live submission — lets a result recover from a failed
+// sync without the pupil having to retake the whole assessment.
+function syncPendingResults() {
+  const statusEl = document.getElementById("sync-pending-status");
+  const btnEl = document.getElementById("btn-sync-pending");
+  const pending = findUnsyncedLocalResults();
+  if (!pending.length) return;
+
+  btnEl.disabled = true;
+  statusEl.textContent = "Syncing...";
+
+  const sc = r => r.secScores || {};
+  const requests = pending.map(r => fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: r.name, year: r.year, school: r.school, teacher: r.teacher,
+      date: r.date, academicYear: r.academicYear, term: r.term, studentStatus: r.studentStatus,
+      timestamp: r.timestamp, assessment: "Master English",
+      timeTaken: r.timeTaken, total: r.total, rag: r.rag, placement: r.placement, teacherNote: r.teacherNote,
+      secA: sc(r).A||0, secB: sc(r).B||0, secC: sc(r).C||0, secD: sc(r).D||0,
+      secE: sc(r).E||0, secF: sc(r).F||0, secG: sc(r).G||0, secH: sc(r).H||0,
+      summary: `${r.name} scored ${r.total}/38 on the Master English Baseline. PLACEMENT: ${r.placement}. ${r.teacherNote} (synced later from local device after a connection issue.)`,
+      answers: JSON.stringify(r.answers || {}),
+      writingSample: r.writingSample || "",
+    }),
+  }));
+
+  Promise.all(requests).then(() => {
+    statusEl.textContent = "✅ Synced — refreshing...";
+    setTimeout(() => {
+      teacherResultsCache = null;
+      fetchRemoteResults().then(remote => {
+        teacherResultsCache = remote;
+        renderTeacherDashboard();
+      });
+    }, 800);
+  }).catch(() => {
+    btnEl.disabled = false;
+    statusEl.textContent = "⚠️ Still couldn't reach the Sheet — try again shortly.";
+  });
+}
+
+// Builds one tab-separated row matching the exact 65-column header order in
+// the Results sheet, so it can be pasted directly into Google Sheets — this
+// bypasses the network/fetch entirely, as a guaranteed-to-work fallback when
+// a device genuinely can't reach the Apps Script endpoint for any reason.
+function buildSpreadsheetRow(r) {
+  const sc = r.secScores || {};
+  const cols = [
+    r.timestamp || "", r.date || "", r.name || "", r.year || "", r.school || "",
+    r.teacher || "", "Master English", r.academicYear || "", r.term || "", r.studentStatus || "",
+    r.total || 0, r.rag || "", r.placement || "", r.teacherNote || "",
+    sc.A||0, sc.B||0, sc.C||0, sc.D||0, sc.E||0, sc.F||0, sc.G||0, sc.H||0,
+  ];
+  const answers = r.answers || {};
+  for (let i = 1; i <= 38; i++) {
+    const q = QUESTIONS.find(qq => qq.id === i);
+    const given = answers[i];
+    cols.push((q && given === q.ans) ? 1 : 0);
+  }
+  cols.push(r.timeTaken || "");
+  cols.push(`${r.name} scored ${r.total}/38 on the Master English Baseline. PLACEMENT: ${r.placement}. ${r.teacherNote} (recovered via manual copy after a sync issue.)`);
+  cols.push(JSON.stringify(answers));
+  cols.push(""); // Tutor Comments
+  cols.push(r.writingSample || "");
+  cols.push(r.aiWritingFeedback || "");
+  return cols.join("\t");
+}
+
+function copyTextToClipboard(text, statusEl, successMsg) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      if (statusEl) { statusEl.textContent = successMsg; statusEl.style.color = "#166534"; }
+    }).catch(() => {
+      if (statusEl) { statusEl.textContent = "⚠️ Could not copy — try selecting and copying manually."; statusEl.style.color = "#B91C1C"; }
+    });
+  } else if (statusEl) {
+    statusEl.textContent = "⚠️ Clipboard not available on this browser.";
+    statusEl.style.color = "#B91C1C";
+  }
+}
+
+function copyPendingAsRows() {
+  const statusEl = document.getElementById("sync-pending-status");
+  const rows = findUnsyncedLocalResults().map(buildSpreadsheetRow).join("\n");
+  copyTextToClipboard(rows, statusEl, "✅ Copied! Paste into the first empty row of your Results sheet (cell A-column of that row).");
+}
+
+function copyAllLocalAsRows() {
+  const statusEl = document.getElementById("copy-alllocal-status");
+  const rows = getStoredResults().map(buildSpreadsheetRow).join("\n");
+  copyTextToClipboard(rows, statusEl, "✅ Copied! Paste into the first empty row of your Results sheet (cell A-column of that row).");
+}
+
+function formatDateNice(dateStr) {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+}
+
+// Matches header by PREFIX ("Sec A ") rather than the full exact string
+// ("Sec A (6)") — immune to a sheet header still showing an old bracketed
+// max after a future difficulty-calibration pass changes a section's size.
+function getSecScoreByPrefixMaster(row, letter) {
+  const prefix = "Sec " + letter + " ";
+  const key = Object.keys(row).find(k => k.indexOf(prefix) === 0);
+  return key ? (Number(row[key]) || 0) : 0;
+}
+
+function normalizeRemoteResult(row) {
+  // Prefer the raw "Answers JSON" column (exact letters the student picked)
+  // for full per-question review. Falls back to correctness-only reconstruction
+  // for any older rows submitted before this column existed.
+  let answers = null;
+  if (row["Answers JSON"]) {
+    try { answers = JSON.parse(row["Answers JSON"]); } catch(e) { answers = null; }
+  }
+  if (!answers) {
+    answers = {};
+    QUESTIONS.forEach(q => {
+      const isCorrect = Number(row["Q" + q.id]) === 1;
+      answers[q.id] = isCorrect ? q.ans : "✗";
+    });
+  }
+
+  return {
+    timestamp:   row["Timestamp"],
+    name:        row["Name"],
+    year:        row["Year"],
+    school:      row["School"],
+    teacher:     row["Teacher"],
+    date:        row["Date"],
+    academicYear: row["Academic Year"],
+    term:         row["Term"],
+    studentStatus: row["Student Status"],
+    total:       Number(row["Total"]) || 0,
+    rag:         row["RAG"],
+    placement:   row["Group Placed"],
+    teacherNote: row["Teacher Action Note"],
+    timeTaken:   row["Time Taken"],
+    tutorComment: row["Tutor Comments"] || "",
+    writingSample: row["Writing Sample"] || "",
+    aiWritingFeedback: row["AI Writing Feedback"] || "",
+    secScores: {
+      A: getSecScoreByPrefixMaster(row, "A"),
+      B: getSecScoreByPrefixMaster(row, "B"),
+      C: getSecScoreByPrefixMaster(row, "C"),
+      D: getSecScoreByPrefixMaster(row, "D"),
+      E: getSecScoreByPrefixMaster(row, "E"),
+      F: getSecScoreByPrefixMaster(row, "F"),
+      G: getSecScoreByPrefixMaster(row, "G"),
+      H: getSecScoreByPrefixMaster(row, "H"),
+    },
+    answers: answers,
+  };
+}
+
+function fetchRemoteResults() {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
+    return Promise.resolve(null);
+  }
+  return fetch(APPS_SCRIPT_URL)
+    .then(res => res.json())
+    .then(rows => rows.map(normalizeRemoteResult))
+    .catch(() => null);
+}
+
+function saveTutorComment(r) {
+  const statusEl = document.getElementById("comment-save-status");
+  const comment = document.getElementById("tutor-comment-box").value;
+
+  if (!r.timestamp) {
+    statusEl.textContent = "⚠️ Can't save — this result predates comment support.";
+    statusEl.style.color = "var(--red-c)";
+    return;
+  }
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
+    statusEl.textContent = "⚠️ Apps Script URL not configured.";
+    statusEl.style.color = "var(--red-c)";
+    return;
+  }
+
+  statusEl.textContent = "Saving...";
+  statusEl.style.color = "var(--text-soft)";
+
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({ action: "addComment", timestamp: r.timestamp, comment: comment }),
+  })
+    .then(res => res.json())
+    .then(res => {
+      if (res.status === "ok") {
+        r.tutorComment = comment;
+        // Reflect the change in whichever cache this result came from
+        if (teacherResultsCache) {
+          const match = teacherResultsCache.find(x => x.timestamp === r.timestamp);
+          if (match) match.tutorComment = comment;
+        }
+        const local = getStoredResults();
+        const localMatch = local.find(x => x.timestamp === r.timestamp);
+        if (localMatch) {
+          localMatch.tutorComment = comment;
+          localStorage.setItem(RESULTS_STORE_KEY, JSON.stringify(local));
+        }
+        statusEl.textContent = "✅ Saved";
+        statusEl.style.color = "#166534";
+      } else {
+        statusEl.textContent = "⚠️ Could not save — " + (res.message || "unknown error");
+        statusEl.style.color = "var(--red-c)";
+      }
+    })
+    .catch(() => {
+      statusEl.textContent = "⚠️ Could not reach Google Sheet.";
+      statusEl.style.color = "var(--red-c)";
+    });
+}
+
+// Fires ONLY when the teacher clicks the button — never automatically on
+// submission. Sends the writing sample to the Apps Script backend, which
+// calls the Anthropic API server-side (API key never touches this HTML file)
+// and returns/persists rubric feedback.
+function analyzeWritingSample(r, btnEl) {
+  const statusEl = document.getElementById("writing-analyze-status");
+  const feedbackBlock = document.getElementById("writing-feedback-block");
+
+  if (!r.timestamp) {
+    statusEl.textContent = "⚠️ Can't analyse — missing timestamp for this result.";
+    statusEl.style.color = "var(--red-c)";
+    return;
+  }
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
+    statusEl.textContent = "⚠️ Apps Script URL not configured.";
+    statusEl.style.color = "var(--red-c)";
+    return;
+  }
+
+  btnEl.disabled = true;
+  statusEl.textContent = "Analysing... (takes a few seconds)";
+  statusEl.style.color = "var(--text-soft)";
+
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({ action: "analyzeWriting", timestamp: r.timestamp, writingText: r.writingSample }),
+  })
+    .then(res => res.json())
+    .then(res => {
+      btnEl.disabled = false;
+      if (res.status === "ok" && res.feedback) {
+        r.aiWritingFeedback = JSON.stringify(res.feedback);
+        if (teacherResultsCache) {
+          const match = teacherResultsCache.find(x => x.timestamp === r.timestamp);
+          if (match) match.aiWritingFeedback = r.aiWritingFeedback;
+        }
+        feedbackBlock.innerHTML = renderWritingFeedbackBlock(res.feedback);
+        btnEl.textContent = "🤖 Re-analyse Writing (AI)";
+        statusEl.textContent = "✅ Analysis complete";
+        statusEl.style.color = "#166534";
+      } else {
+        statusEl.textContent = "⚠️ " + (res.message || "Could not analyse writing.");
+        statusEl.style.color = "var(--red-c)";
+      }
+    })
+    .catch(() => {
+      btnEl.disabled = false;
+      statusEl.textContent = "⚠️ Could not reach Google Sheet.";
+      statusEl.style.color = "var(--red-c)";
+    });
+}
+
+function renderTeacherLoading() {
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <div style="text-align:center;padding:60px 0">
+      <div style="font-size:36px;margin-bottom:12px">☁️</div>
+      <div style="font-size:15px;color:var(--text-soft)">Loading results from Google Sheet…</div>
+    </div>
+  `;
+}
+
+function renderTeacherPin() {
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <div style="text-align:center;padding:40px 0 20px">
+      <div style="font-size:40px;margin-bottom:10px">🔒</div>
+      <div style="font-size:20px;font-weight:900;color:var(--brand-dark);margin-bottom:6px">Teacher Mode</div>
+      <div style="font-size:14px;color:var(--text-soft);margin-bottom:20px">Enter the PIN to view results</div>
+      <input id="pin-input" type="password" inputmode="numeric" placeholder="PIN"
+        style="width:160px;text-align:center;font-size:22px;letter-spacing:6px;padding:10px;border:2px solid var(--grey-mid);border-radius:10px;outline:none;margin-bottom:16px;">
+      <br>
+      <button id="btn-pin-ok" class="btn-next" style="width:160px">Enter</button>
+      <div style="margin-top:16px">
+        <button id="btn-pin-back" style="background:none;border:none;color:var(--text-soft);font-size:13px;cursor:pointer;text-decoration:underline;">← Back</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("btn-pin-back").addEventListener("click", () => render());
+
+  document.getElementById("btn-pin-ok").addEventListener("click", () => {
+    const pin = document.getElementById("pin-input").value;
+    if (pin === TEACHER_PIN) {
+      renderTeacherLoading();
+      fetchRemoteResults().then(remote => {
+        teacherResultsCache = remote; // null if offline/failed — dashboard falls back to local
+        renderTeacherDashboard();
+      });
+    } else {
+      document.getElementById("pin-input").style.borderColor = "var(--red-c)";
+      document.getElementById("pin-input").value = "";
+      document.getElementById("pin-input").placeholder = "Wrong PIN";
+    }
+  });
+}
+
+function passesFilters(r) {
+  if (dashboardFilters.search && !(r.name||"").toLowerCase().includes(dashboardFilters.search.toLowerCase())) return false;
+  if (dashboardFilters.year && r.year !== dashboardFilters.year) return false;
+  if (dashboardFilters.rag && r.rag !== dashboardFilters.rag) return false;
+  if (dashboardFilters.teacher && r.teacher !== dashboardFilters.teacher) return false;
+  if (dashboardFilters.academicYear && r.academicYear !== dashboardFilters.academicYear) return false;
+  if (dashboardFilters.term && r.term !== dashboardFilters.term) return false;
+  if (dashboardFilters.status === "real") {
+    if (r.studentStatus === "Test-Demo") return false;
+  } else if (dashboardFilters.status) {
+    if (r.studentStatus !== dashboardFilters.status) return false;
+  }
+  if (dashboardFilters.dateFrom) {
+    const d = new Date(r.date);
+    const from = new Date(dashboardFilters.dateFrom);
+    if (isNaN(d) || d < from) return false;
+  }
+  if (dashboardFilters.dateTo) {
+    const d = new Date(r.date);
+    const to = new Date(dashboardFilters.dateTo);
+    to.setHours(23,59,59,999);
+    if (isNaN(d) || d > to) return false;
+  }
+  return true;
+}
+
+function renderTeacherDashboard() {
+  const usingRemote = teacherResultsCache !== null;
+  const all = usingRemote ? teacherResultsCache : getStoredResults();
+  const filtered = all.filter(passesFilters);
+
+  const years = [...new Set(all.map(r => r.year).filter(Boolean))].sort();
+  const academicYears = [...new Set(all.map(r => r.academicYear).filter(Boolean))].sort().reverse();
+  const teachers = [...new Set(all.map(r => r.teacher).filter(Boolean))].sort();
+
+  // Detect local results that never made it to the Sheet — e.g. a submission
+  // made during a wifi dropout. Without this check, once the connection is
+  // restored the dashboard silently shows only the synced list, and any
+  // unsynced local result would just disappear from view with no trace.
+  const unsyncedLocal = usingRemote ? findUnsyncedLocalResults() : [];
+
+  const app = document.getElementById("app");
+  let html = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="font-size:20px;font-weight:900;color:var(--brand-dark);flex:1">👨‍🏫 Teacher Dashboard</div>
+      <button id="btn-td-refresh" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">🔄</button>
+      <button id="btn-td-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">✕ Exit</button>
+    </div>
+    <div style="font-size:12px;margin-bottom:16px;color:${usingRemote ? '#166534' : '#92400E'};background:${usingRemote ? '#DCFCE7' : '#FEF3C7'};border-radius:8px;padding:6px 10px;">
+      ${usingRemote
+        ? '☁️ Synced from Google Sheet — results from every device'
+        : '⚠️ Could not reach Google Sheet — showing results saved on this device only'}
+      ${(!usingRemote && getStoredResults().length > 0) ? `
+        <button id="btn-copy-alllocal" style="display:block;margin-top:8px;background:white;color:#92400E;border:2px solid #92400E;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;">📋 Copy all ${getStoredResults().length} local result${getStoredResults().length===1?'':'s'} as rows (paste into Sheet manually)</button>
+        <span id="copy-alllocal-status" style="font-size:12px;display:block;margin-top:4px"></span>
+      ` : ''}
+    </div>
+    ${unsyncedLocal.length > 0 ? `
+    <div style="font-size:12px;margin-bottom:16px;color:#92400E;background:#FEF3C7;border:2px solid #F59E0B;border-radius:8px;padding:10px;">
+      ⚠️ ${unsyncedLocal.length} result${unsyncedLocal.length===1?'':'s'} saved on this device ${unsyncedLocal.length===1?'has':'have'} not synced to the Sheet yet
+      (${unsyncedLocal.map(r => r.name).join(', ')}).
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <button id="btn-sync-pending" style="background:#92400E;color:white;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;">🔄 Sync Now</button>
+        <button id="btn-copy-pending" style="background:white;color:#92400E;border:2px solid #92400E;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;">📋 Copy as row (paste into Sheet manually)</button>
+      </div>
+      <span id="sync-pending-status" style="font-size:12px;display:block;margin-top:6px"></span>
+    </div>` : ''}
+
+    <input id="td-search" type="text" placeholder="🔍 Search student name..." value="${dashboardFilters.search}"
+      style="width:100%;border:2px solid var(--grey-mid);border-radius:10px;padding:10px 14px;font-size:15px;margin-bottom:10px;outline:none;">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <select id="td-filter-year" style="border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="">All year groups</option>
+        ${years.map(y => `<option value="${y}" ${dashboardFilters.year===y?'selected':''}>${y}</option>`).join('')}
+      </select>
+      <select id="td-filter-rag" style="border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="">All standards</option>
+        <option value="GREEN" ${dashboardFilters.rag==='GREEN'?'selected':''}>🟢 Exceeding</option>
+        <option value="AMBER" ${dashboardFilters.rag==='AMBER'?'selected':''}>🟠 At Expected</option>
+        <option value="RED" ${dashboardFilters.rag==='RED'?'selected':''}>🔴 Below Expected</option>
+      </select>
+    </div>
+    <div style="margin-bottom:8px">
+      <select id="td-filter-teacher" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="">All tutors</option>
+        ${teachers.map(t => `<option value="${t}" ${dashboardFilters.teacher===t?'selected':''}>${t}</option>`).join('')}
+      </select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <select id="td-filter-ay" style="border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="">All academic years</option>
+        ${academicYears.map(y => `<option value="${y}" ${dashboardFilters.academicYear===y?'selected':''}>${y}</option>`).join('')}
+      </select>
+      <select id="td-filter-term" style="border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="">All terms</option>
+        <option value="Autumn" ${dashboardFilters.term==='Autumn'?'selected':''}>Autumn</option>
+        <option value="Spring" ${dashboardFilters.term==='Spring'?'selected':''}>Spring</option>
+        <option value="Summer" ${dashboardFilters.term==='Summer'?'selected':''}>Summer</option>
+      </select>
+    </div>
+    <div style="margin-bottom:8px">
+      <select id="td-filter-status" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="real" ${dashboardFilters.status==='real'?'selected':''}>Real students (hide Test/Demo)</option>
+        <option value="" ${dashboardFilters.status===''?'selected':''}>All students (incl. Test/Demo)</option>
+        <option value="Enrolled Student" ${dashboardFilters.status==='Enrolled Student'?'selected':''}>Enrolled only</option>
+        <option value="Prospective (Lead)" ${dashboardFilters.status==='Prospective (Lead)'?'selected':''}>Leads only</option>
+        <option value="Test-Demo" ${dashboardFilters.status==='Test-Demo'?'selected':''}>Test/Demo only</option>
+      </select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+      <div>
+        <label style="font-size:11px;color:var(--text-soft);display:block;margin-bottom:2px">From date</label>
+        <input id="td-filter-from" type="date" value="${dashboardFilters.dateFrom}" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:7px 10px;font-size:13px;">
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--text-soft);display:block;margin-bottom:2px">To date</label>
+        <input id="td-filter-to" type="date" value="${dashboardFilters.dateTo}" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:7px 10px;font-size:13px;">
+      </div>
+    </div>
+    ${(dashboardFilters.search||dashboardFilters.year||dashboardFilters.rag||dashboardFilters.teacher||dashboardFilters.dateFrom||dashboardFilters.dateTo||dashboardFilters.term||dashboardFilters.academicYear!==getAcademicYear()||dashboardFilters.status!=="real")
+      ? `<button id="td-clear-filters" style="background:none;border:none;color:var(--brand);font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;margin-bottom:12px;padding:0;">✕ Reset to default view</button>`
+      : ''}
+    <div style="font-size:12px;color:var(--text-soft);margin-bottom:12px">Showing ${filtered.length} of ${all.length} result${all.length===1?'':'s'}</div>
+  `;
+
+  if (filtered.length === 0) {
+    html += `<div style="text-align:center;color:var(--text-soft);padding:32px 0;font-size:15px;">
+      ${all.length === 0 ? 'No results found yet — complete an assessment first.' : 'No students match these filters.'}
+    </div>`;
+  } else {
+    filtered.forEach((r) => {
+      const ragBg  = r.rag==="GREEN"?"#C8E6C9":r.rag==="AMBER"?"#FFE0B2":"#FFCDD2";
+      const ragFg  = r.rag==="GREEN"?"#1B5E20":r.rag==="AMBER"?"#E65100":"#B71C1C";
+      html += `
+        <div class="student-card" data-idx="${all.indexOf(r)}"
+          style="border:2px solid var(--grey-mid);border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:12px;">
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:15px;">${r.name}</div>
+            <div style="font-size:12px;color:var(--text-soft);">${r.year} · ${r.school||''} · ${formatDateNice(r.date)}${r.timeTaken ? ` · ⏱️ ${r.timeTaken}` : ''}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:20px;font-weight:900;color:var(--brand-dark)">${r.total}/38</div>
+            <span style="background:${ragBg};color:${ragFg};font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;">${r.placement||r.rag}</span>
+            <div style="font-size:10px;color:var(--text-soft);margin-top:3px;font-weight:600;">${getStandardLabel(r.rag)}</div>
+          </div>
+          <div style="font-size:18px;color:var(--grey-mid)">›</div>
+        </div>
+      `;
+    });
+  }
+
+  app.innerHTML = html;
+
+  document.getElementById("btn-td-back").addEventListener("click", () => render());
+  document.getElementById("btn-td-refresh").addEventListener("click", () => {
+    renderTeacherLoading();
+    fetchRemoteResults().then(remote => {
+      teacherResultsCache = remote;
+      renderTeacherDashboard();
+    });
+  });
+  const btnSyncPending = document.getElementById("btn-sync-pending");
+  if (btnSyncPending) {
+    btnSyncPending.addEventListener("click", () => syncPendingResults());
+  }
+  const btnCopyPending = document.getElementById("btn-copy-pending");
+  if (btnCopyPending) {
+    btnCopyPending.addEventListener("click", () => copyPendingAsRows());
+  }
+  const btnCopyAllLocal = document.getElementById("btn-copy-alllocal");
+  if (btnCopyAllLocal) {
+    btnCopyAllLocal.addEventListener("click", () => copyAllLocalAsRows());
+  }
+  document.getElementById("td-search").addEventListener("input", e => {
+    dashboardFilters.search = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-year").addEventListener("change", e => {
+    dashboardFilters.year = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-rag").addEventListener("change", e => {
+    dashboardFilters.rag = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-teacher").addEventListener("change", e => {
+    dashboardFilters.teacher = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-ay").addEventListener("change", e => {
+    dashboardFilters.academicYear = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-term").addEventListener("change", e => {
+    dashboardFilters.term = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-status").addEventListener("change", e => {
+    dashboardFilters.status = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-from").addEventListener("change", e => {
+    dashboardFilters.dateFrom = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-to").addEventListener("change", e => {
+    dashboardFilters.dateTo = e.target.value;
+    renderTeacherDashboard();
+  });
+  const clearBtn = document.getElementById("td-clear-filters");
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      dashboardFilters = { search: "", year: "", rag: "", teacher: "", dateFrom: "", dateTo: "", academicYear: getAcademicYear(), term: "", status: "real" };
+      renderTeacherDashboard();
+    });
+  }
+  document.querySelectorAll(".student-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const idx = parseInt(card.dataset.idx);
+      renderTeacherStudentView(all[idx]);
+    });
+  });
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
+function renderWritingFeedbackBlock(fb) {
+  const areas = [
+    { key:"ideas",      label:"Ideas & Content" },
+    { key:"structure",  label:"Sentence Structure" },
+    { key:"vocabulary", label:"Vocabulary" },
+    { key:"spelling",   label:"Spelling & Punctuation" },
+  ];
+  let html = '<div style="margin-top:12px;border-top:1px solid #e2e8f0;padding-top:12px">';
+  areas.forEach(a => {
+    const d = fb[a.key];
+    if (!d) return;
+    html += `<div style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;font-size:13px">
+        <span style="font-weight:700">${a.label}</span>
+        <span style="font-weight:900;color:#4C1D95">${d.score}/4</span>
+      </div>
+      <div style="font-size:12px;color:#64748b">${escapeHtml(d.comment||'')}</div>
+    </div>`;
+  });
+  if (fb.summary) {
+    html += `<div style="margin-top:10px;background:#F3E8FF;border-radius:8px;padding:10px;font-size:13px;color:#1a1a1a">${escapeHtml(fb.summary)}</div>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+// Writing Task is deliberately NEVER scored automatically — this panel shows
+// the raw text plus an on-demand "Analyse Writing" button. The AI call only
+// fires when a teacher explicitly clicks it, keeping a human as the actual
+// decision-maker (same principle as Tutor Comments).
+function renderWritingSamplePanel(r) {
+  const hasSample = r.writingSample && r.writingSample.trim().length > 0;
+  if (!hasSample) {
+    return `<div style="background:white;border:2px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:14px">
+      <div style="font-weight:900;font-size:14px;margin-bottom:6px;color:#1a3a5c">✍️ Writing Task</div>
+      <div style="font-size:12px;color:#94a3b8">No writing sample recorded for this sitting.</div>
+    </div>`;
+  }
+  let existingFeedback = null;
+  if (r.aiWritingFeedback) {
+    try { existingFeedback = JSON.parse(r.aiWritingFeedback); } catch(e) {}
+  }
+  return `<div style="background:white;border:2px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:14px">
+    <div style="font-weight:900;font-size:14px;margin-bottom:6px;color:#1a3a5c">✍️ Writing Task</div>
+    <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">Untimed, not scored — separate from the placement above, for teacher reference only.</div>
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px;font-size:14px;line-height:1.6;white-space:pre-wrap;margin-bottom:10px">${escapeHtml(r.writingSample)}</div>
+    <button id="btn-analyze-writing" data-timestamp="${r.timestamp}" style="background:#37474F;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;">🤖 ${existingFeedback ? 'Re-analyse' : 'Analyse'} Writing (AI)</button>
+    <span id="writing-analyze-status" style="font-size:12px;color:#64748b;margin-left:10px"></span>
+    <div id="writing-feedback-block">${existingFeedback ? renderWritingFeedbackBlock(existingFeedback) : ''}</div>
+  </div>`;
+}
+
+function renderTeacherStudentView(r) {
+  const app = document.getElementById("app");
+  const ragBg  = r.rag==="GREEN"?"#C8E6C9":r.rag==="AMBER"?"#FFE0B2":"#FFCDD2";
+  const ragFg  = r.rag==="GREEN"?"#1B5E20":r.rag==="AMBER"?"#E65100":"#B71C1C";
+
+  // Student History — other sittings matched by Name + Year + School (any baseline attempt on this device/sheet)
+  const usingRemoteSV = teacherResultsCache !== null;
+  const allSV = usingRemoteSV ? teacherResultsCache : getStoredResults();
+  const history = allSV.filter(x =>
+    x.timestamp !== r.timestamp &&
+    (x.name||"").toLowerCase() === (r.name||"").toLowerCase() &&
+    x.year === r.year && (x.school||"") === (r.school||"")
+  ).sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  let html = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <button id="btn-sv-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">← Back</button>
+      <div style="flex:1;font-size:18px;font-weight:900;color:var(--brand-dark)">${r.name}</div>
+      <button id="btn-print-report" style="background:var(--brand);border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;color:white;">🖨️ Report</button>
+    </div>
+
+    <div style="text-align:center;background:var(--gold-light);border:2px solid var(--gold);border-radius:12px;padding:18px;margin-bottom:16px">
+      <div style="font-size:36px;font-weight:900;color:var(--brand-dark)">${r.total}<span style="font-size:16px;font-weight:400;color:var(--text-soft)">/38</span></div>
+      <span style="background:${ragBg};color:${ragFg};font-size:12px;font-weight:700;padding:3px 12px;border-radius:20px;">${r.placement||r.rag}</span>
+      <div style="font-size:12px;font-weight:800;color:var(--brand-dark);margin-top:6px">${getStandardLabel(r.rag)}</div>
+      <div style="font-size:12px;color:var(--text-soft);margin-top:8px">${r.year} · ${r.school||''} · ${r.teacher||''} · ${formatDateNice(r.date)} · ⏱️ ${r.timeTaken||''}</div>
+    </div>
+
+    ${getYearMismatchNote(r.year) ? `<div style="background:#FFF8E1;border-left:3px solid #F59E0B;border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#78350F">${getYearMismatchNote(r.year)}</div>` : ''}
+
+    ${history.length ? `
+    <div style="background:white;border:2px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:14px">
+      <div style="font-weight:900;font-size:14px;margin-bottom:10px;color:#1a3a5c">📈 Student History (${history.length} previous sitting${history.length===1?'':'s'})</div>
+      ${history.map(h => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:13px">
+          <div>
+            <div style="font-weight:700">${formatDateNice(h.date)} ${h.academicYear ? `· ${h.academicYear}${h.term ? ' '+h.term : ''}` : ''}</div>
+            <div style="font-size:11px;color:var(--text-soft)">${h.assessment || 'Master'} · ${getStandardLabel(h.rag)}</div>
+          </div>
+          <div style="font-weight:900;color:var(--brand-dark)">${h.total}</div>
+        </div>`).join('')}
+    </div>` : ''}
+
+    ${r.teacherNote ? `<div style="background:#f8fafc;border-left:3px solid var(--brand);border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--text)">📝 ${r.teacherNote}</div>` : ''}
+
+    <div style="background:white;border:2px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:14px">
+      <div style="font-weight:900;font-size:14px;margin-bottom:10px;color:#1a3a5c">Section Breakdown</div>
+  `;
+
+  Object.entries(r.secScores).forEach(([sec, sc]) => {
+    const max = SEC_MAX[sec];
+    const pct = Math.round((sc / max) * 100);
+    const cls = getSectionRag(sc, max);
+    const bc = cls === "green" ? "#1B5E20" : cls === "amber" ? "#E65100" : "#B71C1C";
+    html += `
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:3px">
+          <span>${sec} · ${SECTIONS[sec].name}</span><span>${sc}/${max}</span>
+        </div>
+        <div style="background:#f1f5f9;border-radius:6px;height:10px;overflow:hidden">
+          <div style="height:100%;width:${pct}%;background:${bc};border-radius:6px"></div>
+        </div>
+        <div style="font-size:10px;color:${bc};font-weight:700;margin-top:2px">${getSectionStandardLabel(cls)}</div>
+      </div>`;
+  });
+
+  html += `</div>
+
+    <div style="background:white;border:2px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:14px">
+      <div style="font-weight:900;font-size:14px;margin-bottom:8px;color:#1a3a5c">💬 Tutor Comments</div>
+      <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">Personal observations from the session — shows on the parent report.</div>
+      <textarea id="tutor-comment-box" rows="3" placeholder="e.g. Confident verbally but rushes written work..."
+        style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:10px;font-size:14px;font-family:inherit;resize:vertical;">${r.tutorComment || ''}</textarea>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+        <button id="btn-save-comment" style="background:var(--brand);border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;color:white;">💾 Save Comment</button>
+        <span id="comment-save-status" style="font-size:12px;color:var(--text-soft);"></span>
+      </div>
+    </div>
+
+    ${renderWritingSamplePanel(r)}
+
+    <!-- Q by Q — clickable -->
+    <div style="background:white;border:2px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:14px">
+      <div style="font-weight:900;font-size:14px;margin-bottom:4px;color:#1a3a5c">Question by Question</div>
+      <div style="font-size:12px;color:#94a3b8;margin-bottom:12px">Tap any question to review it in detail</div>
+      <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+        <button class="btn-filter-sv" data-filter="all" style="padding:4px 12px;border-radius:20px;border:2px solid var(--brand-dark);background:var(--brand-dark);color:white;font-size:12px;font-weight:700;cursor:pointer">All</button>
+        <button class="btn-filter-sv" data-filter="wrong" style="padding:4px 12px;border-radius:20px;border:2px solid #e2e8f0;background:white;color:#64748b;font-size:12px;font-weight:700;cursor:pointer">❌ Wrong</button>
+        <button class="btn-filter-sv" data-filter="skipped" style="padding:4px 12px;border-radius:20px;border:2px solid #e2e8f0;background:white;color:#64748b;font-size:12px;font-weight:700;cursor:pointer">⬜ Skipped</button>
+      </div>
+  `;
+
+  QUESTIONS.forEach((q, qi) => {
+    const given   = r.answers ? r.answers[q.id] : null;
+    const correct = given && given !== 'IDK' && given === q.ans;
+    const idk     = given === 'IDK';
+    const icon    = correct ? '✅' : idk ? '⬜' : '❌';
+    const bg      = correct ? '#f0fdf4' : idk ? '#f8fafc' : '#fef2f2';
+    const border  = correct ? '#bbf7d0' : idk ? '#e2e8f0' : '#fca5a5';
+    const givenTxt = given && given !== 'IDK'
+      ? given : given === 'IDK' ? '?' : '–';
+    html += `
+      <div class="btn-q-detail" data-qi="${qi}"
+        style="background:${bg};border:1px solid ${border};border-radius:10px;
+          padding:9px 12px;margin-bottom:5px;cursor:pointer;
+          display:flex;align-items:center;gap:10px;transition:opacity 0.15s">
+        <span style="font-size:16px">${icon}</span>
+        <span style="font-weight:700;font-size:13px;flex:1">Q${q.id}. ${q.text.slice(0,65)}${q.text.length>65?'…':''}</span>
+        <span style="font-size:12px;font-weight:700;color:#94a3b8;min-width:16px">${givenTxt}</span>
+        <span style="color:#cbd5e1;font-size:16px">›</span>
+      </div>`;
+  });
+
+  html += `</div>`;
+  document.getElementById('app').innerHTML = html;
+
+  document.getElementById('btn-sv-back').addEventListener('click', () => renderTeacherDashboard());
+  document.getElementById('btn-print-report').addEventListener('click', () => renderParentReport(r));
+  document.getElementById('btn-save-comment').addEventListener('click', () => saveTutorComment(r));
+
+  const btnAnalyzeWriting = document.getElementById('btn-analyze-writing');
+  if (btnAnalyzeWriting) {
+    btnAnalyzeWriting.addEventListener('click', () => analyzeWritingSample(r, btnAnalyzeWriting));
+  }
+
+  document.querySelectorAll('.btn-filter-sv').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.btn-filter-sv').forEach(b => {
+        b.style.background='white'; b.style.color='#64748b'; b.style.borderColor='#e2e8f0';
+      });
+      btn.style.background='var(--brand-dark)'; btn.style.color='white'; btn.style.borderColor='var(--brand-dark)';
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.btn-q-detail').forEach(card => {
+        const qi  = parseInt(card.dataset.qi);
+        const q   = QUESTIONS[qi];
+        const given = r.answers ? r.answers[q.id] : null;
+        const correct = given && given !== 'IDK' && given === q.ans;
+        const idk     = given === 'IDK' || !given;
+        const show = filter==='all' || (filter==='wrong' && !correct && !idk) || (filter==='skipped' && idk);
+        card.style.display = show ? 'flex' : 'none';
+      });
+    });
+  });
+
+  document.querySelectorAll('.btn-q-detail').forEach(card => {
+    card.addEventListener('click', () => {
+      renderQuestionDetail(r, parseInt(card.dataset.qi), 'all');
+    });
+  });
+}
+
+function renderQuestionDetail(r, qIndex, filter) {
+  const q = QUESTIONS[qIndex];
+  const given = r.answers ? r.answers[q.id] : null;
+  const correct = given && given !== 'IDK' && given === q.ans;
+  const idk = given === 'IDK' || !given;
+  const letters = ["A","B","C","D"];
+
+  let html = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <button id="btn-qd-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">← Back</button>
+      <div style="flex:1;font-size:16px;font-weight:900;color:var(--brand-dark)">${r.name} — Q${q.id}</div>
+      <button id="btn-qd-prev" ${qIndex===0?'disabled':''} style="background:var(--brand-dark);border:none;border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer;color:white;${qIndex===0?'opacity:0.4;cursor:not-allowed;':''}">◀</button>
+      <button id="btn-qd-next" ${qIndex===QUESTIONS.length-1?'disabled':''} style="background:var(--brand-dark);border:none;border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer;color:white;${qIndex===QUESTIONS.length-1?'opacity:0.4;cursor:not-allowed;':''}">▶</button>
+    </div>
+
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+      <button class="btn-qd-filter" data-filter="all" style="padding:4px 12px;border-radius:20px;border:2px solid var(--brand-dark);background:${filter==='all'?'var(--brand-dark)':'white'};color:${filter==='all'?'white':'#64748b'};font-size:12px;font-weight:700;cursor:pointer">All questions</button>
+      <button class="btn-qd-filter" data-filter="wrong" style="padding:4px 12px;border-radius:20px;border:2px solid #e2e8f0;background:${filter==='wrong'?'var(--brand-dark)':'white'};color:${filter==='wrong'?'white':'#64748b'};font-size:12px;font-weight:700;cursor:pointer">❌ Wrong only</button>
+      <button class="btn-qd-filter" data-filter="skipped" style="padding:4px 12px;border-radius:20px;border:2px solid #e2e8f0;background:${filter==='skipped'?'var(--brand-dark)':'white'};color:${filter==='skipped'?'white':'#64748b'};font-size:12px;font-weight:700;cursor:pointer">⬜ Skipped only</button>
+    </div>
+    <div style="text-align:center;font-size:12px;color:#94a3b8;margin-bottom:10px">Question ${qIndex+1} of ${QUESTIONS.length}</div>
+
+    <div class="section-badge" style="background:${SECTIONS[q.sec].color}">${q.sec} · ${SECTIONS[q.sec].name}</div>
+
+    <div style="background:white;border:2px solid #dbeafe;border-radius:12px;padding:18px;margin-bottom:14px">
+      <div style="font-size:12px;color:#94a3b8;margin-bottom:4px">Question ${q.id}</div>
+      <div style="font-size:19px;font-weight:800;color:var(--text);margin-bottom:12px">${q.text}</div>
+      ${q.display ? `<div class="q-display">${q.display}</div>` : ''}
+      <div class="options ${q.opts.length===4?'four-col':q.opts.length===3?'three-col':'two-col'}">
+  `;
+
+  q.opts.forEach((opt, i) => {
+    const letter = letters[i];
+    const isCorrectAns = letter === q.ans;
+    const isSelected = letter === given;
+    let cls = '';
+    let tag = '';
+    if (isCorrectAns) {
+      cls = 'correct';
+      tag = '<div style="font-size:12px;font-weight:700;margin-top:4px">✅ Correct</div>';
+    }
+    if (isSelected && !isCorrectAns) {
+      cls = 'wrong';
+      tag = '<div style="font-size:12px;font-weight:700;margin-top:4px">❌ Student chose this</div>';
+    }
+    html += `
+      <div class="opt-btn ${cls}" style="cursor:default;flex-direction:column;align-items:flex-start;">
+        <div style="display:flex;align-items:center;gap:12px;width:100%">
+          <span class="opt-letter">${letter}</span>${opt}
+        </div>
+        ${tag}
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+  if (idk) {
+    html += `<div style="text-align:center;margin-top:10px;font-size:13px;color:var(--text-soft)">⬜ Student skipped this question (I don't know)</div>`;
+  } else if (!correct && MISCONCEPTIONS[q.id]) {
+    html += `<div style="background:#fffbeb;border-left:3px solid var(--gold);border-radius:6px;padding:10px 14px;margin-top:10px;font-size:13px;color:var(--text)">
+      💡 <strong>Teacher note:</strong> ${MISCONCEPTIONS[q.id]}
+    </div>`;
+  }
+  html += `</div>`;
+
+  document.getElementById('app').innerHTML = html;
+
+  document.getElementById('btn-qd-back').addEventListener('click', () => renderTeacherStudentView(r));
+  const prevBtn = document.getElementById('btn-qd-prev');
+  const nextBtn = document.getElementById('btn-qd-next');
+  if (prevBtn && qIndex > 0) prevBtn.addEventListener('click', () => renderQuestionDetail(r, qIndex-1, filter));
+  if (nextBtn && qIndex < QUESTIONS.length-1) nextBtn.addEventListener('click', () => renderQuestionDetail(r, qIndex+1, filter));
+
+  document.querySelectorAll('.btn-qd-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      let idx = qIndex;
+      const matches = (i) => {
+        const qq = QUESTIONS[i];
+        const gg = r.answers ? r.answers[qq.id] : null;
+        const cc = gg && gg !== 'IDK' && gg === qq.ans;
+        const ii = gg === 'IDK' || !gg;
+        return f==='all' || (f==='wrong' && !cc && !ii) || (f==='skipped' && ii);
+      };
+      if (!matches(idx)) {
+        for (let i = 0; i < QUESTIONS.length; i++) {
+          if (matches(i)) { idx = i; break; }
+        }
+      }
+      renderQuestionDetail(r, idx, f);
+    });
+  });
+}
+
+function renderParentReport(r) {
+  const app = document.getElementById("app");
+  const ragBg  = r.rag==="GREEN"?"#C8E6C9":r.rag==="AMBER"?"#FFE0B2":"#FFCDD2";
+  const ragFg  = r.rag==="GREEN"?"#1B5E20":r.rag==="AMBER"?"#E65100":"#B71C1C";
+
+  let strong = [], weak = [];
+  Object.entries(r.secScores).forEach(([sec, sc]) => {
+    const pct = sc / SEC_MAX[sec];
+    if (pct >= 0.8) strong.push(SECTIONS[sec].name);
+    else if (pct < 0.5) weak.push(SECTIONS[sec].name);
+  });
+
+  let html = `
+    <div style="display:flex;gap:10px;margin-bottom:16px" class="no-print">
+      <button id="btn-pr-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">← Back</button>
+      <button id="btn-pr-print" style="background:var(--brand);border:none;border-radius:8px;padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer;color:white;">🖨️ Print Full Report</button>
+      <button id="btn-pr-print-summary" style="background:none;border:2px solid var(--brand);border-radius:8px;padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer;color:var(--brand);">🖨️ Print Summary Only</button>
+    </div>
+
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:15px;font-weight:900;color:var(--brand-dark);letter-spacing:0.5px">AIM HIGH TUITION</div>
+      <div style="font-size:12px;color:var(--text-soft)">Master English Baseline — Parent Report</div>
+    </div>
+
+    <div style="text-align:center;background:var(--gold-light);border:2px solid var(--gold);border-radius:12px;padding:18px;margin-bottom:18px">
+      <div style="font-size:18px;font-weight:900;color:var(--brand-dark)">${r.name}</div>
+      <div style="font-size:12px;color:var(--text-soft);margin-bottom:8px">${r.year} · ${r.school||''} · ${formatDateNice(r.date)}</div>
+      <div style="font-size:36px;font-weight:900;color:var(--brand-dark)">${r.total}<span style="font-size:16px;font-weight:400;color:var(--text-soft)">/38</span></div>
+      <span style="background:${ragBg};color:${ragFg};font-size:12px;font-weight:700;padding:3px 12px;border-radius:20px;">${r.placement||r.rag}</span>
+      <div style="font-size:13px;font-weight:800;color:var(--brand-dark);margin-top:6px">${getStandardLabel(r.rag)}</div>
+    </div>
+
+    ${getYearMismatchNote(r.year) ? `<div style="background:#FFF8E1;border-left:3px solid #F59E0B;border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#78350F">${getYearMismatchNote(r.year)}</div>` : ''}
+
+    <div style="font-size:14px;line-height:1.7;color:var(--text);background:var(--grey-light);border-radius:10px;padding:16px;margin-bottom:18px">
+      ${r.name.split(' ')[0]} scored ${r.total} out of 38 on the Master English Baseline Assessment.
+      ${strong.length ? `They showed particular strength in ${strong.join(', ')}. ` : ''}
+      ${weak.length ? `Areas to focus on going forward include ${weak.join(', ')}. ` : ''}
+    </div>
+
+    <div style="margin-bottom:10px;font-size:14px;font-weight:800;color:var(--brand-dark);text-transform:uppercase;letter-spacing:0.5px">Section Breakdown</div>
+  `;
+
+  Object.entries(r.secScores).forEach(([sec, sc]) => {
+    const max = SEC_MAX[sec];
+    const pct = Math.round((sc / max) * 100);
+    const cls = getSectionRag(sc, max);
+    const bc = cls === "green" ? "#1B5E20" : cls === "amber" ? "#E65100" : "#B71C1C";
+    html += `
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:3px">
+          <span>${SECTIONS[sec].name}</span><span>${sc}/${max}</span>
+        </div>
+        <div style="background:#f1f5f9;border-radius:6px;height:10px;overflow:hidden">
+          <div style="height:100%;width:${pct}%;background:${bc};border-radius:6px"></div>
+        </div>
+        <div style="font-size:10px;color:${bc};font-weight:700;margin-top:2px">${getSectionStandardLabel(cls)}</div>
+      </div>`;
+  });
+
+  html += `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div style="background:#f0fdf4;border:2px solid #16a34a;border-radius:10px;padding:12px 14px">
+        <div style="font-size:11px;font-weight:700;color:#16a34a;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">✅ Strengths</div>
+        ${strong.length ? strong.map(s=>`<div style="font-size:12px;color:#14532D;margin-bottom:4px">• ${s}</div>`).join('') : '<div style="font-size:12px;color:#64748b">Working towards all sections</div>'}
+      </div>
+      <div style="background:#fef2f2;border:2px solid #dc2626;border-radius:10px;padding:12px 14px">
+        <div style="font-size:11px;font-weight:700;color:#dc2626;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">🎯 Priority Areas</div>
+        ${weak.length ? weak.map(s=>`<div style="font-size:12px;color:#7F1D1D;margin-bottom:4px">• ${s}</div>`).join('') : '<div style="font-size:12px;color:#64748b">No significant gaps identified</div>'}
+      </div>
+    </div>
+  `;
+
+  let qRows = '';
+  const letters38 = ['A','B','C','D'];
+  QUESTIONS.forEach(q => {
+    const given = r.answers ? r.answers[q.id] : null;
+    const correct = given && given !== 'IDK' && given === q.ans;
+    const idk = given === 'IDK';
+    const icon = correct ? '✅' : idk ? '⬜' : '❌';
+    const bg = correct ? '#f0fdf4' : idk ? '#f8fafc' : '#fef2f2';
+    const plainText = q.text.replace(/<[^>]*>/g, '');
+    const givenTxt = given && given !== 'IDK'
+      ? `${given} — ${(q.opts[letters38.indexOf(given)]||given).replace(/<[^>]*>/g, '')}`
+      : given === 'IDK' ? "I don't know" : '–';
+    const corrTxt = `${q.ans} — ${(q.opts[letters38.indexOf(q.ans)]||q.ans).replace(/<[^>]*>/g, '')}`;
+    qRows += `
+      <tr style="background:${bg}">
+        <td style="padding:5px 8px;font-weight:700;text-align:center;border:1px solid #e2e8f0">${q.id}</td>
+        <td style="padding:5px 8px;border:1px solid #e2e8f0">${q.sec}</td>
+        <td style="padding:5px 8px;border:1px solid #e2e8f0;font-size:11px">${plainText.slice(0,55)}${plainText.length>55?'…':''}</td>
+        <td style="padding:5px 8px;text-align:center;border:1px solid #e2e8f0">${icon}</td>
+        <td style="padding:5px 8px;font-size:11px;border:1px solid #e2e8f0;color:${correct?'#14532D':idk?'#94a3b8':'#dc2626'}">${givenTxt}</td>
+        <td style="padding:5px 8px;font-size:11px;border:1px solid #e2e8f0;color:#14532D">${correct?'–':corrTxt}</td>
+      </tr>`;
+  });
+
+  html += `
+    <div id="qla-table-section" style="page-break-before:always;padding-top:20px">
+      <div style="font-size:13px;font-weight:700;color:var(--brand-dark);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Question by Question Breakdown</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead>
+          <tr style="background:var(--brand-dark);color:white">
+            <th style="padding:7px 8px;text-align:center;border:1px solid #e2e8f0">Q</th>
+            <th style="padding:7px 8px;text-align:center;border:1px solid #e2e8f0">Sec</th>
+            <th style="padding:7px 8px;text-align:left;border:1px solid #e2e8f0">Question</th>
+            <th style="padding:7px 8px;text-align:center;border:1px solid #e2e8f0">Result</th>
+            <th style="padding:7px 8px;text-align:left;border:1px solid #e2e8f0">Student Answer</th>
+            <th style="padding:7px 8px;text-align:left;border:1px solid #e2e8f0">Correct Answer</th>
+          </tr>
+        </thead>
+        <tbody>${qRows}</tbody>
+      </table>
+    </div>
+  `;
+
+  html += `
+    ${r.tutorComment ? `
+    <div style="margin-top:18px">
+      <div style="margin-bottom:8px;font-size:14px;font-weight:800;color:var(--brand-dark);text-transform:uppercase;letter-spacing:0.5px">Tutor Comments</div>
+      <div style="background:var(--grey-light);border-radius:10px;padding:14px;font-size:13px;line-height:1.6;color:var(--text)">${r.tutorComment}</div>
+    </div>` : ''}
+    <div style="margin-top:20px;text-align:center;font-size:11px;color:var(--text-soft)">
+      Prepared by Aim High Tuition. Please speak to your child's tutor about next steps.
+    </div>
+  `;
+
+  app.innerHTML = html;
+  document.getElementById('btn-pr-back').addEventListener('click', () => renderTeacherStudentView(r));
+  document.getElementById('btn-pr-print').addEventListener('click', () => window.print());
+  document.getElementById('btn-pr-print-summary').addEventListener('click', () => {
+    const qlaSection = document.getElementById('qla-table-section');
+    qlaSection.style.display = 'none';
+    const restore = () => { qlaSection.style.display = ''; window.removeEventListener('afterprint', restore); };
+    window.addEventListener('afterprint', restore);
+    window.print();
+  });
+}
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let state = {
+  phase: "cover",
+  student: {},
+  qIndex: 0,
+  answers: {},
+  selected: null,
+  revealed: false,
+  startTime: null,
+  practiceSelected: null,
+  writingText: "",
+  timerInterval: null,
+};
+
+// ── LIVE TIMER (tutor-facing pacing aid, not exam-style pressure) ───────────
+// Counts up plainly, but shifts colour past soft thresholds so a supervising
+// tutor can notice pacing at a glance without it feeling like a countdown or
+// exam clock to the student. Thresholds match the cover page's own guidance
+// (~25-30 min typical, try not to exceed 35).
+function startQuizTimer() {
+  stopQuizTimer(); // guard against double-starting
+  state.timerInterval = setInterval(updateQuizTimerDisplay, 1000);
+  updateQuizTimerDisplay();
+}
+function stopQuizTimer() {
+  if (state.timerInterval) {
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
+}
+function updateQuizTimerDisplay() {
+  const el = document.getElementById("quiz-timer");
+  if (!el || !state.startTime) return;
+  const elapsedSec = Math.floor((Date.now() - state.startTime) / 1000);
+  const mins = Math.floor(elapsedSec / 60);
+  const secs = elapsedSec % 60;
+  el.textContent = "⏱️ " + mins + ":" + String(secs).padStart(2, "0");
+  let color = "#64748b"; // neutral grey — under 25 min
+  if (elapsedSec >= 35 * 60) color = "#DC2626";      // red — past 35 min
+  else if (elapsedSec >= 25 * 60) color = "#F59E0B"; // amber — past 25 min
+  el.style.color = color;
+}
+
+// ── READ-ALOUD (Web Speech API) ─────────────────────────────────────────────
+let cachedVoicesMaster = [];
+if (typeof window !== "undefined" && "speechSynthesis" in window) {
+  cachedVoicesMaster = window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = () => {
+    cachedVoicesMaster = window.speechSynthesis.getVoices();
+  };
+}
+function pickFriendlyVoiceMaster() {
+  if (!cachedVoicesMaster || !cachedVoicesMaster.length) return null;
+  return cachedVoicesMaster.find(v => /en-GB/i.test(v.lang) && /female|natural/i.test(v.name))
+      || cachedVoicesMaster.find(v => /en-GB/i.test(v.lang))
+      || cachedVoicesMaster.find(v => /^en/i.test(v.lang))
+      || null;
+}
+// Strips HTML/emoji, splits into sentences, speaks each with a real pause —
+// avoids the rushed, robotic, run-together sound of one long utterance.
+function speakText(text) {
+  try {
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    let plain = String(text).replace(/<[^>]*>/g, " ");
+    plain = plain.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}]/gu, "");
+    plain = plain.replace(/\s+/g, " ").trim();
+    if (!plain) return;
+    const sentences = (plain.match(/[^.!?]+[.!?]?/g) || [plain]).map(s => s.trim()).filter(Boolean);
+    const voice = pickFriendlyVoiceMaster();
+    let i = 0;
+    function speakNext() {
+      if (i >= sentences.length) return;
+      const utter = new SpeechSynthesisUtterance(sentences[i]);
+      i++;
+      utter.lang = "en-GB";
+      utter.rate = 0.88;
+      utter.pitch = 1.08;
+      if (voice) utter.voice = voice;
+      utter.onend = () => setTimeout(speakNext, 350);
+      window.speechSynthesis.speak(utter);
+    }
+    speakNext();
+  } catch(e) {}
+}
+
+// ── RENDER ───────────────────────────────────────────────────────────────────
+function render() {
+  const app = document.getElementById("app");
+  if (state.phase === "cover")    app.innerHTML = renderCover();
+  if (state.phase === "practice") app.innerHTML = renderPractice();
+  if (state.phase === "quiz")     app.innerHTML = renderQuiz();
+  if (state.phase === "writing")  app.innerHTML = renderWriting();
+  if (state.phase === "results")  app.innerHTML = renderResults();
+  attachEvents();
+}
+
+function renderPractice() {
+  const p = PRACTICE_QUESTION_MASTER;
+  const letters = ["A","B","C","D"];
+  let html = `
+    <div class="section-badge" style="background:#455A64">Practice — doesn't count</div>
+    <div class="q-text">${p.text}
+      <button type="button" class="btn-speak" data-speak-target="practice-q2-master">🔊</button>
+    </div>
+    <div class="q-hint" id="practice-q2-master">${p.q2}</div>
+    <div class="options four-col">
+  `;
+  p.opts.forEach((opt, i) => {
+    const letter = letters[i];
+    const cls = (letter === state.practiceSelected) ? "selected" : "";
+    html += `<button class="opt-btn ${cls}" data-practice-letter="${letter}">
+      <span class="opt-letter">${letter}</span>${opt}
+    </button>`;
+  });
+  html += `</div>
+    <button class="btn-next" id="btn-practice-next" ${!state.practiceSelected ? "disabled" : ""}>Start the real questions →</button>
+  `;
+  return html;
+}
+
+function renderWriting() {
+  return `
+    <div class="section-badge" style="background:#37474F">Writing Task</div>
+    <div class="q-text">One last thing before you finish!</div>
+    <div class="q-hint" style="margin-bottom:14px">
+      Write 4-5 sentences describing a place that feels exciting or mysterious to you. Try to use varied
+      sentence openers and correct punctuation. Take your time and do your best — this helps your teacher
+      see your writing.
+    </div>
+    <textarea id="writing-sample-box" rows="8" placeholder="Start writing here..."
+      style="width:100%;padding:14px;font-size:16px;font-family:inherit;border:2px solid var(--grey-mid);border-radius:10px;resize:vertical">${state.writingText || ""}</textarea>
+    <button class="btn-next" id="btn-writing-done" style="width:100%;margin-top:16px">Finish →</button>
+  `;
+}
+
+
+function renderCover() {
+  return `
+    <div class="cover-title">Master English<br>Baseline Assessment</div>
+    <div class="cover-sub">Multiple Choice · 38 questions · 38 marks</div>
+    <div style="text-align:center;font-size:13px;font-weight:700;color:#4C1D95;background:#F3E8FF;border-radius:8px;padding:8px 12px;margin:10px 0 16px 0;">
+      ⏱️ Most pupils finish in around 25-30 minutes — try not to take longer than 35 minutes.
+    </div>
+
+    <div class="instr-box">
+      <h3>📋 Instructions</h3>
+      <ul>
+        <li>For each question, select the letter <strong>A, B, C or D</strong> next to your answer.</li>
+        <li>Only select <strong>ONE</strong> answer per question.</li>
+        <li>Ask your teacher to read a question aloud, or press 🔊 next to it, any time.</li>
+        <li>Try every question — have a go, even the challenge ones!</li>
+      </ul>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>First name</label>
+        <input id="f-name" type="text" placeholder="e.g. Lila" autocomplete="given-name">
+      </div>
+      <div class="form-group">
+        <label>Last name</label>
+        <input id="f-surname" type="text" placeholder="e.g. Ahmed">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Year group</label>
+        <select id="f-year">
+          <option value="">Select...</option>
+          <option>Reception</option>
+          <option>Year 1</option>
+          <option>Year 2</option>
+          <option>Year 3</option>
+          <option>Year 4</option>
+          <option>Year 5</option>
+          <option>Year 6</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>School</label>
+        <input id="f-school" type="text" placeholder="School name">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Teacher</label>
+        <select id="f-teacher">
+          <option value="">Select...</option>
+          <option value="__other__">Other (type in)</option>
+        </select>
+        <input id="f-teacher-other" type="text" placeholder="Teacher name" style="display:none;margin-top:6px;">
+      </div>
+      <div class="form-group">
+        <label>Today's date</label>
+        <input id="f-date" type="date" value="${new Date().toISOString().slice(0,10)}">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group" style="flex:1">
+        <label>Student status</label>
+        <select id="f-status">
+          <option value="Enrolled Student">Enrolled Student</option>
+          <option value="Prospective (Lead)">Prospective (Lead)</option>
+          <option value="Test-Demo">Test / Demo (not a real student)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn-next" id="btn-start">Let's go! ⭐</button>
+    <div style="text-align:center;margin-top:14px">
+      <button id="btn-teacher-mode" style="background:none;border:none;color:var(--text-soft);font-size:12px;cursor:pointer;text-decoration:underline;padding:4px 8px;">🔒 Teacher Mode</button>
+    </div>
+  `;
+}
+
+function renderQuiz() {
+  const q = QUESTIONS[state.qIndex];
+  const total = QUESTIONS.length;
+  const pct = Math.round(((state.qIndex) / total) * 100);
+  const letters = ["A","B","C","D"];
+  const secMeta = SECTIONS[q.sec];
+  // Layout: 4 opts = 2x2 grid, 3 = three-col, 2 = two-col
+  const layout = q.opts.length === 4 ? "four-col" : q.opts.length === 3 ? "three-col" : "two-col";
+
+  let html = `
+    <div class="progress-wrap">
+      <div class="progress-bar" style="width:${pct}%"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="progress-label">Question ${state.qIndex + 1} of ${total}</div>
+      <div id="quiz-timer" style="font-size:12px;font-weight:700;color:#64748b">⏱️ 0:00</div>
+    </div>
+  `;
+
+  // Checkpoint message
+  if (q.checkpoint && !state.revealed) {
+    html += `<div class="checkpoint"><span class="emoji">${q.checkpoint.slice(-2)}</span>${q.checkpoint.slice(0,-2).trim()}</div>`;
+  }
+
+  // Combine stem + plain-text display (sentence/cloze) for read-aloud, so the
+  // speaker button reads the full context, not just the bare instruction.
+  // Skipped for Section A (spelling/decoding is the point) and for HTML
+  // displays (the shared passage already has its own dedicated speak button).
+  let spokenPayload = q.text;
+  if (!secMeta.noAudio && q.display && typeof q.display === "string" && !q.display.trim().startsWith("<")) {
+    spokenPayload += ". " + q.display.replace(/___/g, "blank");
+  }
+
+  html += `
+    <div class="section-badge" style="background:${secMeta.color}">
+      ${q.sec} · ${secMeta.name}
+    </div>
+    <div class="q-number">Question ${q.id}</div>
+    <div class="q-text" id="q-text-${q.id}">${q.text}</div>
+  `;
+  if (!secMeta.noAudio) {
+    html += `<div id="q-speak-src-${q.id}" style="display:none">${spokenPayload}</div>`;
+    html += `<button type="button" class="btn-speak" data-speak-target="q-speak-src-${q.id}">🔊 Read this question aloud</button>`;
+  }
+
+  if (q.display) {
+    html += `<div class="q-display">${q.display}</div>`;
+  }
+  if (q.hint) {
+    html += `<div class="q-hint">💡 ${q.hint}</div>`;
+  }
+
+  // Options
+  html += `<div class="options ${layout}">`;
+  q.opts.forEach((opt, i) => {
+    const letter = letters[i];
+    const cls = (letter === state.selected) ? "selected" : "";
+    html += `
+      <button class="opt-btn ${cls}" data-letter="${letter}">
+        <span class="opt-letter">${letter}</span>
+        ${opt}
+      </button>
+    `;
+  });
+  html += `</div>`;
+
+  const isLast = state.qIndex === total - 1;
+  const btnLabel = isLast ? "See my results 🎉" : "Next question →";
+
+  // IDK button only shows before an answer is picked
+  if (!state.selected) {
+    html += `<button class="btn-idk" id="btn-idk">🤷 I don't know — skip this one</button>`;
+  }
+
+  html += `<button class="btn-next" id="btn-next" ${!state.selected ? "disabled" : ""}>${btnLabel}</button>`;
+  return html;
+}
+
+function renderResults() {
+  // Calculate scores
+  let correctCount = 0;
+  const secScores = { A:0, B:0, C:0, D:0, E:0, F:0, G:0, H:0 };
+  QUESTIONS.forEach(q => {
+    if (state.answers[q.id] === q.ans) {
+      correctCount++;
+      secScores[q.sec]++;
+    }
+  });
+
+  const secA = secScores["A"];
+  const placement = getPlacement(correctCount, secA, state.student.year);
+  const summary = buildSummary(state.student, correctCount, secScores, placement);
+
+  // Student sees celebration only — no group or RAG shown
+  const stars = correctCount >= 29 ? "🌟🌟🌟" : correctCount >= 20 ? "⭐⭐" : "⭐";
+  const msg = correctCount >= 29
+    ? "Fantastic work! You should be really proud of yourself!"
+    : correctCount >= 20
+    ? "Great effort! You worked really hard today!"
+    : "Well done for trying every question — that takes courage!";
+
+  let html = `
+    <div style="text-align:center;padding:32px 0 20px">
+      <div style="font-size:64px;line-height:1;margin-bottom:16px">${stars}</div>
+      <div style="font-size:32px;font-weight:900;color:var(--brand-dark);margin-bottom:8px">
+        Well done, ${state.student.name.split(" ")[0]}!
+      </div>
+      <div style="font-size:18px;color:var(--text-soft);margin-bottom:20px">${msg}</div>
+      <div style="font-size:48px;font-weight:900;color:var(--brand-dark)">
+        ${correctCount}<span style="font-size:22px;font-weight:400;color:var(--text-soft)"> out of 38</span>
+      </div>
+    </div>
+
+    <div style="background:var(--gold-light);border:2px solid var(--gold);border-radius:12px;padding:18px 20px;text-align:center;margin-bottom:20px">
+      <div style="font-size:15px;font-weight:700;color:var(--brand-dark)">
+        🎉 You've finished the assessment!
+      </div>
+      <div style="font-size:14px;color:var(--text-soft);margin-top:6px">
+        Your teacher will look at your results and let you know what's next.
+      </div>
+    </div>
+
+    <div class="section-breakdown">
+      <h3>How you did by topic</h3>
+  `;
+
+  Object.entries(secScores).forEach(([sec, sc]) => {
+    const max = SEC_MAX[sec];
+    const pct = Math.round((sc / max) * 100);
+    const cls = getSectionRag(sc, max);
+    html += `
+      <div class="sec-row">
+        <div class="sec-letter" style="background:${SECTIONS[sec].color}">${sec}</div>
+        <div class="sec-info">
+          <div class="sec-name">${SECTIONS[sec].name}</div>
+          <div class="sec-bar-wrap">
+            <div class="sec-bar ${cls}" style="width:${pct}%"></div>
+          </div>
+        </div>
+        <div class="sec-score">${sc}/${max}</div>
+      </div>
+    `;
+  });
+
+  html += `</div>
+    <div id="submit-status" class="submit-status sending">⏳ Sending results to your teacher...</div>
+    <div style="text-align:center;margin-top:16px">
+      <button id="btn-teacher-mode-results" style="background:none;border:none;color:var(--text-soft);font-size:12px;cursor:pointer;text-decoration:underline;padding:4px 8px;">🔒 Teacher Mode</button>
+    </div>
+  `;
+
+  // Auto-submit with full placement data — teacher sees everything
+  setTimeout(() => submitResults(correctCount, secScores, summary, placement), 800);
+
+  return html;
+}
+
+// ── EVENTS ───────────────────────────────────────────────────────────────────
+function attachEvents() {
+  // Cover start
+  const btnStart = document.getElementById("btn-start");
+  if (btnStart) {
+    btnStart.addEventListener("click", () => {
+      const name    = document.getElementById("f-name").value.trim();
+      const surname = document.getElementById("f-surname").value.trim();
+      const year    = document.getElementById("f-year").value;
+      const school  = document.getElementById("f-school").value.trim();
+      const teacherSel = document.getElementById("f-teacher").value;
+      const teacher = teacherSel === "__other__"
+        ? document.getElementById("f-teacher-other").value.trim()
+        : teacherSel;
+      const status  = document.getElementById("f-status").value;
+      const date    = document.getElementById("f-date").value;
+      if (!name || !year) {
+        alert("Please enter your first name and year group to start.");
+        return;
+      }
+      state.student = {
+        name: name + (surname ? " " + surname : ""), year, school, teacher, date,
+        academicYear: getAcademicYear(date), term: getTerm(date), studentStatus: status
+      };
+      state.startTime = Date.now();
+      state.phase = "practice";
+      state.qIndex = 0;
+      render();
+    });
+  }
+
+  // Practice question — untimed, unscored
+  document.querySelectorAll("[data-practice-letter]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.practiceSelected = btn.dataset.practiceLetter;
+      render();
+    });
+  });
+  const btnPracticeNext = document.getElementById("btn-practice-next");
+  if (btnPracticeNext) {
+    btnPracticeNext.addEventListener("click", () => {
+      state.startTime = Date.now(); // real timing starts now, not during practice
+      state.phase = "quiz";
+      render();
+      startQuizTimer();
+    });
+  }
+
+  // Writing Task — untimed, not scored, compulsory (no skip)
+  const writingBox = document.getElementById("writing-sample-box");
+  if (writingBox) {
+    writingBox.addEventListener("input", () => { state.writingText = writingBox.value; });
+  }
+  const btnWritingDone = document.getElementById("btn-writing-done");
+  if (btnWritingDone) {
+    btnWritingDone.addEventListener("click", () => {
+      const text = writingBox ? writingBox.value.trim() : "";
+      if (text.length < 10) {
+        alert("Please write at least a sentence or two before finishing.");
+        return;
+      }
+      state.writingText = text;
+      state.phase = "results";
+      render();
+    });
+  }
+
+  // Read-aloud speaker buttons
+  document.querySelectorAll(".btn-speak").forEach(btn => {
+    btn.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      const targetId = btn.dataset.speakTarget;
+      const el = targetId ? document.getElementById(targetId) : null;
+      speakText(el ? el.textContent : btn.closest(".q-text, div").textContent);
+    });
+  });
+
+  // Teacher dropdown — populate from Google Sheet + toggle "Other" text box
+  const selTeacher = document.getElementById("f-teacher");
+  if (selTeacher) {
+    populateTutorSelect();
+    const otherBox = document.getElementById("f-teacher-other");
+    selTeacher.addEventListener("change", () => {
+      otherBox.style.display = selTeacher.value === "__other__" ? "block" : "none";
+    });
+  }
+
+  // I don't know button
+  const btnIdk = document.getElementById("btn-idk");
+  if (btnIdk) {
+    btnIdk.addEventListener("click", () => {
+      const q = QUESTIONS[state.qIndex];
+      state.answers[q.id] = "IDK"; // record as skipped
+      state.qIndex++;
+      state.selected = null;
+      state.revealed = false;
+      if (state.qIndex >= QUESTIONS.length) {
+        state.phase = "writing"; stopQuizTimer();
+      }
+      render();
+    });
+  }
+
+  // Option buttons
+  document.querySelectorAll(".opt-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.selected = btn.dataset.letter;
+      render();
+    });
+  });
+
+  // Next button — records answer and moves straight on, no reveal
+  const btnNext = document.getElementById("btn-next");
+  if (btnNext) {
+    btnNext.addEventListener("click", () => {
+      const q = QUESTIONS[state.qIndex];
+      state.answers[q.id] = state.selected;
+      state.qIndex++;
+      state.selected = null;
+      if (state.qIndex >= QUESTIONS.length) {
+        state.phase = "writing"; stopQuizTimer();
+      }
+      render();
+    });
+  }
+
+  // Teacher mode button
+  const btnTeacher = document.getElementById("btn-teacher-mode");
+  if (btnTeacher) {
+    btnTeacher.addEventListener("click", () => {
+      renderTeacherPin();
+    });
+  }
+  const btnTeacherResults = document.getElementById("btn-teacher-mode-results");
+  if (btnTeacherResults) {
+    btnTeacherResults.addEventListener("click", () => {
+      renderTeacherPin();
+    });
+  }
+}
+
+// ── SUBMIT TO GOOGLE SHEETS ──────────────────────────────────────────────────
+function submitResults(total, secScores, summary, placement) {
+  const elapsedMs  = Date.now() - (state.startTime || Date.now());
+  const mins       = Math.floor(elapsedMs / 60000);
+  const secs       = Math.floor((elapsedMs % 60000) / 1000);
+  const timeTaken  = `${mins}m ${secs}s`;
+
+  const payload = {
+    name:        state.student.name,
+    year:        state.student.year,
+    school:      state.student.school,
+    teacher:     state.student.teacher,
+    date:        state.student.date,
+    academicYear: state.student.academicYear,
+    term:         state.student.term,
+    studentStatus: state.student.studentStatus,
+    timestamp:   new Date().toISOString(),
+    assessment:  "Master English",
+    timeTaken:   timeTaken,
+    total:       total,
+    rag:         placement.rag,
+    placement:   placement.group,
+    teacherNote: placement.teacherNote,
+    secA:        secScores.A,
+    secB:        secScores.B,
+    secC:        secScores.C,
+    secD:        secScores.D,
+    secE:        secScores.E,
+    secF:        secScores.F,
+    secG:        secScores.G,
+    secH:        secScores.H,
+    summary:     summary,
+    answers:     JSON.stringify(state.answers),
+    writingSample: state.writingText || "",
+  };
+
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
+    document.getElementById("submit-status").className = "submit-status error";
+    document.getElementById("submit-status").textContent =
+      "⚠️ Results not sent — Apps Script URL not configured yet. Score saved locally.";
+    return;
+  }
+
+  // Cache locally too, so Teacher Mode works even if this device goes offline later
+  saveResultsToStore({
+    timestamp: payload.timestamp,
+    name: state.student.name,
+    year: state.student.year,
+    school: state.student.school,
+    teacher: state.student.teacher,
+    date: state.student.date,
+    academicYear: state.student.academicYear,
+    term: state.student.term,
+    studentStatus: state.student.studentStatus,
+    total: total,
+    rag: placement.rag,
+    placement: placement.group,
+    teacherNote: placement.teacherNote,
+    timeTaken: timeTaken,
+    secScores: secScores,
+    answers: state.answers,
+    tutorComment: "",
+    writingSample: state.writingText || "",
+    aiWritingFeedback: "",
+  });
+
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  }).then(() => {
+    const el = document.getElementById("submit-status");
+    if (el) {
+      el.className = "submit-status sent";
+      el.textContent = "✅ Results sent to your teacher!";
+    }
+  }).catch(() => {
+    const el = document.getElementById("submit-status");
+    if (el) {
+      el.className = "submit-status error";
+      el.textContent = "⚠️ Could not send results. Please tell your teacher.";
+    }
+  });
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
