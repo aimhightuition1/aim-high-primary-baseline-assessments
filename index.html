@@ -3,25 +3,182 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aim High Tuition — Maths Baseline Assessments</title>
+<meta name="robots" content="noindex, nofollow">
+<title>Aim High Tuition — Baseline Assessments</title>
 <style>
-body{font-family:Segoe UI,Arial,sans-serif;background:#f5f3ff;margin:0;color:#1f2937}
-main{max-width:760px;margin:60px auto;padding:24px}
-h1{text-align:center;color:#4c1d95;margin-bottom:8px}
-p{text-align:center;color:#555;margin-bottom:30px}
-.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
-a{display:block;text-decoration:none;background:white;padding:30px 20px;border-radius:14px;
-box-shadow:0 4px 18px rgba(0,0,0,.1);text-align:center;font-size:21px;font-weight:800;color:#4c1d95}
-a:hover{transform:translateY(-2px)}
-small{display:block;margin-top:7px;color:#666;font-size:13px;font-weight:500}
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --paper: #F7F5F1;
+    --ink: #1A1A1A;
+    --ink-soft: #5C5850;
+    --line: #E4E0D8;
+
+    --ascend: #5C2E00;
+    --ascend-tint: #FBF3E9;
+    --ignite: #1A3A5C;
+    --ignite-tint: #EDF3FA;
+    --master: #4C1D95;
+    --master-tint: #F4EFFB;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 64px 24px 96px; }
+
+  header { margin-bottom: 56px; }
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(34px, 5.5vw, 52px);
+    line-height: 1.06;
+    margin: 0 0 16px 0;
+    letter-spacing: -0.01em;
+  }
+  header p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Progression rail — genuinely encodes the real curriculum order,
+     Ascend (Y1/2) -> Ignite (Y3/4) -> Master (Y5/6) */
+  .rail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 36px 0 8px;
+  }
+  .rail-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .rail-line { flex: 1; height: 2px; background: var(--line); }
+
+  section.level {
+    border-top: 1px solid var(--line);
+    padding: 36px 0;
+  }
+  section.level:last-of-type { border-bottom: 1px solid var(--line); }
+
+  .level-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .level-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 28px;
+  }
+  .level-years {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+  .level-desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0 0 20px 0;
+    max-width: 60ch;
+  }
+
+  .subjects { display: flex; gap: 12px; flex-wrap: wrap; }
+  .subject-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    border: 1px solid transparent;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .subject-link:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+  .subject-link .arrow { opacity: 0.55; font-weight: 400; }
+
+  footer {
+    margin-top: 56px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
 </style>
 </head>
-<body><main>
-<h1>Aim High Tuition</h1>
-<p>Choose a Maths Baseline Assessment</p>
-<div class="grid">
-<a href="./ascend/">Ascend<small>Maths Baseline Assessment</small></a>
-<a href="./ignite/">Ignite<small>Maths Baseline Assessment</small></a>
-<a href="./master/">Master<small>Maths Baseline Assessment</small></a>
-</div>
-</main></body></html>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">Aim High Tuition</div>
+      <h1>Baseline Assessments</h1>
+      <p>Six diagnostic baselines across three primary levels. Pick a level below, then a subject, to open the live assessment.</p>
+    </header>
+
+    <div class="rail" aria-hidden="true">
+      <div class="rail-dot" style="background:var(--ascend)"></div>
+      <div class="rail-line"></div>
+      <div class="rail-dot" style="background:var(--ignite)"></div>
+      <div class="rail-line"></div>
+      <div class="rail-dot" style="background:var(--master)"></div>
+    </div>
+
+    <section class="level" style="border-top:none">
+      <div class="level-head">
+        <span class="level-name" style="color:var(--ascend)">Ascend</span>
+        <span class="level-years">Year 1 / Year 2</span>
+      </div>
+      <p class="level-desc">Foundational baseline — phonics, number, and early reasoning skills.</p>
+      <div class="subjects">
+        <a class="subject-link" style="background:var(--ascend-tint);color:var(--ascend)" href="/ascend/primarymaths/">Maths <span class="arrow">→</span></a>
+        <a class="subject-link" style="background:var(--ascend-tint);color:var(--ascend)" href="/ascend/primaryenglish/">English <span class="arrow">→</span></a>
+      </div>
+    </section>
+
+    <section class="level">
+      <div class="level-head">
+        <span class="level-name" style="color:var(--ignite)">Ignite</span>
+        <span class="level-years">Year 3 / Year 4</span>
+      </div>
+      <p class="level-desc">Lower Key Stage 2 baseline — builds on Ascend with more advanced grammar, arithmetic, and problem solving.</p>
+      <div class="subjects">
+        <a class="subject-link" style="background:var(--ignite-tint);color:var(--ignite)" href="/ignite/primarymaths/">Maths <span class="arrow">→</span></a>
+        <a class="subject-link" style="background:var(--ignite-tint);color:var(--ignite)" href="/ignite/primaryenglish/">English <span class="arrow">→</span></a>
+      </div>
+    </section>
+
+    <section class="level">
+      <div class="level-head">
+        <span class="level-name" style="color:var(--master)">Master</span>
+        <span class="level-years">Year 5 / Year 6</span>
+      </div>
+      <p class="level-desc">Upper Key Stage 2 baseline — SATs-aligned content across both subjects, with a written task on English.</p>
+      <div class="subjects">
+        <a class="subject-link" style="background:var(--master-tint);color:var(--master)" href="/master/primarymaths/">Maths <span class="arrow">→</span></a>
+        <a class="subject-link" style="background:var(--master-tint);color:var(--master)" href="/master/primaryenglish/">English <span class="arrow">→</span></a>
+      </div>
+    </section>
+
+    <footer>
+      <p style="margin:0 0 4px 0"><strong>Secondary baselines</strong> — coming soon.</p>
+      Internal use only — not indexed for public search. Teacher Mode is PIN-protected within each assessment.
+    </footer>
+  </div>
+</body>
+</html>
