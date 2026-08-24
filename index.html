@@ -3,182 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
 <title>Aim High Tuition — Baseline Assessments</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+  :root{
+    --ink:#1a2332; --ink-soft:#2c3a52; --crimson:#137a6f; --crimson-dark:#0d5a52;
+    --paper:#f5f7f5; --paper-line:#dde4de; --gold:#b08d3e; --white:#fffdf9;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--paper);color:var(--ink);}
+  .display{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;}
 
-  :root {
-    --paper: #F7F5F1;
-    --ink: #1A1A1A;
-    --ink-soft: #5C5850;
-    --line: #E4E0D8;
+  header{background:var(--ink);color:var(--white);padding:48px 24px 40px;text-align:center;}
+  header .brand{font-size:13px;letter-spacing:.16em;text-transform:uppercase;opacity:.7;margin-bottom:10px;}
+  header h1{font-size:32px;margin:0 0 8px;font-weight:400;}
+  header p{margin:0;opacity:.75;font-size:14.5px;max-width:480px;margin:0 auto;}
 
-    --ascend: #5C2E00;
-    --ascend-tint: #FBF3E9;
-    --ignite: #1A3A5C;
-    --ignite-tint: #EDF3FA;
-    --master: #4C1D95;
-    --master-tint: #F4EFFB;
+  .ladder{max-width:720px;margin:0 auto;padding:36px 20px 60px;}
+  .stage{margin-bottom:36px;}
+  .stage-label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;padding-left:2px;}
+  .stage-track{position:relative;padding-left:22px;}
+  .stage-track::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--paper-line);}
+  .paper-card{
+    position:relative;display:block;text-decoration:none;color:inherit;
+    background:var(--white);border:1px solid var(--paper-line);border-radius:8px;
+    padding:16px 20px;margin-bottom:10px;transition:border-color .15s, transform .15s;
   }
+  .paper-card::before{
+    content:'';position:absolute;left:-22px;top:50%;transform:translateY(-50%);
+    width:12px;height:12px;border-radius:50%;background:var(--white);border:2.5px solid var(--crimson);
+  }
+  .paper-card:hover{border-color:var(--crimson);transform:translateX(2px);}
+  .paper-name{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+  .paper-meta{font-size:12.5px;color:var(--ink-soft);}
 
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Inter', system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .wrap { max-width: 880px; margin: 0 auto; padding: 64px 24px 96px; }
-
-  header { margin-bottom: 56px; }
-  .eyebrow {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin-bottom: 14px;
-  }
-  h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 700;
-    font-size: clamp(34px, 5.5vw, 52px);
-    line-height: 1.06;
-    margin: 0 0 16px 0;
-    letter-spacing: -0.01em;
-  }
-  header p {
-    font-size: 16px;
-    color: var(--ink-soft);
-    max-width: 46ch;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  /* Progression rail — genuinely encodes the real curriculum order,
-     Ascend (Y1/2) -> Ignite (Y3/4) -> Master (Y5/6) */
-  .rail {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 36px 0 8px;
-  }
-  .rail-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-  .rail-line { flex: 1; height: 2px; background: var(--line); }
-
-  section.level {
-    border-top: 1px solid var(--line);
-    padding: 36px 0;
-  }
-  section.level:last-of-type { border-bottom: 1px solid var(--line); }
-
-  .level-head {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    margin-bottom: 6px;
-  }
-  .level-name {
-    font-family: 'Fraunces', serif;
-    font-weight: 700;
-    font-size: 28px;
-  }
-  .level-years {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink-soft);
-  }
-  .level-desc {
-    font-size: 14px;
-    color: var(--ink-soft);
-    margin: 0 0 20px 0;
-    max-width: 60ch;
-  }
-
-  .subjects { display: flex; gap: 12px; flex-wrap: wrap; }
-  .subject-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 20px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 15px;
-    border: 1px solid transparent;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
-  }
-  .subject-link:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
-  .subject-link .arrow { opacity: 0.55; font-weight: 400; }
-
-  footer {
-    margin-top: 56px;
-    font-size: 12px;
-    color: var(--ink-soft);
-    border-top: 1px solid var(--line);
-    padding-top: 20px;
-  }
+  footer{text-align:center;padding:20px;font-size:12px;color:var(--ink-soft);}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="eyebrow">Aim High Tuition</div>
-      <h1>Baseline Assessments</h1>
-      <p>Six diagnostic baselines across three primary levels. Pick a level below, then a subject, to open the live assessment.</p>
-    </header>
 
-    <div class="rail" aria-hidden="true">
-      <div class="rail-dot" style="background:var(--ascend)"></div>
-      <div class="rail-line"></div>
-      <div class="rail-dot" style="background:var(--ignite)"></div>
-      <div class="rail-line"></div>
-      <div class="rail-dot" style="background:var(--master)"></div>
+<header>
+  <div class="brand">Aim High Tuition</div>
+  <h1 class="display">Baseline Assessments</h1>
+  <p>Select the paper matching your year group. Each assessment is self-marking and takes 45–60 minutes.</p>
+</header>
+
+<div class="ladder">
+
+  <div class="stage">
+    <div class="stage-label">Primary — Years 1–6</div>
+    <div class="stage-track">
+      <a class="paper-card" href="https://assessment.aimhighonlinetuition.com/ascend/">
+        <div class="paper-name">Ascend</div>
+        <div class="paper-meta">Year 1–2</div>
+      </a>
+      <a class="paper-card" href="https://assessment.aimhighonlinetuition.com/ignite/">
+        <div class="paper-name">Ignite</div>
+        <div class="paper-meta">Year 3–4</div>
+      </a>
+      <a class="paper-card" href="https://assessment.aimhighonlinetuition.com/master/">
+        <div class="paper-name">Master</div>
+        <div class="paper-meta">Year 5–6</div>
+      </a>
     </div>
-
-    <section class="level" style="border-top:none">
-      <div class="level-head">
-        <span class="level-name" style="color:var(--ascend)">Ascend</span>
-        <span class="level-years">Year 1 / Year 2</span>
-      </div>
-      <p class="level-desc">Foundational baseline — phonics, number, and early reasoning skills.</p>
-      <div class="subjects">
-        <a class="subject-link" style="background:var(--ascend-tint);color:var(--ascend)" href="/ascend/primarymaths/">Maths <span class="arrow">→</span></a>
-        <a class="subject-link" style="background:var(--ascend-tint);color:var(--ascend)" href="/ascend/primaryenglish/">English <span class="arrow">→</span></a>
-      </div>
-    </section>
-
-    <section class="level">
-      <div class="level-head">
-        <span class="level-name" style="color:var(--ignite)">Ignite</span>
-        <span class="level-years">Year 3 / Year 4</span>
-      </div>
-      <p class="level-desc">Lower Key Stage 2 baseline — builds on Ascend with more advanced grammar, arithmetic, and problem solving.</p>
-      <div class="subjects">
-        <a class="subject-link" style="background:var(--ignite-tint);color:var(--ignite)" href="/ignite/primarymaths/">Maths <span class="arrow">→</span></a>
-        <a class="subject-link" style="background:var(--ignite-tint);color:var(--ignite)" href="/ignite/primaryenglish/">English <span class="arrow">→</span></a>
-      </div>
-    </section>
-
-    <section class="level">
-      <div class="level-head">
-        <span class="level-name" style="color:var(--master)">Master</span>
-        <span class="level-years">Year 5 / Year 6</span>
-      </div>
-      <p class="level-desc">Upper Key Stage 2 baseline — SATs-aligned content across both subjects, with a written task on English.</p>
-      <div class="subjects">
-        <a class="subject-link" style="background:var(--master-tint);color:var(--master)" href="/master/primarymaths/">Maths <span class="arrow">→</span></a>
-        <a class="subject-link" style="background:var(--master-tint);color:var(--master)" href="/master/primaryenglish/">English <span class="arrow">→</span></a>
-      </div>
-    </section>
-
-    <footer>
-      <p style="margin:0 0 4px 0"><strong>Secondary baselines</strong> — coming soon.</p>
-      Internal use only — not indexed for public search. Teacher Mode is PIN-protected within each assessment.
-    </footer>
   </div>
+
+  <div class="stage">
+    <div class="stage-label">Secondary — Years 7–10</div>
+    <div class="stage-track">
+      <a class="paper-card" href="https://assessment.aimhighonlinetuition.com/maths-y78/">
+        <div class="paper-name">Year 7/8 Combined Baseline</div>
+        <div class="paper-meta">Non-calculator · Year 7–8</div>
+      </a>
+      <a class="paper-card" href="https://assessment.aimhighonlinetuition.com/maths-y910/">
+        <div class="paper-name">Year 9/10 Combined Baseline</div>
+        <div class="paper-meta">Non-calculator · Year 9–10</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-label">GCSE Maths</div>
+    <div class="stage-track">
+      <a class="paper-card" href="https://assessment.aimhighonlinetuition.com/maths-higher-p1/">
+        <div class="paper-name">GCSE Maths Higher — Paper 1</div>
+        <div class="paper-meta">Non-calculator</div>
+      </a>
+      <a class="paper-card" href="https://assessment.aimhighonlinetuition.com/maths-foundation-p1/">
+        <div class="paper-name">GCSE Maths Foundation — Paper 1</div>
+        <div class="paper-meta">Non-calculator</div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer>Aim High Tuition</footer>
+
 </body>
 </html>
