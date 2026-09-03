@@ -443,42 +443,42 @@ function numberBoxes(items) {
 const QUESTIONS = [
   // A — Numbers (Q1-5)
   { id:1, sec:"A", text:"Write this number in digits.", display:"Fourteen",
-    opts:["41","40","14","4"], ans:"C" },
+    opts:["41","40","14","4"] },
   { id:2, sec:"A", text:"Write one more than:", display:"19",
-    opts:["18","21","17","20"], ans:"D" },
+    opts:["18","21","17","20"] },
   { id:3, sec:"A", text:"Write one less than:", display:"30",
-    opts:["31","28","29","20"], ans:"C" },
+    opts:["31","28","29","20"] },
   { id:4, sec:"A", text:"Put these numbers in order, smallest first.", display:numberBoxes([15,7,23,11]),
-    opts:["15, 7, 11, 23","7, 11, 15, 23","23, 15, 11, 7","7, 15, 11, 23"], ans:"B" },
+    opts:["15, 7, 11, 23","7, 11, 15, 23","23, 15, 11, 7","7, 15, 11, 23"] },
   { id:5, sec:"A", text:"Which sign goes in the gap?", display:"16 ___ 61",
-    opts:["=","<","+",">"], ans:"B" },
+    opts:["=","<","+",">"] },
 
   // B — Counting (Q6-8)
   { id:6, sec:"B", text:"Count in 2s. What is the missing number?", display:numberBoxes([2,4,6,"?",10]),
-    opts:["9","7","5","8"], ans:"D" },
+    opts:["9","7","5","8"] },
   { id:7, sec:"B", text:"Count in 5s. What is the missing number?", display:numberBoxes([5,10,15,"?",25]),
-    opts:["18","21","20","22"], ans:"C" },
+    opts:["18","21","20","22"] },
   { id:8, sec:"B", text:"Count in 10s. What is the missing number?", display:numberBoxes([10,20,"?",40,50]),
-    opts:["35","25","32","30"], ans:"D",
+    opts:["35","25","32","30"],
     checkpoint:"Well done! Keep going! 🌟" },
 
   // C — Addition (Q9-12)
   { id:9,  sec:"C", text:"Work out:", display:"5 + 3 = ?",
-    opts:["7","9","6","8"], ans:"D" },
+    opts:["7","9","6","8"] },
   { id:10, sec:"C", text:"Work out:", display:"9 + 6 = ?",
-    opts:["16","14","15","13"], ans:"C" },
+    opts:["16","14","15","13"] },
   { id:11, sec:"C", text:"Work out:", display:"14 + 5 = ?",
-    opts:["18","20","21","19"], ans:"D" },
+    opts:["18","20","21","19"] },
   { id:12, sec:"C", text:"Work out:", display:"23 + 10 = ?",
-    opts:["34","24","33","32"], ans:"C" },
+    opts:["34","24","33","32"] },
 
   // D — Subtraction (Q13-15)
   { id:13, sec:"D", text:"Work out:", display:"10 − 4 = ?",
-    opts:["5","4","7","6"], ans:"D" },
+    opts:["5","4","7","6"] },
   { id:14, sec:"D", text:"Work out:", display:"16 − 7 = ?",
-    opts:["8","9","7","10"], ans:"B" },
+    opts:["8","9","7","10"] },
   { id:15, sec:"D", text:"Work out:", display:"35 − 10 = ?",
-    opts:["26","24","25","20"], ans:"C" },
+    opts:["26","24","25","20"] },
 
   // E — Shapes (Q16-18)
   { id:16, sec:"E", text:"How many sides does this shape have?",
@@ -487,14 +487,14 @@ const QUESTIONS = [
     <polygon points="70,10 130,120 10,120" fill="#FFF3E0" stroke="#7B3F00" stroke-width="4"/>
   </svg>
 </div>`,
-    opts:["4 sides","2 sides","5 sides","3 sides"], ans:"D" },
+    opts:["4 sides","2 sides","5 sides","3 sides"] },
   { id:17, sec:"E", text:"How many corners does this shape have?",
     display:`<div style="display:flex;justify-content:center;padding:10px 0">
   <svg width="180" height="120" viewBox="0 0 180 120">
     <rect x="10" y="10" width="160" height="100" fill="#FFF3E0" stroke="#7B3F00" stroke-width="4"/>
   </svg>
 </div>`,
-    opts:["3 corners","2 corners","4 corners","6 corners"], ans:"C" },
+    opts:["3 corners","2 corners","4 corners","6 corners"] },
   { id:18, sec:"E", text:"What is this 3D shape called?",
     display:`<div style="display:flex;justify-content:center;padding:10px 0">
   <svg width="160" height="160" viewBox="0 0 160 160">
@@ -503,11 +503,11 @@ const QUESTIONS = [
     <polygon points="100,60 120,40 120,100 100,120" fill="#F5D98A" stroke="#7B3F00" stroke-width="3" stroke-linejoin="round"/>
   </svg>
 </div>`,
-    opts:["Cuboid","Cube","Sphere","Cone"], ans:"B" },
+    opts:["Cuboid","Cube","Sphere","Cone"] },
 
   // F — Fractions (Q19-21)
   { id:19, sec:"F", text:"What is half of 10?", display:"Half of 10 = ?",
-    opts:["4","6","5","2"], ans:"C" },
+    opts:["4","6","5","2"] },
   { id:20, sec:"F", text:"8 sweets are shared equally into 4 groups. How many sweets are in one group?",
     display:`<div style="display:flex;justify-content:center;gap:10px;padding:10px 0;flex-wrap:wrap">
   <svg width="30" height="30"><circle cx="15" cy="15" r="13" fill="#E91E63"/></svg>
@@ -519,7 +519,7 @@ const QUESTIONS = [
   <svg width="30" height="30"><circle cx="15" cy="15" r="13" fill="#E91E63"/></svg>
   <svg width="30" height="30"><circle cx="15" cy="15" r="13" fill="#E91E63"/></svg>
 </div>`,
-    opts:["4","8","1","2"], ans:"D" },
+    opts:["4","8","1","2"] },
   { id:21, sec:"F", text:"What fraction of this shape is shaded?",
     display:`<div style="display:flex;justify-content:center;padding:10px 0">
   <svg width="120" height="120" viewBox="0 0 120 120">
@@ -529,7 +529,7 @@ const QUESTIONS = [
     <rect x="62" y="62" width="58" height="58" fill="#FFF3E0" stroke="#7B3F00" stroke-width="3"/>
   </svg>
 </div>`,
-    opts:["Three quarters","One quarter","One half","Two thirds"], ans:"C",
+    opts:["Three quarters","One quarter","One half","Two thirds"],
     checkpoint:"Nearly there! Amazing work! 🎉" },
 
   // G — Measurement & Money (Q22-24)
@@ -550,7 +550,7 @@ const QUESTIONS = [
   <div style="height:14px;width:300px;max-width:100%;background:#2E7D32;border-radius:3px"></div>
   <span style="font-size:13px;color:#555">30 cm</span>
 </div>`,
-    opts:["They are the same","A: 10 cm","B: 20 cm","C: 30 cm"], ans:"D" },
+    opts:["They are the same","A: 10 cm","B: 20 cm","C: 30 cm"] },
   { id:23, sec:"G", text:"Add these coins together.",
     display:`<div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;padding:8px 0">
   <!-- 10p coin -->
@@ -575,7 +575,7 @@ const QUESTIONS = [
   </svg>
   <span style="font-size:32px;font-weight:900;color:#555">= ?</span>
 </div>`,
-    opts:["20p","15p","12p","17p"], ans:"D" },
+    opts:["20p","15p","12p","17p"] },
 
   { id:24, sec:"G", text:"What time does this clock show?",
     display:`<div style="display:flex;justify-content:center;padding:8px 0">
@@ -610,13 +610,13 @@ const QUESTIONS = [
     <circle cx="90" cy="90" r="5" fill="#333"/>
   </svg>
 </div>`,
-    opts:["Half past 6","Half past 3","12 o'clock","6 o'clock"], ans:"D" },
+    opts:["Half past 6","Half past 3","12 o'clock","6 o'clock"] },
 
   // H — Times Tables & Data (Q25-28)
   { id:25, sec:"H", text:"Work out:", display:"2 × 5 = ?",
-    opts:["7","15","10","12"], ans:"C" },
+    opts:["7","15","10","12"] },
   { id:26, sec:"H", text:"Work out:", display:"10 × 3 = ?",
-    opts:["13","33","23","30"], ans:"D" },
+    opts:["13","33","23","30"] },
 
   { id:27, sec:"H", text:"Look at the table. Which fruit got the most votes?",
     display:`<table style="width:100%;border-collapse:collapse;font-size:15px;text-align:left;margin-top:4px">
@@ -637,7 +637,7 @@ const QUESTIONS = [
   <td style="padding:10px 14px;text-align:center;font-weight:700;font-size:18px">3</td>
 </tr>
 </table>`,
-    opts:["Grapes","Bananas","Apples","They all got the same"], ans:"C" },
+    opts:["Grapes","Bananas","Apples","They all got the same"] },
 
   { id:28, sec:"H", text:"Look at the tally chart. How many children chose Cat?",
     display:`<table style="width:100%;border-collapse:collapse;font-size:15px;text-align:left">
@@ -674,7 +674,7 @@ const QUESTIONS = [
   <td style="padding:10px 14px;text-align:center;font-weight:700;font-size:24px;color:#7B3F00">?</td>
 </tr>
 </table>`,
-    opts:["3","6","4","5"], ans:"D" },
+    opts:["3","6","4","5"] },
 ];
 
 // Correct answers map
@@ -684,45 +684,9 @@ QUESTIONS.forEach(q => { ANSWER_KEY[q.id] = q.ans; });
 // Section max scores
 const SEC_MAX = { A:5, B:3, C:4, D:3, E:3, F:3, G:3, H:4 };
 
-// ── PLACEMENT LOGIC ──────────────────────────────────────────────────────────
-function getPlacement(total, secA) {
-  if (total >= 25) return {
-    rag: "GREEN", cls: "green", emoji: "🌟",
-    group: "Attempt Ignite Baseline",
-    detail: "Score 25+ — administer the Ignite baseline next to confirm level.",
-    teacherNote: "Score 25+. Move to Ignite baseline paper."
-  };
-  if (total >= 21 && secA >= 4) return {
-    rag: "GREEN", cls: "green", emoji: "🌟",
-    group: "Ascend 2",
-    detail: "Strong score with secure number knowledge.",
-    teacherNote: "Score 21-24, Sec A " + secA + "/5. Place in Ascend 2."
-  };
-  if (total >= 21 && secA <= 3) return {
-    rag: "GREEN", cls: "green", emoji: "🌟",
-    group: "Ascend 1",
-    detail: "Good overall score but number skills need consolidation.",
-    teacherNote: "Score 21-24 but Sec A only " + secA + "/5. Place in Ascend 1 — number gaps."
-  };
-  if (total >= 12 && secA >= 4) return {
-    rag: "AMBER", cls: "amber", emoji: "⭐",
-    group: "Ascend 2",
-    detail: "Developing well. Number knowledge is secure.",
-    teacherNote: "Score 12-20, Sec A " + secA + "/5. Place in Ascend 2."
-  };
-  if (total >= 12 && secA <= 3) return {
-    rag: "AMBER", cls: "amber", emoji: "⭐",
-    group: "Ascend 1",
-    detail: "Developing. Number skills need more support.",
-    teacherNote: "Score 12-20, Sec A only " + secA + "/5. Place in Ascend 1."
-  };
-  return {
-    rag: "RED", cls: "red-c", emoji: "💪",
-    group: "Ascend 1",
-    detail: "Needs foundational support. Verbal check recommended.",
-    teacherNote: "Score 0-11, Sec A " + secA + "/5. Ascend 1 — verbal check. Contact parent."
-  };
-}
+// ── PLACEMENT LOGIC lives server-side now (see Ascend_Code.gs) — the
+// client no longer computes total/section scores/RAG/placement itself,
+// it only renders whatever the server returns after marking.
 
 function getSectionRag(score, max) {
   const pct = score / max;
@@ -764,29 +728,36 @@ function getYearMismatchNote(year) {
   return "";
 }
 
-function buildSummary(student, total, secScores, placement) {
-  const strong = [], weak = [];
-  Object.entries(secScores).forEach(([sec, sc]) => {
-    const pct = sc / SEC_MAX[sec];
-    if (pct >= 0.8) strong.push(SECTIONS[sec].name);
-    else if (pct < 0.5) weak.push(SECTIONS[sec].name);
-  });
-  const secA = secScores["A"];
-
-  let text = `${student.name} scored ${total}/28 on the Ascend Baseline (${student.year}, ${student.school}). `;
-  text += `PLACEMENT: ${placement.group}. ${placement.teacherNote} `;
-  if (strong.length) text += `Strong sections: ${strong.join(", ")}. `;
-  if (weak.length)   text += `Weak sections needing support: ${weak.join(", ")}. `;
-  text += `Section A (Numbers): ${secA}/5. `;
-  if (secA <= 2 && total <= 11) text += `Verbal check strongly recommended before first lesson. `;
-  return text;
-}
+// buildSummary now runs server-side too — see Ascend_Code.gs
 
 // ── TEACHER MODE ─────────────────────────────────────────────────────────────
 const TEACHER_PIN = "2468";
 const RESULTS_STORE_KEY = "aimhigh_ascend_all_results";
 let teacherResultsCache = null; // null = not fetched yet / fetch failed, use local fallback
-let dashboardFilters = { search: "", year: "", rag: "", teacher: "", dateFrom: "", dateTo: "" };
+// Normalizes any academic-year string to the "YYYY/YY" format — defensive,
+// in case any future data ever uses a different separator, so the filter
+// treats them as identical rather than showing duplicate entries.
+function normalizeAcademicYear(val) {
+  if (!val) return val;
+  const m = String(val).match(/^(\d{4})[\/-](\d{2})$/);
+  return m ? `${m[1]}/${m[2]}` : val;
+}
+function getAcademicYear(dateStr) {
+  const d = dateStr ? new Date(dateStr) : new Date();
+  if (isNaN(d)) return "";
+  const y = d.getFullYear(), m = d.getMonth() + 1; // 1-12
+  return (m >= 9) ? `${y}/${String(y + 1).slice(-2)}` : `${y - 1}/${String(y).slice(-2)}`;
+}
+function getTerm(dateStr) {
+  const d = dateStr ? new Date(dateStr) : new Date();
+  if (isNaN(d)) return "";
+  const m = d.getMonth(); // 0-11
+  if (m >= 8 && m <= 11) return "Autumn";
+  if (m >= 0 && m <= 3) return "Spring";
+  return "Summer";
+}
+
+let dashboardFilters = { search: "", year: "", rag: "", teacher: "", className: "", status: "Enrolled Student", academicYear: getAcademicYear(), term: "", dateFrom: "", dateTo: "" };
 
 function saveResultsToStore(studentData) {
   try {
@@ -834,6 +805,8 @@ function normalizeRemoteResult(row) {
     school:      row["School"],
     teacher:     row["Teacher"],
     date:        row["Date"],
+    academicYear: normalizeAcademicYear(row["Academic Year"]),
+    term:         row["Term"],
     total:       Number(row["Total"]) || 0,
     rag:         row["RAG"],
     placement:   row["Group Placed"],
@@ -851,6 +824,8 @@ function normalizeRemoteResult(row) {
       H: Number(row["Sec H (4)"]) || 0,
     },
     answers: answers,
+    className:   row["Class"] || "",
+    studentStatus: row["Student Status"] || "",
   };
 }
 
@@ -858,9 +833,9 @@ function fetchRemoteResults() {
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
     return Promise.resolve(null);
   }
-  return fetch(APPS_SCRIPT_URL)
+  return fetch(APPS_SCRIPT_URL + "?pin=" + encodeURIComponent(TEACHER_PIN))
     .then(res => res.json())
-    .then(rows => rows.map(normalizeRemoteResult))
+    .then(rows => Array.isArray(rows) ? rows.map(normalizeRemoteResult) : null)
     .catch(() => null);
 }
 
@@ -964,6 +939,10 @@ function passesFilters(r) {
   if (dashboardFilters.year && r.year !== dashboardFilters.year) return false;
   if (dashboardFilters.rag && r.rag !== dashboardFilters.rag) return false;
   if (dashboardFilters.teacher && r.teacher !== dashboardFilters.teacher) return false;
+  if (dashboardFilters.className && r.className !== dashboardFilters.className) return false;
+  if (dashboardFilters.status && r.studentStatus !== dashboardFilters.status) return false;
+  if (dashboardFilters.academicYear && r.academicYear !== dashboardFilters.academicYear) return false;
+  if (dashboardFilters.term && r.term !== dashboardFilters.term) return false;
   if (dashboardFilters.dateFrom) {
     const d = new Date(r.date);
     const from = new Date(dashboardFilters.dateFrom);
@@ -985,11 +964,15 @@ function renderTeacherDashboard() {
 
   const years = [...new Set(all.map(r => r.year).filter(Boolean))].sort();
   const teachers = [...new Set(all.map(r => r.teacher).filter(Boolean))].sort();
+  const classes = [...new Set(all.map(r => r.className).filter(Boolean))].sort();
+  const academicYears = [...new Set(all.map(r => r.academicYear).filter(Boolean))].sort().reverse();
 
   const app = document.getElementById("app");
   let html = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
       <div style="font-size:20px;font-weight:900;color:var(--brand-dark);flex:1">👨‍🏫 Teacher Dashboard</div>
+      <button id="btn-td-walkthrough" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">📖 Walkthrough</button>
+      <button id="btn-td-livemonitor" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">📡 Live</button>
       <button id="btn-td-refresh" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">🔄</button>
       <button id="btn-td-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">✕ Exit</button>
     </div>
@@ -1020,6 +1003,31 @@ function renderTeacherDashboard() {
         ${teachers.map(t => `<option value="${t}" ${dashboardFilters.teacher===t?'selected':''}>${t}</option>`).join('')}
       </select>
     </div>
+    <div style="margin-bottom:8px">
+      <select id="td-filter-class" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="">All classes</option>
+        ${classes.map(c => `<option value="${c}" ${dashboardFilters.className===c?'selected':''}>${c}</option>`).join('')}
+      </select>
+    </div>
+    <div style="margin-bottom:8px">
+      <select id="td-filter-status" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="Enrolled Student" ${dashboardFilters.status==='Enrolled Student'?'selected':''}>Enrolled Students</option>
+        <option value="Trial Student" ${dashboardFilters.status==='Trial Student'?'selected':''}>Trial Students</option>
+        <option value="" ${dashboardFilters.status===''?'selected':''}>All Students</option>
+      </select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <select id="td-filter-ay" style="border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="">All academic years</option>
+        ${academicYears.map(y => `<option value="${y}" ${dashboardFilters.academicYear===y?'selected':''}>${y}</option>`).join('')}
+      </select>
+      <select id="td-filter-term" style="border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="">All terms</option>
+        <option value="Autumn" ${dashboardFilters.term==='Autumn'?'selected':''}>Autumn</option>
+        <option value="Spring" ${dashboardFilters.term==='Spring'?'selected':''}>Spring</option>
+        <option value="Summer" ${dashboardFilters.term==='Summer'?'selected':''}>Summer</option>
+      </select>
+    </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
       <div>
         <label style="font-size:11px;color:var(--text-soft);display:block;margin-bottom:2px">From date</label>
@@ -1030,7 +1038,7 @@ function renderTeacherDashboard() {
         <input id="td-filter-to" type="date" value="${dashboardFilters.dateTo}" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:7px 10px;font-size:13px;">
       </div>
     </div>
-    ${(dashboardFilters.search||dashboardFilters.year||dashboardFilters.rag||dashboardFilters.teacher||dashboardFilters.dateFrom||dashboardFilters.dateTo)
+    ${(dashboardFilters.search||dashboardFilters.year||dashboardFilters.rag||dashboardFilters.teacher||dashboardFilters.className||dashboardFilters.status!=='Enrolled Student'||dashboardFilters.academicYear!==getAcademicYear()||dashboardFilters.term||dashboardFilters.dateFrom||dashboardFilters.dateTo)
       ? `<button id="td-clear-filters" style="background:none;border:none;color:var(--brand);font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;margin-bottom:12px;padding:0;">✕ Clear all filters</button>`
       : ''}
     <div style="font-size:12px;color:var(--text-soft);margin-bottom:12px">Showing ${filtered.length} of ${all.length} result${all.length===1?'':'s'}</div>
@@ -1065,6 +1073,8 @@ function renderTeacherDashboard() {
   app.innerHTML = html;
 
   document.getElementById("btn-td-back").addEventListener("click", () => render());
+  document.getElementById("btn-td-walkthrough").addEventListener("click", () => renderWalkthrough(0));
+  document.getElementById("btn-td-livemonitor").addEventListener("click", () => renderLiveMonitor());
   document.getElementById("btn-td-refresh").addEventListener("click", () => {
     renderTeacherLoading();
     fetchRemoteResults().then(remote => {
@@ -1088,6 +1098,22 @@ function renderTeacherDashboard() {
     dashboardFilters.teacher = e.target.value;
     renderTeacherDashboard();
   });
+  document.getElementById("td-filter-class").addEventListener("change", e => {
+    dashboardFilters.className = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-status").addEventListener("change", e => {
+    dashboardFilters.status = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-ay").addEventListener("change", e => {
+    dashboardFilters.academicYear = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-term").addEventListener("change", e => {
+    dashboardFilters.term = e.target.value;
+    renderTeacherDashboard();
+  });
   document.getElementById("td-filter-from").addEventListener("change", e => {
     dashboardFilters.dateFrom = e.target.value;
     renderTeacherDashboard();
@@ -1099,7 +1125,7 @@ function renderTeacherDashboard() {
   const clearBtn = document.getElementById("td-clear-filters");
   if (clearBtn) {
     clearBtn.addEventListener("click", () => {
-      dashboardFilters = { search: "", year: "", rag: "", teacher: "", dateFrom: "", dateTo: "" };
+      dashboardFilters = { search: "", year: "", rag: "", teacher: "", className: "", status: "Enrolled Student", academicYear: getAcademicYear(), term: "", dateFrom: "", dateTo: "" };
       renderTeacherDashboard();
     });
   }
@@ -1109,6 +1135,101 @@ function renderTeacherDashboard() {
       renderTeacherStudentView(all[idx]);
     });
   });
+}
+
+// ── LIVE MONITOR — see who's currently mid-test, polling every 12s ─────────
+let liveMonitorInterval = null;
+const LIVE_MONITOR_POLL_MS = 12000;
+
+function renderLiveMonitor() {
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <div style="font-size:20px;font-weight:900;color:var(--brand-dark);flex:1">📡 Live Monitor</div>
+      <button id="btn-lm-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">✕ Close</button>
+    </div>
+    <div id="lm-content"><p style="color:var(--text-soft)">Loading...</p></div>
+  `;
+  document.getElementById("btn-lm-back").addEventListener("click", () => {
+    if (liveMonitorInterval) { clearInterval(liveMonitorInterval); liveMonitorInterval = null; }
+    renderTeacherDashboard();
+  });
+  pollLiveMonitor();
+  if (liveMonitorInterval) clearInterval(liveMonitorInterval);
+  liveMonitorInterval = setInterval(pollLiveMonitor, LIVE_MONITOR_POLL_MS);
+}
+
+function pollLiveMonitor() {
+  const el = document.getElementById("lm-content");
+  if (!el) return; // panel was closed before this poll fired
+  fetch(APPS_SCRIPT_URL + "?action=getActiveDrafts&pin=" + encodeURIComponent(TEACHER_PIN))
+    .then(r => r.json())
+    .then(drafts => {
+      const el2 = document.getElementById("lm-content");
+      if (!el2) return;
+      if (drafts.error) { el2.innerHTML = `<p style="color:var(--red-c)">${drafts.error}</p>`; return; }
+      if (!drafts.length) { el2.innerHTML = `<p style="color:var(--text-soft)">No students currently mid-test.</p>`; return; }
+      el2.innerHTML = drafts.map(d => `
+        <div style="background:white;border:2px solid var(--grey-mid);border-radius:10px;padding:12px 14px;margin-bottom:8px">
+          <div style="font-weight:700;color:var(--brand-dark)">${d.name} <span style="font-weight:400;color:var(--text-soft);font-size:12px">(${d.year || ""}${d.className ? " — " + d.className : ""})</span></div>
+          <div style="font-size:12px;color:var(--text-soft);margin-top:2px">
+            Started ${new Date(d.startTimestamp).toLocaleTimeString()} · ${d.answeredCount || 0}/28 answered · last saved ${Math.round((Date.now() - new Date(d.lastSaved).getTime())/1000)}s ago
+          </div>
+        </div>
+      `).join("");
+    })
+    .catch(() => {
+      const el3 = document.getElementById("lm-content");
+      if (el3) el3.innerHTML = `<p style="color:var(--red-c)">Could not load. Check your connection.</p>`;
+    });
+}
+
+// ── QUESTION WALKTHROUGH — go through the paper, reveal answers on demand ──
+let walkthroughAnswerKey = null;
+let walkthroughRevealed = {};
+
+function renderWalkthrough(idx) {
+  const app = document.getElementById("app");
+  if (!walkthroughAnswerKey) {
+    app.innerHTML = `<p style="color:var(--text-soft)">Loading answer key...</p>`;
+    fetch(APPS_SCRIPT_URL + "?action=getAnswerKey&pin=" + encodeURIComponent(TEACHER_PIN))
+      .then(r => r.json())
+      .then(data => { walkthroughAnswerKey = data.answers || {}; renderWalkthrough(idx); });
+    return;
+  }
+
+  const q = QUESTIONS[idx];
+  const letters = ["A", "B", "C", "D"];
+  const revealed = !!walkthroughRevealed[q.id];
+  const correctLetter = walkthroughAnswerKey[q.id];
+
+  const optsHtml = q.opts.map((opt, i) => {
+    const letter = letters[i];
+    const isCorrect = revealed && letter === correctLetter;
+    return `<div style="padding:10px 14px;border:2px solid ${isCorrect ? "var(--green)" : "var(--grey-mid)"};border-radius:8px;margin-bottom:6px;background:${isCorrect ? "var(--green-light)" : "white"};font-weight:${isCorrect ? "700" : "400"}">${letter}) ${opt}</div>`;
+  }).join("");
+
+  app.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <div style="font-size:20px;font-weight:900;color:var(--brand-dark);flex:1">📖 Walkthrough — Q${idx + 1} of ${QUESTIONS.length}</div>
+      <button id="btn-wt-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">✕ Close</button>
+    </div>
+    <div style="background:white;border:2px solid var(--grey-mid);border-radius:12px;padding:18px">
+      <div style="font-size:16px;margin-bottom:14px">${q.text}${q.display ? " <strong>" + q.display + "</strong>" : ""}</div>
+      ${optsHtml}
+      ${revealed ? "" : `<button id="btn-wt-reveal" style="margin-top:10px;background:var(--gold);border:none;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;">Reveal Answer</button>`}
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:16px">
+      <button id="btn-wt-prev" ${idx === 0 ? "disabled" : ""} style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 16px;font-weight:600;cursor:pointer;">← Previous</button>
+      <button id="btn-wt-next" ${idx === QUESTIONS.length - 1 ? "disabled" : ""} style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 16px;font-weight:600;cursor:pointer;">Next →</button>
+    </div>
+  `;
+
+  document.getElementById("btn-wt-back").addEventListener("click", () => renderTeacherDashboard());
+  document.getElementById("btn-wt-prev").addEventListener("click", () => { if (idx > 0) renderWalkthrough(idx - 1); });
+  document.getElementById("btn-wt-next").addEventListener("click", () => { if (idx < QUESTIONS.length - 1) renderWalkthrough(idx + 1); });
+  const revealBtn = document.getElementById("btn-wt-reveal");
+  if (revealBtn) revealBtn.addEventListener("click", () => { walkthroughRevealed[q.id] = true; renderWalkthrough(idx); });
 }
 
 function renderTeacherStudentView(r) {
@@ -1488,31 +1609,47 @@ function stopQuizTimer() {
 }
 function updateQuizTimerDisplay() {
   const el = document.getElementById("quiz-timer");
-  if (!el || !state.startTime) return;
+  const textEl = document.getElementById("quiz-timer-text");
+  if (!el || !textEl || !state.startTime) return;
   const elapsedSec = Math.floor((Date.now() - state.startTime) / 1000);
   const mins = Math.floor(elapsedSec / 60);
   const secs = elapsedSec % 60;
-  el.textContent = "⏱️ " + mins + ":" + String(secs).padStart(2, "0");
-  let color = "#64748b";
-  if (elapsedSec >= 25 * 60) color = "#DC2626";
-  else if (elapsedSec >= 20 * 60) color = "#F59E0B";
+  textEl.textContent = mins + ":" + String(secs).padStart(2, "0");
+  let color = "var(--text-soft)", bg = "var(--grey-light)";
+  if (elapsedSec >= 25 * 60) { color = "var(--red-c)"; bg = "var(--red-light)"; }
+  else if (elapsedSec >= 20 * 60) { color = "var(--amber)"; bg = "var(--amber-light)"; }
   el.style.color = color;
+  el.style.background = bg;
 }
 
 
 // ── RENDER ───────────────────────────────────────────────────────────────────
 function render() {
   const app = document.getElementById("app");
-  if (state.phase === "cover")   app.innerHTML = renderCover();
+  if (state.phase === "cover") {
+    app.innerHTML = renderCover();
+    loadTutors();
+    loadClasses();
+  }
   if (state.phase === "quiz")    app.innerHTML = renderQuiz();
-  if (state.phase === "results") app.innerHTML = renderResults();
+  if (state.phase === "results") {
+    app.innerHTML = renderResults();
+    if (!state.submitted) {
+      state.submitted = true;
+      submitResults();
+    }
+  }
   attachEvents();
+  if (state.phase === "quiz") {
+    updateQuizTimerDisplay(); // sync immediately — the freshly-recreated element
+                              // would otherwise show "0:00" until the next tick
+  }
 }
 
 function renderCover() {
   return `
-    <div class="cover-title">Ascend Maths<br>Baseline Assessment</div>
-    <div class="cover-sub">Multiple Choice · 28 questions</div>
+    <div class="cover-title">Ascend Maths</div>
+    <div class="cover-sub">Multiple Choice · 28 questions &middot; Baseline Assessment</div>
 
     <div class="instr-box">
       <h3>📋 Instructions</h3>
@@ -1522,6 +1659,11 @@ function renderCover() {
         <li>No calculator.</li>
         <li>Try every question — have a go!</li>
       </ul>
+    </div>
+
+    <div class="instr-box" style="background:var(--red-light); border-color:var(--red-c);">
+      <h3>👋 A note for parents and students</h3>
+      <p style="font-size:14px;color:var(--text);margin:0;">This is a diagnostic quiz, not a test to prepare for — its purpose is to see exactly where your child is starting from, so we can support them effectively. Please let them answer independently, without help, hints, or looking anything up, and only attempt it once, so the results are a true reflection of where to begin.</p>
     </div>
 
     <div class="form-row">
@@ -1557,13 +1699,30 @@ function renderCover() {
     <div class="form-row">
       <div class="form-group">
         <label>Teacher</label>
-        <input id="f-teacher" type="text" placeholder="Teacher name">
+        <select id="f-teacher"><option value="">Loading...</option></select>
       </div>
       <div class="form-group">
         <label>Today's date</label>
         <input id="f-date" type="date" value="${new Date().toISOString().slice(0,10)}">
       </div>
     </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Class</label>
+        <select id="f-class" onchange="onClassSelectChange()"><option value="">Loading...</option></select>
+        <input id="f-class-other" type="text" placeholder="Type the class name" style="display:none;margin-top:6px;">
+      </div>
+      <div class="form-group">
+        <label>Student Status</label>
+        <select id="f-status">
+          <option>Enrolled Student</option>
+          <option>Trial Student</option>
+          <option>Test-Demo</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="resume-banner" style="display:none;background:#FFF9C4;border:2px solid var(--gold);border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:13px;"></div>
 
     <button class="btn-next" id="btn-start">Let's go! ⭐</button>
     <div style="text-align:center;margin-top:14px">
@@ -1587,7 +1746,9 @@ function renderQuiz() {
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div class="progress-label">Question ${state.qIndex + 1} of ${total}</div>
-      <div id="quiz-timer" style="font-size:12px;font-weight:700;color:#64748b">⏱️ 0:00</div>
+      <div id="quiz-timer" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--text-soft);background:var(--grey-light);border-radius:999px;padding:4px 12px;transition:background 0.3s,color 0.3s;">
+        <span style="font-size:13px;">⏱️</span><span id="quiz-timer-text">0:00</span>
+      </div>
     </div>
   `;
 
@@ -1634,29 +1795,92 @@ function renderQuiz() {
   }
 
   html += `<button class="btn-next" id="btn-next" ${!state.selected ? "disabled" : ""}>${btnLabel}</button>`;
+  html += `<div style="text-align:center;margin-top:14px">
+    <button id="btn-teacher-mode-quiz" style="background:none;border:none;color:var(--text-soft);font-size:11px;cursor:pointer;text-decoration:underline;padding:4px 8px;">🔒 Teacher Mode</button>
+  </div>`;
   return html;
 }
 
 function renderResults() {
-  // Calculate scores
-  let correctCount = 0;
-  const secScores = { A:0, B:0, C:0, D:0, E:0, F:0, G:0, H:0 };
-  QUESTIONS.forEach(q => {
-    if (state.answers[q.id] === q.ans) {
-      correctCount++;
-      secScores[q.sec]++;
+  // Score is no longer computed here — the client doesn't have the answer
+  // key anymore. Show a loading state, then submit and render using
+  // whatever the server (the actual source of truth) sends back.
+  return `
+    <div style="text-align:center;padding:60px 20px">
+      <div style="font-size:48px;margin-bottom:16px">⏳</div>
+      <div style="font-size:20px;font-weight:700;color:var(--brand-dark)">Marking your answers...</div>
+      <div id="submit-status" class="submit-status sending" style="margin-top:16px">Just a moment</div>
+    </div>
+  `;
+}
+
+function submitResults() {
+  stopDraftAutoSave();
+  const elapsedMs  = Date.now() - (state.startTime || Date.now());
+  const mins       = Math.floor(elapsedMs / 60000);
+  const secs       = Math.floor((elapsedMs % 60000) / 1000);
+  const timeTaken  = `${mins}m ${secs}s`;
+
+  const payload = {
+    name:        state.student.name,
+    year:        state.student.year,
+    school:      state.student.school,
+    teacher:     state.student.teacher,
+    date:        state.student.date,
+    status:      state.student.status,
+    className:   state.student.className,
+    timestamp:   new Date().toISOString(),
+    assessment:  "Ascend",
+    timeTaken:   timeTaken,
+    answers:     JSON.stringify(state.answers),
+  };
+
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
+    const el = document.getElementById("submit-status");
+    if (el) {
+      el.className = "submit-status error";
+      el.textContent = "⚠️ Results not sent — Apps Script URL not configured yet.";
     }
-  });
+    return;
+  }
 
-  const secA = secScores["A"];
-  const placement = getPlacement(correctCount, secA);
-  const summary = buildSummary(state.student, correctCount, secScores, placement);
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify(payload),
+  })
+    .then(r => r.json())
+    .then(result => {
+      if (result.status !== "ok") throw new Error(result.message || "Server returned an error status");
+      renderResultsScreen(result, timeTaken);
+      // Cache locally too, so Teacher Mode works even if this device goes offline later
+      saveResultsToStore({
+        timestamp: payload.timestamp, name: state.student.name, year: state.student.year,
+        school: state.student.school, teacher: state.student.teacher, date: state.student.date,
+        total: result.total, rag: result.rag, placement: result.group, teacherNote: result.teacherNote,
+        timeTaken: timeTaken, secScores: result.secScores, answers: state.answers, tutorComment: "",
+      });
+    })
+    .catch(err => {
+      console.error("Ascend submission failed:", err); // visible in browser dev tools for diagnosis
+      const el = document.getElementById("submit-status");
+      if (el) {
+        el.className = "submit-status error";
+        el.innerHTML = "⚠️ Could not send results. Your answers are safely saved — please try again."
+          + '<br><button id="btn-retry-submit" style="margin-top:8px;background:var(--gold);border:none;border-radius:8px;padding:8px 16px;font-weight:700;cursor:pointer;">Try Again</button>';
+        const retryBtn = document.getElementById("btn-retry-submit");
+        if (retryBtn) retryBtn.addEventListener("click", () => { state.submitted = false; render(); });
+      }
+    });
+}
 
-  // Student sees celebration only — no group or RAG shown
-  const stars = correctCount >= 21 ? "🌟🌟🌟" : correctCount >= 12 ? "⭐⭐" : "⭐";
-  const msg = correctCount >= 21
+function renderResultsScreen(result, timeTaken) {
+  const total = result.total;
+  const secScores = result.secScores;
+  const stars = total >= 21 ? "🌟🌟🌟" : total >= 12 ? "⭐⭐" : "⭐";
+  const msg = total >= 21
     ? "Fantastic work! You should be really proud of yourself!"
-    : correctCount >= 12
+    : total >= 12
     ? "Great effort! You worked really hard today!"
     : "Well done for trying every question — that takes courage!";
 
@@ -1668,7 +1892,7 @@ function renderResults() {
       </div>
       <div style="font-size:18px;color:var(--text-soft);margin-bottom:20px">${msg}</div>
       <div style="font-size:48px;font-weight:900;color:var(--brand-dark)">
-        ${correctCount}<span style="font-size:22px;font-weight:400;color:var(--text-soft)"> out of 28</span>
+        ${total}<span style="font-size:22px;font-weight:400;color:var(--text-soft)"> out of 28</span>
       </div>
     </div>
 
@@ -1704,20 +1928,25 @@ function renderResults() {
   });
 
   html += `</div>
-    <div id="submit-status" class="submit-status sending">⏳ Sending results to your teacher...</div>
+    <div id="submit-status" class="submit-status sent">✅ Results sent to your teacher!</div>
     <div style="text-align:center;margin-top:16px">
       <button id="btn-teacher-mode-results" style="background:none;border:none;color:var(--text-soft);font-size:12px;cursor:pointer;text-decoration:underline;padding:4px 8px;">🔒 Teacher Mode</button>
     </div>
   `;
 
-  // Auto-submit with full placement data — teacher sees everything
-  setTimeout(() => submitResults(correctCount, secScores, summary, placement), 800);
-
-  return html;
+  const container = document.getElementById("app") || document.querySelector(".card") || document.body;
+  container.innerHTML = html;
+  attachEvents();
 }
 
 // ── EVENTS ───────────────────────────────────────────────────────────────────
 function attachEvents() {
+  // Check for a resumable in-progress draft whenever the identifying fields change
+  ["f-name", "f-surname", "f-year", "f-school"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener(el.tagName === "SELECT" ? "change" : "blur", checkForResumableDraft);
+  });
+
   // Cover start
   const btnStart = document.getElementById("btn-start");
   if (btnStart) {
@@ -1728,16 +1957,20 @@ function attachEvents() {
       const school  = document.getElementById("f-school").value.trim();
       const teacher = document.getElementById("f-teacher").value.trim();
       const date    = document.getElementById("f-date").value;
+      const status  = document.getElementById("f-status").value;
+      const className = resolveSelectedClass();
       if (!name || !year) {
         alert("Please enter your first name and year group to start.");
         return;
       }
-      state.student = { name: name + (surname ? " " + surname : ""), year, school, teacher, date };
+      state.student = { name: name + (surname ? " " + surname : ""), year, school, teacher, date, status, className };
       state.startTime = Date.now();
+      state.startTimestamp = new Date().toISOString();
       state.phase = "quiz";
       state.qIndex = 0;
       render();
       startQuizTimer();
+      startDraftAutoSave();
     });
   }
 
@@ -1793,87 +2026,146 @@ function attachEvents() {
       renderTeacherPin();
     });
   }
-}
-
-// ── SUBMIT TO GOOGLE SHEETS ──────────────────────────────────────────────────
-function submitResults(total, secScores, summary, placement) {
-  const elapsedMs  = Date.now() - (state.startTime || Date.now());
-  const mins       = Math.floor(elapsedMs / 60000);
-  const secs       = Math.floor((elapsedMs % 60000) / 1000);
-  const timeTaken  = `${mins}m ${secs}s`;
-
-  const payload = {
-    name:        state.student.name,
-    year:        state.student.year,
-    school:      state.student.school,
-    teacher:     state.student.teacher,
-    date:        state.student.date,
-    timestamp:   new Date().toISOString(),
-    assessment:  "Ascend",
-    timeTaken:   timeTaken,
-    total:       total,
-    rag:         placement.rag,
-    placement:   placement.group,
-    teacherNote: placement.teacherNote,
-    secA:        secScores.A,
-    secB:        secScores.B,
-    secC:        secScores.C,
-    secD:        secScores.D,
-    secE:        secScores.E,
-    secF:        secScores.F,
-    secG:        secScores.G,
-    secH:        secScores.H,
-    summary:     summary,
-    answers:     JSON.stringify(state.answers),
-  };
-
-  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
-    document.getElementById("submit-status").className = "submit-status error";
-    document.getElementById("submit-status").textContent =
-      "⚠️ Results not sent — Apps Script URL not configured yet. Score saved locally.";
-    return;
+  const btnTeacherQuiz = document.getElementById("btn-teacher-mode-quiz");
+  if (btnTeacherQuiz) {
+    btnTeacherQuiz.addEventListener("click", () => {
+      renderTeacherPin();
+    });
   }
-
-  // Cache locally too, so Teacher Mode works even if this device goes offline later
-  saveResultsToStore({
-    timestamp: payload.timestamp,
-    name: state.student.name,
-    year: state.student.year,
-    school: state.student.school,
-    teacher: state.student.teacher,
-    date: state.student.date,
-    total: total,
-    rag: placement.rag,
-    placement: placement.group,
-    teacherNote: placement.teacherNote,
-    timeTaken: timeTaken,
-    secScores: secScores,
-    answers: state.answers,
-    tutorComment: "",
-  });
-
-  fetch(APPS_SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  }).then(() => {
-    const el = document.getElementById("submit-status");
-    if (el) {
-      el.className = "submit-status sent";
-      el.textContent = "✅ Results sent to your teacher!";
-    }
-  }).catch(() => {
-    const el = document.getElementById("submit-status");
-    if (el) {
-      el.className = "submit-status error";
-      el.textContent = "⚠️ Could not send results. Please tell your teacher.";
-    }
-  });
 }
+
+// ── TUTOR & CLASS DROPDOWNS (self-managed, same pattern as every other paper) ──
+function loadTutors() {
+  const sel = document.getElementById("f-teacher");
+  if (!sel) return;
+  const fallback = ["Ms Smith", "Aqil", "Anisha", "Other"];
+  function populate(names) {
+    sel.innerHTML = "";
+    names.forEach(name => { const opt = document.createElement("option"); opt.value = name; opt.textContent = name; sel.appendChild(opt); });
+  }
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) { populate(fallback); return; }
+  fetch(APPS_SCRIPT_URL + "?action=getTutors")
+    .then(r => r.json())
+    .then(data => populate(data.tutors && data.tutors.length ? data.tutors : fallback))
+    .catch(() => populate(fallback));
+}
+
+function loadClasses() {
+  const sel = document.getElementById("f-class");
+  if (!sel) return;
+  const fallback = ["Other"];
+  function populate(names) {
+    sel.innerHTML = "";
+    names.forEach(name => { const opt = document.createElement("option"); opt.value = name; opt.textContent = name; sel.appendChild(opt); });
+    onClassSelectChange();
+  }
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) { populate(fallback); return; }
+  fetch(APPS_SCRIPT_URL + "?action=getClasses")
+    .then(r => r.json())
+    .then(data => populate(data.classes && data.classes.length ? data.classes : fallback))
+    .catch(() => populate(fallback));
+}
+function onClassSelectChange() {
+  const sel = document.getElementById("f-class");
+  const other = document.getElementById("f-class-other");
+  if (!sel || !other) return;
+  other.style.display = (sel.value === "Other") ? "block" : "none";
+}
+function resolveSelectedClass() {
+  const sel = document.getElementById("f-class");
+  if (!sel) return "";
+  if (sel.value === "Other") {
+    const typed = document.getElementById("f-class-other").value.trim();
+    return typed || "Other";
+  }
+  return sel.value;
+}
+
+// ── DRAFT AUTO-SAVE & RESUME ─────────────────────────────────────────────────
+let draftAutoSaveInterval = null;
+const DRAFT_AUTOSAVE_MS = 20000;
+
+function startDraftAutoSave() {
+  if (draftAutoSaveInterval) clearInterval(draftAutoSaveInterval);
+  draftAutoSaveInterval = setInterval(() => {
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR") || !state.student) return;
+    fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({
+        action: "saveDraft",
+        name: state.student.name, year: state.student.year, school: state.student.school,
+        teacher: state.student.teacher, status: state.student.status, className: state.student.className,
+        startTimestamp: state.startTimestamp,
+        answers: JSON.stringify(state.answers)
+      })
+    }).catch(() => {});
+  }, DRAFT_AUTOSAVE_MS);
+}
+function stopDraftAutoSave() {
+  if (draftAutoSaveInterval) { clearInterval(draftAutoSaveInterval); draftAutoSaveInterval = null; }
+}
+
+function checkForResumableDraft() {
+  const name = document.getElementById("f-name").value.trim();
+  const surname = document.getElementById("f-surname").value.trim();
+  const fullName = name + (surname ? " " + surname : "");
+  const year = document.getElementById("f-year").value;
+  const school = document.getElementById("f-school").value.trim();
+  if (!name || !year || !school || !APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) return;
+  fetch(APPS_SCRIPT_URL + "?action=getDraft&name=" + encodeURIComponent(fullName) + "&year=" + encodeURIComponent(year) + "&school=" + encodeURIComponent(school))
+    .then(r => r.json())
+    .then(draft => {
+      const banner = document.getElementById("resume-banner");
+      if (!banner) return;
+      if (draft && draft.name) {
+        banner.style.display = "block";
+        banner.innerHTML = `An in-progress attempt was found (${draft.answeredCount || 0} questions answered, last saved ${new Date(draft.lastSaved).toLocaleString()}).
+          <button id="btn-resume-draft" type="button" style="margin-left:8px;">Resume</button>
+          <button id="btn-fresh-start" type="button" style="margin-left:4px;">Start Fresh</button>`;
+        window._pendingDraft = draft;
+        document.getElementById("btn-resume-draft").addEventListener("click", () => resumeDraft(fullName, year, school, draft));
+        document.getElementById("btn-fresh-start").addEventListener("click", () => { banner.style.display = "none"; });
+      } else {
+        banner.style.display = "none";
+      }
+    }).catch(() => {});
+}
+
+function resumeDraft(fullName, year, school, draft) {
+  state.student = { name: fullName, year, school, teacher: draft.teacher, date: new Date().toISOString().slice(0,10), status: draft.status };
+  state.startTime = Date.now() - (Date.now() - new Date(draft.startTimestamp).getTime());
+  state.startTimestamp = draft.startTimestamp;
+  try { state.answers = JSON.parse(draft.answers || "{}"); } catch(e) { state.answers = {}; }
+  state.qIndex = Object.keys(state.answers).length;
+  state.phase = "quiz";
+  render();
+  startQuizTimer();
+  startDraftAutoSave();
+}
+
+// ── DEEP LINK from the submission email ──────────────────────────────────────
+// ?view=student&name=...&year=...&school=...&teacher=...&timestamp=...
+// Only pre-fills WHICH student to open in Teacher Mode — the PIN is still
+// required, this is a convenience, not a bypass of the PIN security.
+function getDeepLinkParams() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("view") !== "student") return null;
+  return {
+    name: params.get("name") || "", year: params.get("year") || "",
+    school: params.get("school") || "", teacher: params.get("teacher") || "",
+    timestamp: params.get("timestamp") || ""
+  };
+}
+const pendingDeepLink = getDeepLinkParams();
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 render();
+if (pendingDeepLink) {
+  // Jump straight into the PIN prompt for Teacher Mode
+  const btnTeacherMode = document.getElementById("btn-teacher-mode");
+  if (btnTeacherMode) btnTeacherMode.click();
+}
 </script>
 </body>
 </html>
