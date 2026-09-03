@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aim High — Year 7/8 Combined Baseline (Non-Calculator)</title>
+<title>Aim High — KS3 Combined Baseline (Non-Calculator)</title>
 <style>
   :root{
     --ink:#1a2332;
@@ -417,12 +417,12 @@
   <div class="cover-card">
     <div class="cover-band">
       <span class="brand display">Aim High Tuition</span>
-      <span class="code">Y78-BASELINE-NC</span>
+      <span class="code">KS3-BASELINE-NC</span>
     </div>
     <div class="cover-body">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
         <div>
-          <h1 class="cover-title">Year 7/8 Maths</h1>
+          <h1 class="cover-title">KS3 Maths</h1>
           <p class="cover-sub">Combined Baseline Assessment (Non-Calculator)</p>
         </div>
         <svg width="52" height="52" viewBox="0 0 48 48" style="flex-shrink:0;" aria-label="No calculator permitted">
@@ -446,9 +446,19 @@
         <strong>Instructions.</strong> Answer every question in the boxes provided. You must show your final answer only — this is auto-marked, so partial working is not assessed on this diagnostic paper (except where a question is split into separate parts). Give exact values (fractions/surds) where a question asks for them. The exam will auto-submit when the timer reaches zero, and your paper is marked securely on the server once submitted.
       </div>
 
-      <div class="field">
-        <label>Student Name</label>
-        <input type="text" id="studentName" placeholder="Full name" autocomplete="off">
+      <div class="instructions" style="border-left:4px solid var(--crimson); background:#fdf1f1; margin-top:12px;">
+        <strong>Important — read before you begin.</strong> This is a diagnostic baseline, not a graded exam. Its only purpose is to find out exactly what you already know and where you need support, so we can help you properly. Complete it entirely on your own — do not use notes, textbooks, the internet, AI tools, or ask anyone for help. If you use any of these, the result won't reflect your real starting point, and we won't be able to give you the right support going forward. You should only attempt this paper once. Your first attempt is the one that counts, regardless of circumstances — so please take your time and try your best.
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>First name</label>
+          <input type="text" id="studentFirstName" placeholder="e.g. Lila" autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label>Last name</label>
+          <input type="text" id="studentSurname" placeholder="e.g. Ahmed" autocomplete="family-name">
+        </div>
       </div>
       <div class="field-row">
         <div class="field">
@@ -492,7 +502,6 @@
       </div>
 
       <button class="start-btn" id="startBtn" onclick="checkForDraftThenStart()">Begin Paper 1 →</button>
-      <button class="btn-secondary" style="width:100%;margin-top:10px;" onclick="openPrintablePaper()">🖨️ Print Blank Paper (PDF)</button>
     </div>
   </div>
 </div>
@@ -505,7 +514,7 @@
 <!-- ============ EXAM SCREEN ============ -->
 <div id="examScreen">
   <div class="exam-header">
-    <div class="paper-name">Aim High &nbsp;·&nbsp; <b>Year 7/8 Combined Baseline</b> &nbsp;(Non-Calc)</div>
+    <div class="paper-name">Aim High &nbsp;·&nbsp; <b>KS3 Maths Baseline</b> &nbsp;(Non-Calc)</div>
     <div id="timerBox">50:00</div>
   </div>
   <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
@@ -539,7 +548,7 @@
 </div>
 <div id="dashboardPanel" style="display:none;position:fixed;inset:0;background:var(--paper);z-index:90;overflow-y:auto;padding:24px;">
   <button class="qla-close" onclick="closeDashboardPanel()">✕</button>
-  <div class="teacher-navbar"><button onclick="exitTeacherViewToHome()">🏠 Home</button><button onclick="openWalkthrough()">📖 Walkthrough</button></div>
+  <div class="teacher-navbar"><button onclick="exitTeacherViewToHome()">🏠 Home</button><button onclick="openWalkthrough()">📖 Walkthrough</button><button onclick="openPrintablePaper()">🖨️ Print Blank Paper</button></div>
   <div id="dashboardContent" style="max-width:1100px;margin:0 auto;"></div>
 </div>
 <div id="liveMonitorPanel" style="display:none;position:fixed;inset:0;background:var(--paper);z-index:96;overflow-y:auto;padding:24px;">
@@ -589,7 +598,7 @@
    ========================================================================= */
 
 var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwreSisHEE_uBsUr8LVHo-epoJ9Eyo1xUstOMgE3Wst9cuN5tZU_6gGJXUomtCo-zK/exec";
-var TIME_LIMIT_SECONDS = 55 * 60;
+var TIME_LIMIT_SECONDS = 40 * 60;
 var TEACHER_PIN = "2468";
 
 /* ---------------- RAG boundaries ----------------
@@ -1120,8 +1129,10 @@ function resolveSelectedClass(){
 ------------------------------------------------------------------------- */
 
 function checkForDraftThenStart(){
-  var name = document.getElementById('studentName').value.trim();
-  if(!name){ showAlert('Please enter the student name to begin.'); return; }
+  var firstName = document.getElementById('studentFirstName').value.trim();
+  var surname = document.getElementById('studentSurname').value.trim();
+  var name = firstName + (surname ? ' ' + surname : '');
+  if(!firstName){ showAlert('Please enter the student first name to begin.'); return; }
   var yearGroup = document.getElementById('yearGroup').value;
   var school = document.getElementById('schoolName').value.trim();
 
@@ -1327,8 +1338,10 @@ window.addEventListener('beforeunload', function(){
 });
 
 function startExam(){
-  var name = document.getElementById('studentName').value.trim();
-  if(!name){ showAlert('Please enter the student name to begin.'); return; }
+  var firstName = document.getElementById('studentFirstName').value.trim();
+  var surname = document.getElementById('studentSurname').value.trim();
+  var name = firstName + (surname ? ' ' + surname : '');
+  if(!firstName){ showAlert('Please enter the student first name to begin.'); return; }
   studentMeta = {
     name: name,
     yearGroup: document.getElementById('yearGroup').value,
@@ -1521,8 +1534,8 @@ function topicStrengthsWeaknesses(topicTotals){
 ------------------------------------------------------------------------- */
 function reportLetterheadHtml(dateStr){
   return '<div class="report-letterhead">'+
-    '<div><div class="rl-brand">Aim High Tuition</div><div class="rl-tag">Year 7/8 Combined — Diagnostic Assessment Report</div></div>'+
-    '<div class="rl-meta">Year 7/8 Combined Baseline<br>'+(dateStr||'')+'</div>'+
+    '<div><div class="rl-brand">Aim High Tuition</div><div class="rl-tag">KS3 Combined — Diagnostic Assessment Report</div></div>'+
+    '<div class="rl-meta">KS3 Combined Baseline<br>'+(dateStr||'')+'</div>'+
   '</div>';
 }
 function leadNurtureCtaHtml(status, name){
@@ -2079,7 +2092,7 @@ function openPrintablePaper(){
   var coverHtml =
     '<div style="text-align:center;margin-bottom:26px;padding-bottom:18px;border-bottom:3px solid var(--crimson);">'+
       '<div style="font-family:\'Iowan Old Style\',Georgia,serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson);">Aim High Tuition</div>'+
-      '<h1 style="font-family:\'Iowan Old Style\',Georgia,serif;font-size:28px;margin:8px 0 4px;">Year 7/8 Maths</h1>'+
+      '<h1 style="font-family:\'Iowan Old Style\',Georgia,serif;font-size:28px;margin:8px 0 4px;">KS3 Maths</h1>'+
       '<p style="font-size:15px;color:var(--ink-soft);margin:0 0 10px;">Combined Baseline Assessment (Non-Calculator)</p>'+
       '<svg width="40" height="40" viewBox="0 0 48 48" style="margin-bottom:8px;" aria-label="No calculator permitted">'+
         '<rect x="10" y="4" width="28" height="40" rx="3" fill="none" stroke="#1a2332" stroke-width="2.5"/>'+
@@ -2096,7 +2109,8 @@ function openPrintablePaper(){
       '<div>Class: <span style="display:inline-block;border-bottom:1.5px solid #000;width:140px;"></span></div>'+
       '<div>Date: <span style="display:inline-block;border-bottom:1.5px solid #000;width:110px;"></span></div>'+
     '</div>'+
-    '<div class="instructions" style="margin-bottom:22px;">Answer every question in the space provided. Give exact values (fractions/surds) where a question asks for them.</div>';
+    '<div class="instructions" style="margin-bottom:22px;">Answer every question in the space provided. Give exact values (fractions/surds) where a question asks for them.</div>'+
+    '<div class="instructions" style="border-left:4px solid var(--crimson); background:#fdf1f1; margin-bottom:22px;"><strong>Important.</strong> This is a diagnostic baseline, not a graded exam, completed entirely on your own — no notes, textbooks, the internet, AI tools, or help from anyone else. Only attempt this once: your first attempt is the one that counts, regardless of circumstances.</div>';
   document.getElementById('printablePaperContent').innerHTML = coverHtml + questionsHtml;
   document.getElementById('printablePaperPanel').style.display = 'block';
 }
