@@ -415,12 +415,39 @@ function renderManageContent(){
     '<button class="btn" onclick="addClass(\''+paperId+'\')">Add Class</button></div>'+
     '<p id="classStatus" class="status-msg"></p></div>'+
 
+    '<div style="margin-top:20px;"><strong>View results by class</strong>'+
+    '<p style="font-size:12.5px;color:var(--ink-soft);margin:4px 0 10px;">Shows every result on this paper for students recorded under the selected class.</p>'+
+    '<div class="field-row"><div class="field"><select id="classResultsSelect" onchange="loadClassResults(\''+paperId+'\')"><option value="">Select a class…</option>'+
+    classes.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('')+
+    '</select></div></div>'+
+    '<div id="classResultsContent"></div>'+
+    '</div>'+
+
     '<div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--paper-line);">'+
     '<strong>Clear test data</strong>'+
     '<p style="font-size:12.5px;color:var(--ink-soft);margin:4px 0 10px;">Removes every submission on this paper explicitly marked "Test-Demo" status at the cover page — never touches "Enrolled Student" or "Trial Student" results, however test-like a name might look.</p>'+
     '<p style="font-size:13px;">Currently on this paper: <strong>'+window.__testDemoCount+'</strong> Test-Demo submission'+(window.__testDemoCount===1?'':'s')+'.</p>'+
     (window.__testDemoCount > 0 ? renderClearTestDataControl(paperId) : '')+
     '</div>';
+}
+function loadClassResults(paperId){
+  var className = document.getElementById('classResultsSelect').value;
+  var contentEl = document.getElementById('classResultsContent');
+  if(!className){ contentEl.innerHTML = ''; return; }
+  contentEl.innerHTML = '<div class="loading">Loading results…</div>';
+  fetch(APPS_SCRIPT_URL + '?action=getResultsByClass&paperId=' + encodeURIComponent(paperId) + '&className=' + encodeURIComponent(className))
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var results = data.results || [];
+      if(!results.length){ contentEl.innerHTML = '<div class="empty-state">No results yet for this class.</div>'; return; }
+      var rows = results.map(function(r){
+        var d = r.timestamp ? new Date(r.timestamp).toLocaleString('en-GB') : '';
+        return '<tr><td>'+r.studentName+'</td><td>'+d+'</td><td>'+(r.rawScore!==undefined?r.rawScore+'/'+r.totalMarks:'')+'</td><td>'+(r.percentage!==undefined?r.percentage+'%':'')+'</td><td><span class="grade-pill">'+(r.grade||'')+'</span></td><td>'+(r.tutor||'')+'</td></tr>';
+      }).join('');
+      contentEl.innerHTML = '<table style="margin-top:10px;"><thead><tr><th>Student</th><th>Date</th><th>Score</th><th>%</th><th>Grade</th><th>Tutor</th></tr></thead><tbody>'+rows+'</tbody></table>';
+    }).catch(function(err){
+      contentEl.innerHTML = '<p style="color:var(--red);">Could not load class results: '+String(err)+'</p>';
+    });
 }
 function renderClearTestDataControl(paperId){
   if(clearTestDataArmed){
