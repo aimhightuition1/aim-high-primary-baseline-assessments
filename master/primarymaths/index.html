@@ -503,59 +503,59 @@ function numberBoxes(items) {
 const QUESTIONS = [
   // A — Place Value and Number (Q1-6)
   { id:1, sec:"A", text:"What is the value of the digit 7 in this number?", display:"4,732",
-    opts:["7","70","700","7,000"], ans:"C" },
+    opts:["7","70","700","7,000"] },
   { id:2, sec:"A", text:"Write 206,050 in words.",
-    opts:["Two hundred and six thousand and fifty","Twenty-six thousand and fifty","Two million and sixty-five","Two hundred and sixty thousand and fifty"], ans:"A" },
+    opts:["Two hundred and six thousand and fifty","Twenty-six thousand and fifty","Two million and sixty-five","Two hundred and sixty thousand and fifty"] },
   { id:3, sec:"A", text:"Round this number to the nearest 100,000.", display:"847,362",
-    opts:["800,000","850,000","900,000","847,000"], ans:"A" },
+    opts:["800,000","850,000","900,000","847,000"] },
   { id:4, sec:"A", text:"Work out:", display:"<span style=\"font-size:0.7em;white-space:nowrap\">1,200,000 − 550,000 = ?</span>",
-    opts:["650,000","660,000","750,000","640,000"], ans:"A" },
+    opts:["650,000","660,000","750,000","640,000"] },
   { id:5, sec:"A", text:"Fill in the missing numbers.", display:numberBoxes(["100,000","200,000","300,000","?","?"]),
-    opts:["400,000 and 500,000","300,000 and 400,000","500,000 and 600,000","400,000 and 600,000"], ans:"A" },
+    opts:["400,000 and 500,000","300,000 and 400,000","500,000 and 600,000","400,000 and 600,000"] },
   { id:6, sec:"A", text:"Order these from smallest to largest.", display:numberBoxes(["−15","8","−3","0","−20","12"]),
-    opts:["−20, −15, −3, 0, 8, 12","−15, −20, −3, 0, 8, 12","12, 8, 0, −3, −15, −20","−20, −15, 0, −3, 8, 12"], ans:"A" },
+    opts:["−20, −15, −3, 0, 8, 12","−15, −20, −3, 0, 8, 12","12, 8, 0, −3, −15, −20","−20, −15, 0, −3, 8, 12"] },
 
   // B — Multiplication and Division (Q7-13)
   { id:7, sec:"B", text:"What is 8 squared?", display:"8² = ?",
-    opts:["16","64","24","32"], ans:"B" },
+    opts:["16","64","24","32"] },
   { id:8, sec:"B", text:"What is 2 cubed?", display:"2³ = ?",
-    opts:["6","8","16","4"], ans:"B" },
+    opts:["6","8","16","4"] },
   { id:9, sec:"B", text:"Find all the factor pairs of 30. How many pairs are there?",
-    opts:["3 pairs","4 pairs","5 pairs","6 pairs"], ans:"B" },
+    opts:["3 pairs","4 pairs","5 pairs","6 pairs"] },
   { id:10, sec:"B", text:"Is 97 a prime number?",
-    opts:["Yes, because it has no factors other than 1 and itself","No, because it is odd","No, because 9+7=16","Yes, because it ends in 7"], ans:"A" },
+    opts:["Yes, because it has no factors other than 1 and itself","No, because it is odd","No, because 9+7=16","Yes, because it ends in 7"] },
   { id:11, sec:"B", text:"Work out:", display:"47 × 6 = ?",
-    opts:["282","272","292","232"], ans:"A" },
+    opts:["282","272","292","232"] },
   { id:12, sec:"B", text:"Short division:", display:"738 ÷ 6 = ?",
-    opts:["122","123","124","132"], ans:"B" },
+    opts:["122","123","124","132"] },
   { id:13, sec:"B", text:"347 children need to travel in minibuses of 15. How many minibuses are needed?",
-    opts:["22","23","24","25"], ans:"C" },
+    opts:["22","23","24","25"] },
 
   // C — Fractions, Decimals and Percentages (Q14-19)
   { id:14, sec:"C", text:"What is this fraction of 60?", display:frac(3,4)+" of 60 = ?",
-    opts:["15","36","45","40"], ans:"C" },
+    opts:["15","36","45","40"] },
   { id:15, sec:"C", text:"Find the missing number.", display:frac("?",12)+" = "+frac(3,4),
-    opts:["3","8","9","6"], ans:"C" },
+    opts:["3","8","9","6"] },
   { id:16, sec:"C", text:"Which of the following are equal to "+frac(7,8)+"? (Choose the best answer.)",
-    opts:["0.875 only","0.875 and 87.5%","0.875, 87.5% and 7/8","87.5% only"], ans:"B" },
+    opts:["0.875 only","0.875 and 87.5%","0.875, 87.5% and 7/8","87.5% only"] },
   { id:17, sec:"C", text:"Write "+frac(9,20)+" as a decimal.",
-    opts:["9.20","0.920","0.45","0.9"], ans:"C" },
+    opts:["9.20","0.920","0.45","0.9"] },
   { id:18, sec:"C", text:"Which is larger: 0.7 or 0.65?",
-    opts:["0.7","0.65","They are equal","Cannot tell"], ans:"A" },
+    opts:["0.7","0.65","They are equal","Cannot tell"] },
   { id:19, sec:"C", text:"What is 20% of 350?",
-    opts:["35","60","70","700"], ans:"C",
+    opts:["35","60","70","700"],
     checkpoint:"Halfway there! Keep up the great thinking! 🌟" },
 
   // D — Geometry and Measurement (Q20-26)
   { id:20, sec:"D", text:"Convert:", display:"3.5 km = ? m   and   2,750 ml = ? litres",
-    opts:["3,500 m and 2.75 litres","350 m and 2.75 litres","3,500 m and 27.5 litres","35,000 m and 2.75 litres"], ans:"A",
-    checkpoint:"Some of the geometry coming up is proper Year 6 stretch content — take your time, and it's completely fine if a few feel new! 💪" },
+    opts:["3,500 m and 2.75 litres","350 m and 2.75 litres","3,500 m and 27.5 litres","35,000 m and 2.75 litres"],
+    checkpoint:"Some of the geometry coming up is more advanced content — take your time, and it's completely fine if a few feel new! 💪" },
   { id:21, sec:"D", text:"Find the area of a triangle with base 10 cm and height 6 cm.",
-    opts:["60 cm²","30 cm²","16 cm²","20 cm²"], ans:"B" },
+    opts:["60 cm²","30 cm²","16 cm²","20 cm²"] },
   { id:22, sec:"D", text:"A triangle has angles of 54° and 73°. What is the third angle?",
-    opts:["127°","43°","53°","63°"], ans:"C" },
+    opts:["127°","43°","53°","63°"] },
   { id:23, sec:"D", text:"The angles in a quadrilateral are 95°, 110° and 75°. What is the fourth angle?",
-    opts:["70°","80°","90°","100°"], ans:"B" },
+    opts:["70°","80°","90°","100°"] },
   { id:24, sec:"D", text:"Point A is at (2, 3). It is reflected in the dashed line x = 5. What are the new coordinates?",
     display:(function(){
       const cell=20, ox=10, oy=210;
@@ -578,7 +578,7 @@ const QUESTIONS = [
         </svg>
       </div>`;
     })(),
-    opts:["(8, 3)","(2, 8)","(5, 3)","(8, 8)"], ans:"A" },
+    opts:["(8, 3)","(2, 8)","(5, 3)","(8, 8)"] },
   { id:25, sec:"D", text:"A cuboid has these dimensions. What is its volume?",
     display:`<div style="display:flex;justify-content:center;padding:10px 0">
   <svg width="220" height="160" viewBox="0 0 220 160">
@@ -590,96 +590,60 @@ const QUESTIONS = [
     <text x="158" y="38" text-anchor="middle" font-size="13" font-weight="800" fill="#4C1D95">4 cm</text>
   </svg>
 </div>`,
-    opts:["47 cm³","60 cm³","35 cm³","12 cm³"], ans:"B" },
+    opts:["47 cm³","60 cm³","35 cm³","12 cm³"] },
   { id:26, sec:"D", text:"Long division:", display:"4,836 ÷ 12 = ?",
-    opts:["403","423","402","413"], ans:"A" },
+    opts:["403","423","402","413"] },
 
   // E — Statistics and Word Problems (Q27-29)
   { id:27, sec:"E", text:"Find the mean of:", display:"8,  14,  6,  10,  12",
-    opts:["9","10","11","50"], ans:"B" },
+    opts:["9","10","11","50"] },
   { id:28, sec:"E", text:"A bag has red and blue counters in ratio 3:5. There are 40 counters in total. How many red counters?",
-    opts:["12","15","20","24"], ans:"B" },
+    opts:["12","15","20","24"] },
   { id:29, sec:"E", text:"A school trip costs £18.50 per child. 32 children go. What is the total cost?",
-    opts:["£572","£582","£592","£596"], ans:"C" },
+    opts:["£572","£582","£592","£596"] },
 
   // F — Fractions with Different Denominators (Q30-32)
   { id:30, sec:"F", text:"Work out:", display:frac(1,3)+" + "+frac(1,4),
-    opts:[frac(2,7),frac(7,12),frac(5,12),frac(1,6)], ans:"B" },
+    opts:[frac(2,7),frac(7,12),frac(5,12),frac(1,6)] },
   { id:31, sec:"F", text:"Work out:", display:frac(3,4)+" − "+frac(1,6),
-    opts:[frac(2,3),frac(1,2),frac(7,12),frac(5,12)], ans:"C" },
+    opts:[frac(2,3),frac(1,2),frac(7,12),frac(5,12)] },
   { id:32, sec:"F", text:"Put in order, smallest to largest:", display:frac(3,5)+",  65%,  0.7,  "+frac(7,10),
     opts:[
       frac(3,5)+", 65%, 0.7, "+frac(7,10),
       frac(3,5)+", 65%, "+frac(7,10)+", 0.7",
       "65%, "+frac(3,5)+", 0.7, "+frac(7,10),
       "0.7, 65%, "+frac(3,5)+", "+frac(7,10)
-    ], ans:"A",
+    ],
     checkpoint:"Nearly at the last stretch! Great focus! 🎉" },
 
   // G — Order of Operations & Time (Q33-35)
   { id:33, sec:"G", text:"Work out:", display:"3 + 4 × 5 = ?",
-    opts:["23","35","20","12"], ans:"A" },
+    opts:["23","35","20","12"] },
   { id:34, sec:"G", text:"Work out:", display:"(6 + 2) × 3 = ?",
-    opts:["24","12","30","8"], ans:"A" },
+    opts:["24","12","30","8"] },
   { id:35, sec:"G", text:"A train leaves at 14:35 and takes 1 hour 50 minutes to arrive. What time does it arrive?",
-    opts:["16:25","16:15","15:85","16:35"], ans:"A" },
+    opts:["16:25","16:15","15:85","16:35"] },
 
   // H — Challenge Questions (Q36-38)
   { id:36, sec:"H", text:"Solve for n:", display:"4n + 7 = 31",
-    opts:["n = 6","n = 9","n = 5","n = 8"], ans:"A",
+    opts:["n = 6","n = 9","n = 5","n = 8"],
     checkpoint:"Challenge questions ahead — have a go, they're meant to stretch you! 🏆" },
   { id:37, sec:"H", text:"Long division:", display:"7,284 ÷ 36 = ?",
-    opts:["202 r 12","201","203","202"], ans:"A" },
+    opts:["202 r 12","201","203","202"] },
   { id:38, sec:"H", text:"Red and blue counters are in ratio 2:3. There are 35 counters. How many are blue?",
-    opts:["14","21","15","20"], ans:"B" },
+    opts:["14","21","15","20"] },
 ];
 
-// Correct answers map
-const ANSWER_KEY = {};
-QUESTIONS.forEach(q => { ANSWER_KEY[q.id] = q.ans; });
+// The answer key no longer lives in the client — it's fetched from the
+// server (PIN-gated) only when Teacher Mode is unlocked. See
+// loadTeacherAnswerKey() and teacherAnswerKey below.
 
 // Section max scores
 const SEC_MAX = { A:6, B:7, C:6, D:7, E:3, F:3, G:3, H:3 };
 
-// ── PLACEMENT LOGIC ──────────────────────────────────────────────────────────
-function getPlacement(total, secA) {
-  if (total >= 29 && secA >= 5) return {
-    rag: "GREEN", cls: "green", emoji: "🏆",
-    group: "Master 2 / SATs Track",
-    detail: "Strong score with secure place value knowledge.",
-    teacherNote: "Score 29+, Sec A " + secA + "/6. Strong — Master 2 / SATs track. Confirm with Check-In Week 2."
-  };
-  if (total >= 29 && secA <= 4) return {
-    rag: "GREEN", cls: "green", emoji: "🏆",
-    group: "Master 1",
-    detail: "Strong overall score but place value needs consolidation.",
-    teacherNote: "Score 29+ but Sec A only " + secA + "/6. Place in Master 1 — number gaps to address despite strong overall score."
-  };
-  if (total >= 20 && secA >= 4) return {
-    rag: "AMBER", cls: "amber", emoji: "⭐",
-    group: "Master 2",
-    detail: "Developing well. Place value knowledge is secure.",
-    teacherNote: "Score 20-28, Sec A " + secA + "/6. Place in Master 2. Use QLA to target gaps."
-  };
-  if (total >= 20 && secA <= 3) return {
-    rag: "AMBER", cls: "amber", emoji: "⭐",
-    group: "Master 1",
-    detail: "Developing. Place value needs more support.",
-    teacherNote: "Score 20-28, Sec A only " + secA + "/6. Place in Master 1."
-  };
-  if (secA <= 2 && total <= 10) return {
-    rag: "RED", cls: "red-c", emoji: "💪",
-    group: "Consider Ignite 2",
-    detail: "Significant gaps. Verbal check recommended immediately.",
-    teacherNote: "Score 0-19, Sec A " + secA + "/6 (≤2). Significant gaps — verbal check recommended immediately. Contact parent."
-  };
-  return {
-    rag: "RED", cls: "red-c", emoji: "💪",
-    group: "Consider Ignite 2",
-    detail: "Gaps identified across several areas.",
-    teacherNote: "Score 0-19, Sec A " + secA + "/6. Consider Ignite 2 — gaps identified. Contact parent."
-  };
-}
+// Placement is computed server-side now (see Master_Code.gs) — the
+// client no longer computes total/section scores/RAG/placement itself,
+// it only renders whatever the server returns after marking.
 
 function getSectionRag(score, max) {
   const pct = score / max;
@@ -721,29 +685,47 @@ function getYearMismatchNote(year) {
   return "";
 }
 
-function buildSummary(student, total, secScores, placement) {
-  const strong = [], weak = [];
-  Object.entries(secScores).forEach(([sec, sc]) => {
-    const pct = sc / SEC_MAX[sec];
-    if (pct >= 0.8) strong.push(SECTIONS[sec].name);
-    else if (pct < 0.5) weak.push(SECTIONS[sec].name);
-  });
-  const secA = secScores["A"];
-
-  let text = `${student.name} scored ${total}/38 on the Master Baseline (${student.year}, ${student.school}). `;
-  text += `PLACEMENT: ${placement.group}. ${placement.teacherNote} `;
-  if (strong.length) text += `Strong sections: ${strong.join(", ")}. `;
-  if (weak.length)   text += `Weak sections needing support: ${weak.join(", ")}. `;
-  text += `Section A (Place Value and Number): ${secA}/6. `;
-  if (secA <= 2 && total <= 10) text += `Verbal check strongly recommended before first lesson. `;
-  return text;
-}
+// buildSummary now runs server-side too — see Master_Code.gs
 
 // ── TEACHER MODE ─────────────────────────────────────────────────────────────
 const TEACHER_PIN = "2468";
 const RESULTS_STORE_KEY = "aimhigh_master_all_results";
 let teacherResultsCache = null; // null = not fetched yet / fetch failed, use local fallback
-let dashboardFilters = { search: "", year: "", rag: "", teacher: "", dateFrom: "", dateTo: "" };
+// Normalizes any academic-year string to the "YYYY/YY" format — defensive,
+// in case any future data ever uses a different separator, so the filter
+// treats them as identical rather than showing duplicate entries.
+function normalizeAcademicYear(val) {
+  if (!val) return val;
+  const m = String(val).match(/^(\d{4})[\/-](\d{2})$/);
+  return m ? `${m[1]}/${m[2]}` : val;
+}
+function getAcademicYear(dateStr) {
+  const d = dateStr ? new Date(dateStr) : new Date();
+  if (isNaN(d)) return "";
+  const y = d.getFullYear(), m = d.getMonth() + 1; // 1-12
+  return (m >= 9) ? `${y}/${String(y + 1).slice(-2)}` : `${y - 1}/${String(y).slice(-2)}`;
+}
+function getTerm(dateStr) {
+  const d = dateStr ? new Date(dateStr) : new Date();
+  if (isNaN(d)) return "";
+  const m = d.getMonth(); // 0-11
+  if (m >= 8 && m <= 11) return "Autumn";
+  if (m >= 0 && m <= 3) return "Spring";
+  return "Summer";
+}
+
+let dashboardFilters = { search: "", year: "", rag: "", teacher: "", className: "", status: "Enrolled Student", academicYear: getAcademicYear(), term: "", dateFrom: "", dateTo: "" };
+
+// Correct answers are PIN-gated and fetched only once Teacher Mode is
+// unlocked — never sitting in the page for an unauthenticated visitor.
+let teacherAnswerKey = {};
+function loadTeacherAnswerKey() {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) return Promise.resolve();
+  return fetch(APPS_SCRIPT_URL + "?action=getAnswerKey&pin=" + encodeURIComponent(TEACHER_PIN))
+    .then(r => r.json())
+    .then(data => { teacherAnswerKey = data.answers || {}; })
+    .catch(() => { teacherAnswerKey = {}; });
+}
 
 function saveResultsToStore(studentData) {
   try {
@@ -780,7 +762,7 @@ function normalizeRemoteResult(row) {
     answers = {};
     QUESTIONS.forEach(q => {
       const isCorrect = Number(row["Q" + q.id]) === 1;
-      answers[q.id] = isCorrect ? q.ans : "✗";
+      answers[q.id] = isCorrect ? teacherAnswerKey[q.id] : "✗";
     });
   }
 
@@ -791,6 +773,8 @@ function normalizeRemoteResult(row) {
     school:      row["School"],
     teacher:     row["Teacher"],
     date:        row["Date"],
+    academicYear: normalizeAcademicYear(row["Academic Year"]),
+    term:         row["Term"],
     total:       Number(row["Total"]) || 0,
     rag:         row["RAG"],
     placement:   row["Group Placed"],
@@ -808,6 +792,8 @@ function normalizeRemoteResult(row) {
       H: Number(row["Sec H (3)"]) || 0,
     },
     answers: answers,
+    className:   row["Class"] || "",
+    studentStatus: row["Student Status"] || "",
   };
 }
 
@@ -815,9 +801,9 @@ function fetchRemoteResults() {
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
     return Promise.resolve(null);
   }
-  return fetch(APPS_SCRIPT_URL)
+  return fetch(APPS_SCRIPT_URL + "?pin=" + encodeURIComponent(TEACHER_PIN))
     .then(res => res.json())
-    .then(rows => rows.map(normalizeRemoteResult))
+    .then(rows => Array.isArray(rows) ? rows.map(normalizeRemoteResult) : null)
     .catch(() => null);
 }
 
@@ -905,8 +891,8 @@ function renderTeacherPin() {
     const pin = document.getElementById("pin-input").value;
     if (pin === TEACHER_PIN) {
       renderTeacherLoading();
-      fetchRemoteResults().then(remote => {
-        teacherResultsCache = remote; // null if offline/failed — dashboard falls back to local
+      Promise.all([fetchRemoteResults(), loadTeacherAnswerKey()]).then(results => {
+        teacherResultsCache = results[0]; // null if offline/failed — dashboard falls back to local
         renderTeacherDashboard();
       });
     } else {
@@ -922,6 +908,10 @@ function passesFilters(r) {
   if (dashboardFilters.year && r.year !== dashboardFilters.year) return false;
   if (dashboardFilters.rag && r.rag !== dashboardFilters.rag) return false;
   if (dashboardFilters.teacher && r.teacher !== dashboardFilters.teacher) return false;
+  if (dashboardFilters.className && r.className !== dashboardFilters.className) return false;
+  if (dashboardFilters.status && r.studentStatus !== dashboardFilters.status) return false;
+  if (dashboardFilters.academicYear && r.academicYear !== dashboardFilters.academicYear) return false;
+  if (dashboardFilters.term && r.term !== dashboardFilters.term) return false;
   if (dashboardFilters.dateFrom) {
     const d = new Date(r.date);
     const from = new Date(dashboardFilters.dateFrom);
@@ -943,11 +933,15 @@ function renderTeacherDashboard() {
 
   const years = [...new Set(all.map(r => r.year).filter(Boolean))].sort();
   const teachers = [...new Set(all.map(r => r.teacher).filter(Boolean))].sort();
+  const classes = [...new Set(all.map(r => r.className).filter(Boolean))].sort();
+  const academicYears = [...new Set(all.map(r => r.academicYear).filter(Boolean))].sort().reverse();
 
   const app = document.getElementById("app");
   let html = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
       <div style="font-size:20px;font-weight:900;color:var(--brand-dark);flex:1">👨‍🏫 Teacher Dashboard</div>
+      <button id="btn-td-walkthrough" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">📖 Walkthrough</button>
+      <button id="btn-td-livemonitor" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">📡 Live</button>
       <button id="btn-td-refresh" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">🔄</button>
       <button id="btn-td-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">✕ Exit</button>
     </div>
@@ -978,6 +972,31 @@ function renderTeacherDashboard() {
         ${teachers.map(t => `<option value="${t}" ${dashboardFilters.teacher===t?'selected':''}>${t}</option>`).join('')}
       </select>
     </div>
+    <div style="margin-bottom:8px">
+      <select id="td-filter-class" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="">All classes</option>
+        ${classes.map(c => `<option value="${c}" ${dashboardFilters.className===c?'selected':''}>${c}</option>`).join('')}
+      </select>
+    </div>
+    <div style="margin-bottom:8px">
+      <select id="td-filter-status" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="Enrolled Student" ${dashboardFilters.status==='Enrolled Student'?'selected':''}>Enrolled Students</option>
+        <option value="Trial Student" ${dashboardFilters.status==='Trial Student'?'selected':''}>Trial Students</option>
+        <option value="" ${dashboardFilters.status===''?'selected':''}>All Students</option>
+      </select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <select id="td-filter-ay" style="border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="">All academic years</option>
+        ${academicYears.map(y => `<option value="${y}" ${dashboardFilters.academicYear===y?'selected':''}>${y}</option>`).join('')}
+      </select>
+      <select id="td-filter-term" style="border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="">All terms</option>
+        <option value="Autumn" ${dashboardFilters.term==='Autumn'?'selected':''}>Autumn</option>
+        <option value="Spring" ${dashboardFilters.term==='Spring'?'selected':''}>Spring</option>
+        <option value="Summer" ${dashboardFilters.term==='Summer'?'selected':''}>Summer</option>
+      </select>
+    </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
       <div>
         <label style="font-size:11px;color:var(--text-soft);display:block;margin-bottom:2px">From date</label>
@@ -988,7 +1007,7 @@ function renderTeacherDashboard() {
         <input id="td-filter-to" type="date" value="${dashboardFilters.dateTo}" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:7px 10px;font-size:13px;">
       </div>
     </div>
-    ${(dashboardFilters.search||dashboardFilters.year||dashboardFilters.rag||dashboardFilters.teacher||dashboardFilters.dateFrom||dashboardFilters.dateTo)
+    ${(dashboardFilters.search||dashboardFilters.year||dashboardFilters.rag||dashboardFilters.teacher||dashboardFilters.className||dashboardFilters.status!=='Enrolled Student'||dashboardFilters.academicYear!==getAcademicYear()||dashboardFilters.term||dashboardFilters.dateFrom||dashboardFilters.dateTo)
       ? `<button id="td-clear-filters" style="background:none;border:none;color:var(--brand);font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;margin-bottom:12px;padding:0;">✕ Clear all filters</button>`
       : ''}
     <div style="font-size:12px;color:var(--text-soft);margin-bottom:12px">Showing ${filtered.length} of ${all.length} result${all.length===1?'':'s'}</div>
@@ -1023,6 +1042,8 @@ function renderTeacherDashboard() {
   app.innerHTML = html;
 
   document.getElementById("btn-td-back").addEventListener("click", () => render());
+  document.getElementById("btn-td-walkthrough").addEventListener("click", () => renderWalkthrough(0));
+  document.getElementById("btn-td-livemonitor").addEventListener("click", () => renderLiveMonitor());
   document.getElementById("btn-td-refresh").addEventListener("click", () => {
     renderTeacherLoading();
     fetchRemoteResults().then(remote => {
@@ -1046,6 +1067,22 @@ function renderTeacherDashboard() {
     dashboardFilters.teacher = e.target.value;
     renderTeacherDashboard();
   });
+  document.getElementById("td-filter-class").addEventListener("change", e => {
+    dashboardFilters.className = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-status").addEventListener("change", e => {
+    dashboardFilters.status = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-ay").addEventListener("change", e => {
+    dashboardFilters.academicYear = e.target.value;
+    renderTeacherDashboard();
+  });
+  document.getElementById("td-filter-term").addEventListener("change", e => {
+    dashboardFilters.term = e.target.value;
+    renderTeacherDashboard();
+  });
   document.getElementById("td-filter-from").addEventListener("change", e => {
     dashboardFilters.dateFrom = e.target.value;
     renderTeacherDashboard();
@@ -1057,7 +1094,7 @@ function renderTeacherDashboard() {
   const clearBtn = document.getElementById("td-clear-filters");
   if (clearBtn) {
     clearBtn.addEventListener("click", () => {
-      dashboardFilters = { search: "", year: "", rag: "", teacher: "", dateFrom: "", dateTo: "" };
+      dashboardFilters = { search: "", year: "", rag: "", teacher: "", className: "", status: "Enrolled Student", academicYear: getAcademicYear(), term: "", dateFrom: "", dateTo: "" };
       renderTeacherDashboard();
     });
   }
@@ -1067,6 +1104,98 @@ function renderTeacherDashboard() {
       renderTeacherStudentView(all[idx]);
     });
   });
+}
+
+// ── LIVE MONITOR — see who's currently mid-test, polling every 12s ─────────
+let liveMonitorInterval = null;
+const LIVE_MONITOR_POLL_MS = 12000;
+
+function renderLiveMonitor() {
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <div style="font-size:20px;font-weight:900;color:var(--brand-dark);flex:1">📡 Live Monitor</div>
+      <button id="btn-lm-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">✕ Close</button>
+    </div>
+    <div id="lm-content"><p style="color:var(--text-soft)">Loading...</p></div>
+  `;
+  document.getElementById("btn-lm-back").addEventListener("click", () => {
+    if (liveMonitorInterval) { clearInterval(liveMonitorInterval); liveMonitorInterval = null; }
+    renderTeacherDashboard();
+  });
+  pollLiveMonitor();
+  if (liveMonitorInterval) clearInterval(liveMonitorInterval);
+  liveMonitorInterval = setInterval(pollLiveMonitor, LIVE_MONITOR_POLL_MS);
+}
+
+function pollLiveMonitor() {
+  const el = document.getElementById("lm-content");
+  if (!el) return;
+  fetch(APPS_SCRIPT_URL + "?action=getActiveDrafts&pin=" + encodeURIComponent(TEACHER_PIN))
+    .then(r => r.json())
+    .then(drafts => {
+      const el2 = document.getElementById("lm-content");
+      if (!el2) return;
+      if (drafts.error) { el2.innerHTML = `<p style="color:var(--red-c)">${drafts.error}</p>`; return; }
+      if (!drafts.length) { el2.innerHTML = `<p style="color:var(--text-soft)">No students currently mid-test.</p>`; return; }
+      el2.innerHTML = drafts.map(d => `
+        <div style="background:white;border:2px solid var(--grey-mid);border-radius:10px;padding:12px 14px;margin-bottom:8px">
+          <div style="font-weight:700;color:var(--brand-dark)">${d.name} <span style="font-weight:400;color:var(--text-soft);font-size:12px">(${d.year || ""}${d.className ? " — " + d.className : ""})</span></div>
+          <div style="font-size:12px;color:var(--text-soft);margin-top:2px">
+            Started ${new Date(d.startTimestamp).toLocaleTimeString()} · ${d.answeredCount || 0}/38 answered · last saved ${Math.round((Date.now() - new Date(d.lastSaved).getTime())/1000)}s ago
+          </div>
+        </div>
+      `).join("");
+    })
+    .catch(() => {
+      const el3 = document.getElementById("lm-content");
+      if (el3) el3.innerHTML = `<p style="color:var(--red-c)">Could not load. Check your connection.</p>`;
+    });
+}
+
+// ── QUESTION WALKTHROUGH — go through the blank paper, reveal answers on demand ──
+let walkthroughRevealed = {};
+
+function renderWalkthrough(idx) {
+  const app = document.getElementById("app");
+  if (!teacherAnswerKey || Object.keys(teacherAnswerKey).length === 0) {
+    app.innerHTML = `<p style="color:var(--text-soft)">Loading answer key...</p>`;
+    loadTeacherAnswerKey().then(() => renderWalkthrough(idx));
+    return;
+  }
+
+  const q = QUESTIONS[idx];
+  const letters = ["A", "B", "C", "D"];
+  const revealed = !!walkthroughRevealed[q.id];
+  const correctLetter = teacherAnswerKey[q.id];
+
+  const optsHtml = q.opts.map((opt, i) => {
+    const letter = letters[i];
+    const isCorrect = revealed && letter === correctLetter;
+    return `<div style="padding:10px 14px;border:2px solid ${isCorrect ? "var(--green)" : "var(--grey-mid)"};border-radius:8px;margin-bottom:6px;background:${isCorrect ? "var(--green-light)" : "white"};font-weight:${isCorrect ? "700" : "400"}">${opt}</div>`;
+  }).join("");
+
+  app.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <div style="font-size:20px;font-weight:900;color:var(--brand-dark);flex:1">📖 Walkthrough — Q${idx + 1} of ${QUESTIONS.length}</div>
+      <button id="btn-wt-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">✕ Close</button>
+    </div>
+    <div style="background:white;border:2px solid var(--grey-mid);border-radius:12px;padding:18px">
+      <div style="font-size:16px;margin-bottom:14px">${q.text}${q.display ? " <strong>" + q.display + "</strong>" : ""}</div>
+      ${optsHtml}
+      ${revealed ? "" : `<button id="btn-wt-reveal" style="margin-top:10px;background:var(--brand);color:white;border:none;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;">Reveal Answer</button>`}
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:16px">
+      <button id="btn-wt-prev" ${idx === 0 ? "disabled" : ""} style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 16px;font-weight:600;cursor:pointer;">← Previous</button>
+      <button id="btn-wt-next" ${idx === QUESTIONS.length - 1 ? "disabled" : ""} style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 16px;font-weight:600;cursor:pointer;">Next →</button>
+    </div>
+  `;
+
+  document.getElementById("btn-wt-back").addEventListener("click", () => renderTeacherDashboard());
+  document.getElementById("btn-wt-prev").addEventListener("click", () => { if (idx > 0) renderWalkthrough(idx - 1); });
+  document.getElementById("btn-wt-next").addEventListener("click", () => { if (idx < QUESTIONS.length - 1) renderWalkthrough(idx + 1); });
+  const revealBtn = document.getElementById("btn-wt-reveal");
+  if (revealBtn) revealBtn.addEventListener("click", () => { walkthroughRevealed[q.id] = true; renderWalkthrough(idx); });
 }
 
 function renderTeacherStudentView(r) {
@@ -1139,7 +1268,7 @@ function renderTeacherStudentView(r) {
 
   QUESTIONS.forEach((q, qi) => {
     const given   = r.answers ? r.answers[q.id] : null;
-    const correct = given && given !== 'IDK' && given === q.ans;
+    const correct = given && given !== 'IDK' && given === teacherAnswerKey[q.id];
     const idk     = given === 'IDK';
     const icon    = correct ? '✅' : idk ? '⬜' : '❌';
     const bg      = correct ? '#f0fdf4' : idk ? '#f8fafc' : '#fef2f2';
@@ -1176,7 +1305,7 @@ function renderTeacherStudentView(r) {
         const qi  = parseInt(card.dataset.qi);
         const q   = QUESTIONS[qi];
         const given = r.answers ? r.answers[q.id] : null;
-        const correct = given && given !== 'IDK' && given === q.ans;
+        const correct = given && given !== 'IDK' && given === teacherAnswerKey[q.id];
         const idk     = given === 'IDK' || !given;
         const show = filter==='all' || (filter==='wrong' && !correct && !idk) || (filter==='skipped' && idk);
         card.style.display = show ? 'flex' : 'none';
@@ -1194,7 +1323,7 @@ function renderTeacherStudentView(r) {
 function renderQuestionDetail(r, qIndex, filter) {
   const q = QUESTIONS[qIndex];
   const given = r.answers ? r.answers[q.id] : null;
-  const correct = given && given !== 'IDK' && given === q.ans;
+  const correct = given && given !== 'IDK' && given === teacherAnswerKey[q.id];
   const idk = given === 'IDK' || !given;
   const letters = ["A","B","C","D"];
 
@@ -1224,7 +1353,7 @@ function renderQuestionDetail(r, qIndex, filter) {
 
   q.opts.forEach((opt, i) => {
     const letter = letters[i];
-    const isCorrectAns = letter === q.ans;
+    const isCorrectAns = letter === teacherAnswerKey[q.id];
     const isSelected = letter === given;
     let cls = '';
     let tag = '';
@@ -1271,7 +1400,7 @@ function renderQuestionDetail(r, qIndex, filter) {
       const matches = (i) => {
         const qq = QUESTIONS[i];
         const gg = r.answers ? r.answers[qq.id] : null;
-        const cc = gg && gg !== 'IDK' && gg === qq.ans;
+        const cc = gg && gg !== 'IDK' && gg === teacherAnswerKey[qq.id];
         const ii = gg === 'IDK' || !gg;
         return f==='all' || (f==='wrong' && !cc && !ii) || (f==='skipped' && ii);
       };
@@ -1362,7 +1491,7 @@ function renderParentReport(r) {
   const letters38 = ['A','B','C','D'];
   QUESTIONS.forEach(q => {
     const given = r.answers ? r.answers[q.id] : null;
-    const correct = given && given !== 'IDK' && given === q.ans;
+    const correct = given && given !== 'IDK' && given === teacherAnswerKey[q.id];
     const idk = given === 'IDK';
     const icon = correct ? '✅' : idk ? '⬜' : '❌';
     const bg = correct ? '#f0fdf4' : idk ? '#f8fafc' : '#fef2f2';
@@ -1370,7 +1499,7 @@ function renderParentReport(r) {
     const givenTxt = given && given !== 'IDK'
       ? `${given} — ${(q.opts[letters38.indexOf(given)]||given).replace(/<[^>]*>/g, '')}`
       : given === 'IDK' ? "I don't know" : '–';
-    const corrTxt = `${q.ans} — ${(q.opts[letters38.indexOf(q.ans)]||q.ans).replace(/<[^>]*>/g, '')}`;
+    const corrTxt = `${teacherAnswerKey[q.id]} — ${(q.opts[letters38.indexOf(teacherAnswerKey[q.id])]||teacherAnswerKey[q.id]).replace(/<[^>]*>/g, '')}`;
     qRows += `
       <tr style="background:${bg}">
         <td style="padding:5px 8px;font-weight:700;text-align:center;border:1px solid #e2e8f0">${q.id}</td>
@@ -1450,31 +1579,47 @@ function stopQuizTimer() {
 }
 function updateQuizTimerDisplay() {
   const el = document.getElementById("quiz-timer");
-  if (!el || !state.startTime) return;
+  const textEl = document.getElementById("quiz-timer-text");
+  if (!el || !textEl || !state.startTime) return;
   const elapsedSec = Math.floor((Date.now() - state.startTime) / 1000);
   const mins = Math.floor(elapsedSec / 60);
   const secs = elapsedSec % 60;
-  el.textContent = "⏱️ " + mins + ":" + String(secs).padStart(2, "0");
-  let color = "#64748b";
-  if (elapsedSec >= 35 * 60) color = "#DC2626";
-  else if (elapsedSec >= 25 * 60) color = "#F59E0B";
+  textEl.textContent = mins + ":" + String(secs).padStart(2, "0");
+  let color = "var(--text-soft)", bg = "var(--grey-light)";
+  if (elapsedSec >= 35 * 60) { color = "var(--red-c)"; bg = "var(--red-light)"; }
+  else if (elapsedSec >= 25 * 60) { color = "var(--amber)"; bg = "var(--amber-light)"; }
   el.style.color = color;
+  el.style.background = bg;
 }
 
 
 // ── RENDER ───────────────────────────────────────────────────────────────────
 function render() {
   const app = document.getElementById("app");
-  if (state.phase === "cover")   app.innerHTML = renderCover();
+  if (state.phase === "cover") {
+    app.innerHTML = renderCover();
+    loadTutors();
+    loadClasses();
+  }
   if (state.phase === "quiz")    app.innerHTML = renderQuiz();
-  if (state.phase === "results") app.innerHTML = renderResults();
+  if (state.phase === "results") {
+    app.innerHTML = renderResults();
+    if (!state.submitted) {
+      state.submitted = true;
+      submitResults();
+    }
+  }
   attachEvents();
+  if (state.phase === "quiz") {
+    updateQuizTimerDisplay(); // sync immediately — the freshly-recreated element
+                              // would otherwise show "0:00" until the next tick
+  }
 }
 
 function renderCover() {
   return `
-    <div class="cover-title">Master Maths<br>Baseline Assessment</div>
-    <div class="cover-sub">Multiple Choice · 38 questions</div>
+    <div class="cover-title">Master Maths</div>
+    <div class="cover-sub">Multiple Choice · 38 questions &middot; Baseline Assessment</div>
 
     <div class="instr-box">
       <h3>📋 Instructions</h3>
@@ -1484,6 +1629,11 @@ function renderCover() {
         <li>No calculator — work things out on paper first.</li>
         <li>Try every question — have a go, even the challenge ones!</li>
       </ul>
+    </div>
+
+    <div class="instr-box" style="background:var(--red-light); border-color:var(--red-c);">
+      <h3>👋 A note for parents and students</h3>
+      <p style="font-size:14px;color:var(--text);margin:0;">This is a diagnostic quiz, not a test to prepare for — its purpose is to see exactly where your child is starting from, so we can support them effectively. Please let them answer independently, without help, hints, or looking anything up, and only attempt it once, so the results are a true reflection of where to begin.</p>
     </div>
 
     <div class="form-row">
@@ -1519,13 +1669,30 @@ function renderCover() {
     <div class="form-row">
       <div class="form-group">
         <label>Teacher</label>
-        <input id="f-teacher" type="text" placeholder="Teacher name">
+        <select id="f-teacher"><option value="">Loading...</option></select>
       </div>
       <div class="form-group">
         <label>Today's date</label>
         <input id="f-date" type="date" value="${new Date().toISOString().slice(0,10)}">
       </div>
     </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Class</label>
+        <select id="f-class" onchange="onClassSelectChange()"><option value="">Loading...</option></select>
+        <input id="f-class-other" type="text" placeholder="Type the class name" style="display:none;margin-top:6px;">
+      </div>
+      <div class="form-group">
+        <label>Student Status</label>
+        <select id="f-status">
+          <option>Enrolled Student</option>
+          <option>Trial Student</option>
+          <option>Test-Demo</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="server-resume-banner" style="display:none;background:#fffbeb;border:2px solid #f59e0b;border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:14px;color:#92400e;"></div>
 
     <button class="btn-next" id="btn-start">Let's go! ⭐</button>
     <div style="text-align:center;margin-top:14px">
@@ -1549,7 +1716,9 @@ function renderQuiz() {
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div class="progress-label">Question ${state.qIndex + 1} of ${total}</div>
-      <div id="quiz-timer" style="font-size:12px;font-weight:700;color:#64748b">⏱️ 0:00</div>
+      <div id="quiz-timer" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--text-soft);background:var(--grey-light);border-radius:999px;padding:4px 12px;transition:background 0.3s,color 0.3s;">
+        <span style="font-size:13px;">⏱️</span><span id="quiz-timer-text">0:00</span>
+      </div>
     </div>
   `;
 
@@ -1596,29 +1765,32 @@ function renderQuiz() {
   }
 
   html += `<button class="btn-next" id="btn-next" ${!state.selected ? "disabled" : ""}>${btnLabel}</button>`;
+  html += `<div style="text-align:center;margin-top:14px">
+    <button id="btn-teacher-mode-quiz" style="background:none;border:none;color:var(--text-soft);font-size:11px;cursor:pointer;text-decoration:underline;padding:4px 8px;">🔒 Teacher Mode</button>
+  </div>`;
   return html;
 }
 
 function renderResults() {
-  // Calculate scores
-  let correctCount = 0;
-  const secScores = { A:0, B:0, C:0, D:0, E:0, F:0, G:0, H:0 };
-  QUESTIONS.forEach(q => {
-    if (state.answers[q.id] === q.ans) {
-      correctCount++;
-      secScores[q.sec]++;
-    }
-  });
+  // Score is no longer computed here — the client doesn't have the answer
+  // key anymore. Show a loading state, then submit and render using
+  // whatever the server (the actual source of truth) sends back.
+  return `
+    <div style="text-align:center;padding:60px 20px">
+      <div style="font-size:48px;margin-bottom:16px">⏳</div>
+      <div style="font-size:20px;font-weight:700;color:var(--brand-dark)">Marking your answers...</div>
+      <div id="submit-status" class="submit-status sending" style="margin-top:16px">Just a moment</div>
+    </div>
+  `;
+}
 
-  const secA = secScores["A"];
-  const placement = getPlacement(correctCount, secA);
-  const summary = buildSummary(state.student, correctCount, secScores, placement);
-
-  // Student sees celebration only — no group or RAG shown
-  const stars = correctCount >= 29 ? "🌟🌟🌟" : correctCount >= 20 ? "⭐⭐" : "⭐";
-  const msg = correctCount >= 29
+function renderResultsScreen(result, timeTaken) {
+  const total = result.total;
+  const secScores = result.secScores;
+  const stars = total >= 29 ? "🌟🌟🌟" : total >= 20 ? "⭐⭐" : "⭐";
+  const msg = total >= 29
     ? "Fantastic work! You should be really proud of yourself!"
-    : correctCount >= 20
+    : total >= 20
     ? "Great effort! You worked really hard today!"
     : "Well done for trying every question — that takes courage!";
 
@@ -1630,7 +1802,7 @@ function renderResults() {
       </div>
       <div style="font-size:18px;color:var(--text-soft);margin-bottom:20px">${msg}</div>
       <div style="font-size:48px;font-weight:900;color:var(--brand-dark)">
-        ${correctCount}<span style="font-size:22px;font-weight:400;color:var(--text-soft)"> out of 38</span>
+        ${total}<span style="font-size:22px;font-weight:400;color:var(--text-soft)"> out of 38</span>
       </div>
     </div>
 
@@ -1666,20 +1838,25 @@ function renderResults() {
   });
 
   html += `</div>
-    <div id="submit-status" class="submit-status sending">⏳ Sending results to your teacher...</div>
+    <div id="submit-status" class="submit-status sent">✅ Results sent to your teacher!</div>
     <div style="text-align:center;margin-top:16px">
       <button id="btn-teacher-mode-results" style="background:none;border:none;color:var(--text-soft);font-size:12px;cursor:pointer;text-decoration:underline;padding:4px 8px;">🔒 Teacher Mode</button>
     </div>
   `;
 
-  // Auto-submit with full placement data — teacher sees everything
-  setTimeout(() => submitResults(correctCount, secScores, summary, placement), 800);
-
-  return html;
+  const container = document.getElementById("app") || document.querySelector(".card") || document.body;
+  container.innerHTML = html;
+  attachEvents();
 }
 
 // ── EVENTS ───────────────────────────────────────────────────────────────────
 function attachEvents() {
+  // Check for a resumable in-progress draft whenever the identifying fields change
+  ["f-name", "f-surname", "f-year", "f-school"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener(el.tagName === "SELECT" ? "change" : "blur", checkForResumableDraft);
+  });
+
   // Cover start
   const btnStart = document.getElementById("btn-start");
   if (btnStart) {
@@ -1690,16 +1867,20 @@ function attachEvents() {
       const school  = document.getElementById("f-school").value.trim();
       const teacher = document.getElementById("f-teacher").value.trim();
       const date    = document.getElementById("f-date").value;
+      const status  = document.getElementById("f-status").value;
+      const className = resolveSelectedClass();
       if (!name || !year) {
         alert("Please enter your first name and year group to start.");
         return;
       }
-      state.student = { name: name + (surname ? " " + surname : ""), year, school, teacher, date };
+      state.student = { name: name + (surname ? " " + surname : ""), year, school, teacher, date, status, className };
       state.startTime = Date.now();
+      state.startTimestamp = new Date().toISOString();
       state.phase = "quiz";
       state.qIndex = 0;
       render();
       startQuizTimer();
+      startDraftAutoSave();
     });
   }
 
@@ -1755,10 +1936,17 @@ function attachEvents() {
       renderTeacherPin();
     });
   }
+  const btnTeacherQuiz = document.getElementById("btn-teacher-mode-quiz");
+  if (btnTeacherQuiz) {
+    btnTeacherQuiz.addEventListener("click", () => {
+      renderTeacherPin();
+    });
+  }
 }
 
 // ── SUBMIT TO GOOGLE SHEETS ──────────────────────────────────────────────────
-function submitResults(total, secScores, summary, placement) {
+function submitResults() {
+  stopDraftAutoSave();
   const elapsedMs  = Date.now() - (state.startTime || Date.now());
   const mins       = Math.floor(elapsedMs / 60000);
   const secs       = Math.floor((elapsedMs % 60000) / 1000);
@@ -1770,72 +1958,180 @@ function submitResults(total, secScores, summary, placement) {
     school:      state.student.school,
     teacher:     state.student.teacher,
     date:        state.student.date,
+    status:      state.student.status,
+    className:   state.student.className,
     timestamp:   new Date().toISOString(),
     assessment:  "Master",
     timeTaken:   timeTaken,
-    total:       total,
-    rag:         placement.rag,
-    placement:   placement.group,
-    teacherNote: placement.teacherNote,
-    secA:        secScores.A,
-    secB:        secScores.B,
-    secC:        secScores.C,
-    secD:        secScores.D,
-    secE:        secScores.E,
-    secF:        secScores.F,
-    secG:        secScores.G,
-    secH:        secScores.H,
-    summary:     summary,
     answers:     JSON.stringify(state.answers),
   };
 
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
-    document.getElementById("submit-status").className = "submit-status error";
-    document.getElementById("submit-status").textContent =
-      "⚠️ Results not sent — Apps Script URL not configured yet. Score saved locally.";
-    return;
-  }
-
-  // Cache locally too, so Teacher Mode works even if this device goes offline later
-  saveResultsToStore({
-    timestamp: payload.timestamp,
-    name: state.student.name,
-    year: state.student.year,
-    school: state.student.school,
-    teacher: state.student.teacher,
-    date: state.student.date,
-    total: total,
-    rag: placement.rag,
-    placement: placement.group,
-    teacherNote: placement.teacherNote,
-    timeTaken: timeTaken,
-    secScores: secScores,
-    answers: state.answers,
-    tutorComment: "",
-  });
-
-  fetch(APPS_SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  }).then(() => {
-    const el = document.getElementById("submit-status");
-    if (el) {
-      el.className = "submit-status sent";
-      el.textContent = "✅ Results sent to your teacher!";
-    }
-  }).catch(() => {
     const el = document.getElementById("submit-status");
     if (el) {
       el.className = "submit-status error";
-      el.textContent = "⚠️ Could not send results. Please tell your teacher.";
+      el.textContent = "⚠️ Results not sent — Apps Script URL not configured yet.";
     }
-  });
+    return;
+  }
+
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify(payload),
+  })
+    .then(r => r.json())
+    .then(result => {
+      if (result.status !== "ok") throw new Error(result.message || "Server returned an error status");
+      renderResultsScreen(result, timeTaken);
+      // Cache locally too, so Teacher Mode works even if this device goes offline later
+      saveResultsToStore({
+        timestamp: payload.timestamp, name: state.student.name, year: state.student.year,
+        school: state.student.school, teacher: state.student.teacher, date: state.student.date,
+        total: result.total, rag: result.rag, placement: result.group, teacherNote: result.teacherNote,
+        timeTaken: timeTaken, secScores: result.secScores, answers: state.answers, tutorComment: "",
+      });
+    })
+    .catch(err => {
+      console.error("Master submission failed:", err); // visible in browser dev tools for diagnosis
+      const el = document.getElementById("submit-status");
+      if (el) {
+        el.className = "submit-status error";
+        el.innerHTML = "⚠️ Could not send results. Your answers are safely saved — please try again."
+          + '<br><button id="btn-retry-submit" style="margin-top:8px;background:var(--brand);border:none;border-radius:8px;padding:8px 16px;font-weight:700;cursor:pointer;color:white;">Try Again</button>';
+        const retryBtn = document.getElementById("btn-retry-submit");
+        if (retryBtn) retryBtn.addEventListener("click", () => { state.submitted = false; render(); });
+      }
+    });
 }
+
+// ── TUTOR & CLASS DROPDOWNS (self-managed, same pattern as every other paper) ──
+function loadTutors() {
+  const sel = document.getElementById("f-teacher");
+  if (!sel) return;
+  const fallback = ["Ms Smith", "Aqil", "Anisha", "Other"];
+  function populate(names) {
+    sel.innerHTML = "";
+    names.forEach(name => { const opt = document.createElement("option"); opt.value = name; opt.textContent = name; sel.appendChild(opt); });
+  }
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) { populate(fallback); return; }
+  fetch(APPS_SCRIPT_URL + "?action=getTutors")
+    .then(r => r.json())
+    .then(data => populate(data.tutors && data.tutors.length ? data.tutors : fallback))
+    .catch(() => populate(fallback));
+}
+
+function loadClasses() {
+  const sel = document.getElementById("f-class");
+  if (!sel) return;
+  const fallback = ["Other"];
+  function populate(names) {
+    sel.innerHTML = "";
+    names.forEach(name => { const opt = document.createElement("option"); opt.value = name; opt.textContent = name; sel.appendChild(opt); });
+    onClassSelectChange();
+  }
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) { populate(fallback); return; }
+  fetch(APPS_SCRIPT_URL + "?action=getClasses")
+    .then(r => r.json())
+    .then(data => populate(data.classes && data.classes.length ? data.classes : fallback))
+    .catch(() => populate(fallback));
+}
+function onClassSelectChange() {
+  const sel = document.getElementById("f-class");
+  const other = document.getElementById("f-class-other");
+  if (!sel || !other) return;
+  other.style.display = (sel.value === "Other") ? "block" : "none";
+}
+function resolveSelectedClass() {
+  const sel = document.getElementById("f-class");
+  if (!sel) return "";
+  if (sel.value === "Other") {
+    const typed = document.getElementById("f-class-other").value.trim();
+    return typed || "Other";
+  }
+  return sel.value;
+}
+
+// ── SERVER-SIDE DRAFT AUTO-SAVE & RESUME ─────────────────────────────────────
+let draftAutoSaveInterval = null;
+const DRAFT_AUTOSAVE_MS = 20000;
+
+function startDraftAutoSave() {
+  if (draftAutoSaveInterval) clearInterval(draftAutoSaveInterval);
+  draftAutoSaveInterval = setInterval(() => {
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR") || !state.student) return;
+    fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({
+        action: "saveDraft",
+        name: state.student.name, year: state.student.year, school: state.student.school,
+        teacher: state.student.teacher, status: state.student.status, className: state.student.className,
+        startTimestamp: state.startTimestamp,
+        answers: JSON.stringify(state.answers)
+      })
+    }).catch(() => {});
+  }, DRAFT_AUTOSAVE_MS);
+}
+function stopDraftAutoSave() {
+  if (draftAutoSaveInterval) { clearInterval(draftAutoSaveInterval); draftAutoSaveInterval = null; }
+}
+
+function checkForResumableDraft() {
+  const name = document.getElementById("f-name").value.trim();
+  const surname = document.getElementById("f-surname").value.trim();
+  const fullName = name + (surname ? " " + surname : "");
+  const year = document.getElementById("f-year").value;
+  const school = document.getElementById("f-school").value.trim();
+  if (!name || !year || !school || !APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) return;
+  fetch(APPS_SCRIPT_URL + "?action=getDraft&name=" + encodeURIComponent(fullName) + "&year=" + encodeURIComponent(year) + "&school=" + encodeURIComponent(school))
+    .then(r => r.json())
+    .then(draft => {
+      const banner = document.getElementById("server-resume-banner");
+      if (!banner) return;
+      if (draft && draft.name) {
+        banner.style.display = "block";
+        banner.innerHTML = `An in-progress attempt was found (${draft.answeredCount || 0} questions answered, last saved ${new Date(draft.lastSaved).toLocaleString()}).
+          <button id="btn-resume-server-draft" type="button" style="margin-left:8px;">Resume</button>
+          <button id="btn-fresh-start-server" type="button" style="margin-left:4px;">Start Fresh</button>`;
+        document.getElementById("btn-resume-server-draft").addEventListener("click", () => resumeServerDraft(fullName, year, school, draft));
+        document.getElementById("btn-fresh-start-server").addEventListener("click", () => { banner.style.display = "none"; });
+      } else {
+        banner.style.display = "none";
+      }
+    }).catch(() => {});
+}
+
+function resumeServerDraft(fullName, year, school, draft) {
+  state.student = { name: fullName, year, school, teacher: draft.teacher, date: new Date().toISOString().slice(0,10), status: draft.status, className: draft.className };
+  state.startTime = Date.now() - (Date.now() - new Date(draft.startTimestamp).getTime());
+  state.startTimestamp = draft.startTimestamp;
+  try { state.answers = JSON.parse(draft.answers || "{}"); } catch(e) { state.answers = {}; }
+  state.qIndex = Object.keys(state.answers).length;
+  state.phase = "quiz";
+  render();
+  startQuizTimer();
+  startDraftAutoSave();
+}
+
+// ── DEEP LINK from the submission email ──────────────────────────────────────
+function getDeepLinkParams() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("view") !== "student") return null;
+  return {
+    name: params.get("name") || "", year: params.get("year") || "",
+    school: params.get("school") || "", teacher: params.get("teacher") || "",
+    timestamp: params.get("timestamp") || ""
+  };
+}
+const pendingDeepLink = getDeepLinkParams();
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 render();
+if (pendingDeepLink) {
+  const btnTeacherMode = document.getElementById("btn-teacher-mode");
+  if (btnTeacherMode) btnTeacherMode.click();
+}
 </script>
 </body>
 </html>
