@@ -1,0 +1,2571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aim High — KS3 Stage 1 Science Baseline (Non-Calculator)</title>
+<style>
+  :root{
+    --ink:#1a2332;
+    --ink-soft:#2c3a52;
+    --crimson:#137a6f;
+    --crimson-dark:#0d5a52;
+    --paper:#f5f7f5;
+    --paper-line:#dde4de;
+    --gold:#b08d3e;
+    --green:#3a7d5c;
+    --amber:#c07e1f;
+    --red:#a8283a;
+    --white:#fffdf9;
+  }
+  *{box-sizing:border-box;}
+  /* Disable CSS scroll anchoring — without this, if content above the
+     viewport shifts height slightly after initial paint (e.g. a
+     diagram's SVG settling a beat after the question text renders),
+     the browser silently nudges the scroll position to compensate,
+     which can drift the page down by a question or two without any
+     explicit scroll call — exactly the "loads scrolled past Q1" bug. */
+  html{overflow-anchor:none;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    background:var(--ink);
+    color:var(--ink);
+  }
+  .display{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;}
+  .mono{font-family:"SF Mono",Consolas,Menlo,monospace;}
+
+  /* ---------- Cover / Setup Screen ---------- */
+  #coverScreen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .cover-card{
+    background:var(--paper);
+    max-width:640px;
+    width:100%;
+    border-radius:4px;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+    overflow:hidden;
+  }
+  .cover-band{
+    background:var(--crimson);
+    color:var(--white);
+    padding:22px 32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+  }
+  .cover-band .brand{font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;}
+  .cover-band .code{font-family:"SF Mono",Consolas,monospace;font-size:12px;opacity:.7;}
+  .cover-body{padding:32px;}
+  .cover-title{
+    font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    font-size:30px;
+    color:var(--ink);
+    margin:0 0 4px;
+    line-height:1.15;
+  }
+  .cover-sub{
+    font-size:15px;
+    color:var(--ink-soft);
+    margin:0 0 22px;
+    padding-bottom:20px;
+    border-bottom:2px solid var(--paper-line);
+  }
+  .cover-meta{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 20px;
+    font-size:13.5px;
+    margin-bottom:24px;
+  }
+  .cover-meta div{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dotted var(--paper-line);}
+  .cover-meta span:first-child{color:var(--ink-soft);}
+  .cover-meta span:last-child{font-weight:600;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;}
+  .field input, .field select{
+    width:100%;
+    padding:11px 12px;
+    border:1.5px solid var(--paper-line);
+    border-radius:3px;
+    font-size:15px;
+    background:var(--white);
+    color:var(--ink);
+    font-family:inherit;
+  }
+  .field input:focus, .field select:focus{outline:none;border-color:var(--crimson);}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .instructions{
+    background:var(--white);
+    border:1px solid var(--paper-line);
+    border-left:4px solid var(--gold);
+    padding:14px 16px;
+    font-size:13.5px;
+    line-height:1.6;
+    color:var(--ink-soft);
+    margin-bottom:22px;
+    border-radius:2px;
+  }
+  .instructions strong{color:var(--ink);}
+  .start-btn{
+    width:100%;
+    padding:16px;
+    background:var(--crimson);
+    color:var(--white);
+    border:none;
+    border-radius:3px;
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:.03em;
+    cursor:pointer;
+    transition:background .15s;
+  }
+  .start-btn:hover{background:var(--crimson-dark);}
+  .start-btn:disabled{background:#999;cursor:not-allowed;}
+
+  /* ---------- Exam Screen ---------- */
+  #examScreen{display:none;min-height:100vh;background:var(--paper);}
+  .exam-header{
+    position:sticky;top:0;z-index:50;
+    background:var(--ink);
+    color:var(--white);
+    padding:12px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 2px 12px rgba(0,0,0,.25);
+  }
+  .exam-header .paper-name{font-size:13px;letter-spacing:.06em;}
+  .exam-header .paper-name b{color:var(--gold);}
+  #timerBox{
+    font-family:"SF Mono",Consolas,monospace;
+    font-size:20px;
+    font-weight:700;
+    padding:6px 16px;
+    border-radius:20px;
+    background:rgba(255,255,255,.1);
+    letter-spacing:.03em;
+  }
+  #timerBox.warn{background:var(--amber);color:var(--ink);}
+  #timerBox.danger{background:var(--crimson);color:var(--white);animation:pulse 1s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+  .progress-track{height:4px;background:rgba(255,255,255,.15);}
+  .progress-fill{height:100%;background:var(--gold);transition:width .3s;}
+
+  .exam-wrap{max-width:760px;margin:0 auto;padding:28px 20px 100px;}
+  .qcard{
+    background:var(--white);
+    border:1px solid var(--paper-line);
+    border-radius:4px;
+    margin-bottom:18px;
+    overflow:hidden;
+  }
+  .qcard-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 18px;
+    background:var(--paper);
+    border-bottom:1px solid var(--paper-line);
+  }
+  .qnum{font-weight:800;font-size:15px;color:var(--ink);}
+  .qmarks{font-size:12px;color:var(--ink-soft);font-weight:600;background:var(--white);border:1px solid var(--paper-line);padding:3px 9px;border-radius:12px;}
+  .qbody{padding:18px;}
+  .qtext{font-size:15.5px;line-height:1.65;color:var(--ink);margin-bottom:14px;}
+  .qtext .expr{font-family:"SF Mono",Consolas,monospace;background:var(--paper);padding:2px 6px;border-radius:3px;}
+  .vfrac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px;line-height:1.15;}
+  .vfrac .vf-num{border-bottom:1.3px solid currentColor;padding:0 4px 1px;}
+  .vfrac .vf-den{padding:1px 4px 0;}
+  .qdiagram{display:flex;justify-content:center;margin:14px 0;}
+  .stat-table{border-collapse:collapse;font-size:14px;}
+  .stat-table th,.stat-table td{border:1.5px solid var(--ink);padding:8px 16px;text-align:center;}
+  .stat-table th{background:var(--paper);font-weight:700;}
+  .answer-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px;}
+  .answer-row label{font-size:13.5px;color:var(--ink-soft);font-weight:600;}
+  .unit-suffix{font-size:14px;color:var(--ink-soft);font-weight:600;}
+  .ans-input{
+    padding:9px 11px;
+    border:1.5px solid var(--paper-line);
+    border-radius:3px;
+    font-size:15px;
+    font-family:"SF Mono",Consolas,monospace;
+    min-width:110px;
+    background:var(--white);
+  }
+  .ans-input:focus{outline:none;border-color:var(--crimson);}
+  .hint{font-size:12px;color:#999;margin-top:6px;}
+
+  /* MCQ options */
+  .mcq-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
+  @media (max-width:520px){.mcq-grid{grid-template-columns:1fr;}}
+  .mcq-opt{
+    display:flex;align-items:center;gap:10px;
+    text-align:left;
+    padding:11px 14px;
+    border:1.5px solid var(--paper-line);
+    border-radius:6px;
+    background:var(--white);
+    font-size:14.5px;
+    color:var(--ink);
+    cursor:pointer;
+    transition:border-color .12s, background .12s;
+  }
+  .mcq-opt:hover{border-color:var(--crimson);}
+  .mcq-opt.mcq-selected{border-color:var(--crimson);background:#eef7f5;font-weight:600;}
+  .mcq-letter{
+    flex:none;
+    width:24px;height:24px;
+    border-radius:50%;
+    background:var(--paper-line);
+    color:var(--ink-soft);
+    font-size:12.5px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .mcq-opt.mcq-selected .mcq-letter{background:var(--crimson);color:#fff;}
+  .mcq-text{flex:1;line-height:1.35;}
+
+  /* Vertical fraction input */
+  .frac-input{display:inline-flex;flex-direction:column;align-items:center;gap:3px;}
+  .frac-input input{
+    width:56px;text-align:center;padding:7px 4px;
+    border:1.5px solid var(--paper-line);border-radius:3px;
+    font-size:15px;font-family:"SF Mono",Consolas,monospace;background:var(--white);
+  }
+  .frac-input input:focus{outline:none;border-color:var(--crimson);}
+  .frac-divider{width:56px;height:2px;background:var(--ink);}
+
+  /* Quick-insert toolbar for expression answers */
+  .qtoolbar{display:flex;gap:6px;margin-top:8px;}
+  .qtoolbar button{
+    padding:5px 10px;font-size:13px;font-family:"SF Mono",Consolas,monospace;
+    background:var(--paper);border:1px solid var(--paper-line);border-radius:4px;
+    cursor:pointer;color:var(--ink);
+  }
+  .qtoolbar button:hover{background:var(--white);border-color:var(--ink);}
+
+  .submit-bar{
+    position:fixed;bottom:0;left:0;right:0;
+    background:var(--ink);
+    padding:14px 20px;
+    display:flex;justify-content:center;
+    box-shadow:0 -4px 16px rgba(0,0,0,.3);
+    z-index:50;
+  }
+  .submit-btn{
+    padding:14px 40px;
+    background:var(--crimson);
+    color:var(--white);
+    border:none;border-radius:24px;
+    font-size:15px;font-weight:700;
+    cursor:pointer;
+  }
+  .submit-btn:hover{background:var(--crimson-dark);}
+
+  /* ---------- Results Screen ---------- */
+  #resultsScreen{display:none;min-height:100vh;background:var(--paper);padding:32px 20px 60px;}
+  .results-wrap{max-width:780px;margin:0 auto;}
+  .result-hero{
+    background:linear-gradient(135deg,var(--ink) 0%,var(--ink-soft) 100%);
+    color:var(--white);
+    border-radius:8px;
+    padding:36px 32px;
+    text-align:center;
+    margin-bottom:22px;
+  }
+  .result-hero .grade-badge{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:88px;height:88px;
+    border-radius:50%;
+    background:var(--gold);
+    color:var(--ink);
+    font-family:"Iowan Old Style",Georgia,serif;
+    font-size:40px;font-weight:800;
+    margin-bottom:14px;
+    border:4px solid rgba(255,255,255,.3);
+  }
+  .result-hero h2{margin:0 0 6px;font-size:22px;font-family:"Iowan Old Style",Georgia,serif;}
+  .result-hero p{margin:0;opacity:.85;font-size:14px;}
+  .score-strip{display:flex;gap:14px;margin-bottom:22px;flex-wrap:wrap;}
+  .score-box{
+    flex:1;min-width:140px;
+    background:var(--white);
+    border:1px solid var(--paper-line);
+    border-radius:6px;
+    padding:16px;
+    text-align:center;
+  }
+  .score-box .num{font-size:26px;font-weight:800;color:var(--ink);}
+  .score-box .lbl{font-size:11.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+
+  .section-title{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);margin:26px 0 12px;}
+  .topic-card{
+    background:var(--white);border:1px solid var(--paper-line);border-radius:6px;
+    padding:14px 16px;margin-bottom:10px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .rag-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
+  .rag-green{background:var(--green);}
+  .rag-amber{background:var(--amber);}
+  .rag-red{background:var(--red);}
+  .topic-info{flex:1;}
+  .topic-info .tname{font-weight:700;font-size:14.5px;color:var(--ink);}
+  .topic-info .tscore{font-size:12.5px;color:var(--ink-soft);}
+  .topic-bar-track{width:100px;height:7px;background:var(--paper-line);border-radius:4px;overflow:hidden;flex-shrink:0;}
+  .topic-bar-fill{height:100%;border-radius:4px;}
+
+  .feedback-card{
+    background:var(--white);border:1px solid var(--paper-line);border-radius:6px;
+    padding:18px 20px;margin-bottom:12px;
+  }
+  .feedback-card h4{margin:0 0 10px;font-size:14px;display:flex;align-items:center;gap:8px;}
+  .feedback-card ul{margin:0;padding-left:20px;font-size:13.5px;line-height:1.8;color:var(--ink-soft);}
+  .feedback-card.strength{border-left:4px solid var(--green);}
+  .feedback-card.weakness{border-left:4px solid var(--crimson);}
+
+  .action-row{display:flex;gap:10px;margin-top:24px;}
+  .btn-secondary{
+    flex:1;padding:13px;background:var(--white);border:1.5px solid var(--paper-line);
+    border-radius:24px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--ink);
+  }
+  .btn-secondary:hover{border-color:var(--ink);}
+
+  @media print{
+    body *{visibility:hidden;}
+    #resultsScreen, #resultsScreen *, #studentDetailPanel, #studentDetailPanel *, #printablePaperPanel, #printablePaperPanel *{visibility:visible;}
+    #resultsScreen{position:absolute;top:0;left:0;background:white;padding:20px;}
+    #studentDetailPanel{position:absolute;top:0;left:0;background:white;padding:20px;}
+    #printablePaperPanel{position:absolute;top:0;left:0;background:white;padding:0;}
+    .action-row, .no-print{display:none !important;}
+  }
+
+  /* Teacher panel */
+  #teacherFab{
+    position:fixed;bottom:16px;right:16px;
+    display:flex;align-items:center;gap:7px;
+    padding:10px 16px;border-radius:24px;
+    background:var(--ink);color:var(--white);
+    border:none;font-size:13px;font-weight:700;cursor:pointer;
+    box-shadow:0 4px 12px rgba(0,0,0,.3);
+    z-index:60;
+    opacity:.55;
+  }
+  #teacherFab:hover{opacity:1;}
+  #teacherModal{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;
+    align-items:center;justify-content:center;padding:20px;
+  }
+  .teacher-box{background:white;border-radius:8px;max-width:420px;width:100%;padding:24px;}
+  .teacher-box h3{margin-top:0;}
+  .teacher-box input{width:100%;padding:10px;font-size:18px;letter-spacing:.3em;text-align:center;border:1.5px solid var(--paper-line);border-radius:4px;margin:12px 0;}
+  #qlaPanel{display:none;position:fixed;inset:0;background:var(--paper);z-index:90;overflow-y:auto;padding:24px;}
+  #qlaPanel .qla-close{position:fixed;top:16px;right:16px;background:var(--ink);color:white;border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;z-index:95;}
+
+  /* Custom confirm/alert modal (native dialogs get blocked in sandboxed previews) */
+  #customDialog{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;align-items:center;justify-content:center;padding:20px;}
+  .dialog-box{background:white;border-radius:8px;max-width:380px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.4);}
+  .dialog-box p{font-size:14.5px;line-height:1.6;color:var(--ink);margin:0 0 20px;}
+  .dialog-actions{display:flex;gap:10px;}
+  .dialog-actions button{flex:1;padding:12px;border-radius:24px;border:none;font-weight:700;font-size:13.5px;cursor:pointer;}
+  .dialog-actions .btn-ok{background:var(--crimson);color:white;}
+  .dialog-actions .btn-cancel{background:var(--paper);border:1.5px solid var(--paper-line);color:var(--ink);}
+  .qla-table{width:100%;border-collapse:collapse;font-size:13px;background:white;}
+  .qla-table th,.qla-table td{padding:8px 10px;border-bottom:1px solid var(--paper-line);text-align:left;}
+  .qla-table th{background:var(--ink);color:white;font-size:11.5px;text-transform:uppercase;}
+  .tag-correct{color:var(--green);font-weight:700;}
+  .tag-incorrect{color:var(--crimson);font-weight:700;}
+
+  /* Marking loader */
+  .spinner{
+    width:40px;height:40px;margin:0 auto;
+    border:4px solid rgba(255,255,255,.2);
+    border-top-color:var(--gold);
+    border-radius:50%;
+    animation:spin 0.8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* Printable report letterhead + CTA */
+  .report-letterhead{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:3px solid var(--crimson);padding-bottom:12px;margin-bottom:22px;
+  }
+  .report-letterhead .rl-brand{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-size:22px;font-weight:700;color:var(--ink);}
+  .report-letterhead .rl-tag{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+  .report-letterhead .rl-meta{text-align:right;font-size:11px;color:var(--ink-soft);}
+  .cta-card{
+    background:linear-gradient(135deg,var(--ink) 0%,var(--ink-soft) 100%);color:var(--white);
+    border-radius:8px;padding:18px 20px;margin-top:14px;
+  }
+  .cta-card h4{margin:0 0 6px;font-size:14.5px;}
+  .cta-card p{margin:0;font-size:13px;opacity:.9;line-height:1.6;}
+
+  @media print{
+    @page{ size:A4; margin:14mm; }
+    .qcard{ padding:0; margin-bottom:10px; }
+    .result-hero{ padding:22px 24px; }
+    .score-strip{ margin-bottom:14px; }
+    .topic-card{ padding:10px 14px; margin-bottom:6px; }
+  }
+
+  /* Teacher Dashboard */
+  .dash-filter-bar{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;
+    background:var(--white);border:1px solid var(--paper-line);border-radius:6px;
+    padding:16px;margin-bottom:18px;
+  }
+  .dash-filter-bar .field{margin-bottom:0;}
+  .dash-reset-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .dash-count{font-size:13px;color:var(--ink-soft);}
+  .results-table{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--white);}
+  .results-table th,.results-table td{padding:8px 10px;border-bottom:1px solid var(--paper-line);text-align:left;white-space:nowrap;}
+  .results-table th{background:var(--ink);color:white;font-size:10.5px;text-transform:uppercase;position:sticky;top:0;}
+  .results-table th:nth-child(2),.results-table td:nth-child(2){position:sticky;left:0;background:var(--white);z-index:2;box-shadow:2px 0 4px rgba(0,0,0,.06);}
+  .results-table th:nth-child(2){background:var(--ink);z-index:3;}
+  .teacher-navbar{position:sticky;top:0;z-index:20;display:flex;gap:8px;margin-bottom:16px;padding:8px 0;background:var(--paper);}
+  .teacher-navbar button{background:var(--ink);color:var(--white);border:none;border-radius:20px;padding:8px 16px;font-size:12.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;}
+  .teacher-navbar button:hover{background:var(--crimson);}
+  .student-name-link{cursor:pointer;color:var(--crimson);font-weight:600;text-decoration:none;}
+  .student-name-link:hover{text-decoration:underline;}
+  .results-table tbody tr:hover{background:var(--paper);}
+  .grade-pill{display:inline-block;padding:2px 8px;border-radius:10px;font-weight:700;font-size:12px;}
+  .grade-pill.g-high{background:#e3f0e9;color:var(--green);}
+  .grade-pill.g-mid{background:#f5e9d3;color:var(--amber);}
+  .grade-pill.g-low{background:#f3dfe1;color:var(--crimson);}
+  .grade-pill.g-exceptional{background:#f7edd9;color:var(--gold);}
+  .table-scroll{overflow-x:auto;border:1px solid var(--paper-line);border-radius:6px;}
+</style>
+</head>
+<body>
+
+<!-- ============ COVER SCREEN ============ -->
+<div id="coverScreen">
+  <div class="cover-card">
+    <div class="cover-band">
+      <span class="brand display">Aim High Tuition</span>
+      <span class="code">KS3-S1-SCI-NC</span>
+    </div>
+    <div class="cover-body">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+        <div>
+          <h1 class="cover-title">KS3 Stage 1 Science</h1>
+          <p class="cover-sub">Combined Baseline Assessment (Non-Calculator)</p>
+        </div>
+        <svg width="52" height="52" viewBox="0 0 48 48" style="flex-shrink:0;" aria-label="No calculator permitted">
+          <rect x="10" y="4" width="28" height="40" rx="3" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+          <rect x="14" y="9" width="20" height="8" fill="none" stroke="var(--ink)" stroke-width="2"/>
+          <circle cx="18" cy="24" r="1.8" fill="var(--ink)"/><circle cx="24" cy="24" r="1.8" fill="var(--ink)"/><circle cx="30" cy="24" r="1.8" fill="var(--ink)"/>
+          <circle cx="18" cy="31" r="1.8" fill="var(--ink)"/><circle cx="24" cy="31" r="1.8" fill="var(--ink)"/><circle cx="30" cy="31" r="1.8" fill="var(--ink)"/>
+          <circle cx="18" cy="38" r="1.8" fill="var(--ink)"/><circle cx="24" cy="38" r="1.8" fill="var(--ink)"/><circle cx="30" cy="38" r="1.8" fill="var(--ink)"/>
+          <line x1="4" y1="44" x2="44" y2="4" stroke="var(--crimson)" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="cover-meta">
+        <div><span>Time allowed</span><span id="metaTime">50 minutes</span></div>
+        <div><span>Total marks</span><span id="metaMarks">68</span></div>
+        <div><span>Questions</span><span id="metaQ">36</span></div>
+        <div><span>Calculator</span><span>Not permitted</span></div>
+      </div>
+
+      <div class="instructions">
+        <strong>Instructions.</strong> Answer every question in the boxes provided. You must show your final answer only — this is auto-marked, so partial working is not assessed on this diagnostic paper (except where a question is split into separate parts). Where a question asks for a number, include the correct unit if one is shown. The exam will auto-submit when the timer reaches zero, and your paper is marked securely on the server once submitted.
+      </div>
+
+      <div class="instructions" style="border-left:4px solid var(--crimson); background:#fdf1f1; margin-top:12px;">
+        <strong>Important — read before you begin.</strong> This is a diagnostic baseline, not a graded exam. Its only purpose is to find out exactly what you already know and where you need support, so we can help you properly. Complete it entirely on your own — do not use notes, textbooks, the internet, AI tools, or ask anyone for help. If you use any of these, the result won't reflect your real starting point, and we won't be able to give you the right support going forward. You should only attempt this paper once. Your first attempt is the one that counts, regardless of circumstances — so please take your time and try your best.
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>First name</label>
+          <input type="text" id="studentFirstName" placeholder="e.g. Lila" autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label>Last name</label>
+          <input type="text" id="studentSurname" placeholder="e.g. Ahmed" autocomplete="family-name">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Year Group</label>
+          <select id="yearGroup">
+            <option value="Y7">Year 7</option>
+            <option value="Y8">Year 8</option>
+            <option value="Y9">Year 9</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Class</label>
+          <select id="classGroup" onchange="onClassSelectChange()">
+            <option value="">Loading classes…</option>
+          </select>
+          <input type="text" id="classGroupOther" placeholder="Type the class name" autocomplete="off" style="display:none;margin-top:8px;">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>School</label>
+          <input type="text" id="schoolName" placeholder="School name" autocomplete="off">
+        </div>
+        <div class="field">
+          <label>Tutor</label>
+          <select id="tutorSelect">
+            <option value="">Loading tutors…</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Student Status</label>
+          <select id="studentStatus">
+            <option value="Enrolled Student">Enrolled Student</option>
+            <option value="Trial Student">Trial Student</option>
+            <option value="Test-Demo">Test / Demo</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="start-btn" id="startBtn" onclick="checkForDraftThenStart()">Begin Paper 1 →</button>
+    </div>
+  </div>
+</div>
+<div id="printablePaperPanel" style="display:none;position:fixed;inset:0;background:var(--paper);z-index:97;overflow-y:auto;padding:24px;">
+  <button class="qla-close no-print" onclick="closePrintablePaperPanel()">✕</button>
+  <div class="no-print" style="max-width:820px;margin:0 auto 16px;"><button class="btn-secondary" onclick="window.print()">Print / Save as PDF</button></div>
+  <div id="printablePaperContent" style="max-width:820px;margin:0 auto;background:white;padding:32px;"></div>
+</div>
+
+<!-- ============ EXAM SCREEN ============ -->
+<div id="examScreen">
+  <div class="exam-header">
+    <div class="paper-name">Aim High &nbsp;·&nbsp; <b>KS3 Stage 1 Science Baseline</b> &nbsp;(Non-Calc)</div>
+    <div id="timerBox">50:00</div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <div class="exam-wrap" id="examWrap"></div>
+  <div class="submit-bar">
+    <button class="submit-btn" onclick="confirmSubmit()">Submit Paper</button>
+  </div>
+</div>
+
+<!-- ============ RESULTS SCREEN ============ -->
+<div id="resultsScreen">
+  <div class="results-wrap" id="resultsWrap"></div>
+</div>
+
+<!-- Teacher access -->
+<button id="teacherFab" onclick="openTeacherModal()" title="Teacher View">🔑 Teacher View</button>
+<div id="teacherModal">
+  <div class="teacher-box">
+    <h3>Teacher View</h3>
+    <p style="font-size:13px;color:#666;">Enter PIN to view Question-Level Analysis.</p>
+    <input type="password" id="teacherPin" maxlength="4" inputmode="numeric">
+    <div style="display:flex;gap:8px;">
+      <button class="btn-secondary" onclick="closeTeacherModal()">Cancel</button>
+      <button class="start-btn" onclick="checkTeacherPin()">Unlock</button>
+    </div>
+  </div>
+</div>
+<div id="qlaPanel">
+  <button class="qla-close" onclick="closeQla()">✕</button>
+  <div id="qlaContent" style="max-width:900px;margin:0 auto;"></div>
+</div>
+<div id="dashboardPanel" style="display:none;position:fixed;inset:0;background:var(--paper);z-index:90;overflow-y:auto;padding:24px;">
+  <button class="qla-close" onclick="closeDashboardPanel()">✕</button>
+  <div class="teacher-navbar"><button onclick="exitTeacherViewToHome()">🏠 Home</button><button onclick="openWalkthrough()">📖 Walkthrough</button><button onclick="openPrintablePaper()">🖨️ Print Blank Paper</button></div>
+  <div id="dashboardContent" style="max-width:1100px;margin:0 auto;"></div>
+</div>
+<div id="liveMonitorPanel" style="display:none;position:fixed;inset:0;background:var(--paper);z-index:96;overflow-y:auto;padding:24px;">
+  <button class="qla-close" onclick="closeLiveMonitor()">✕</button>
+  <div class="teacher-navbar"><button onclick="exitTeacherViewToHome()">🏠 Home</button><button onclick="backToDashboardFrom('liveMonitorPanel')">← Dashboard</button><button onclick="openWalkthrough()">📖 Walkthrough</button></div>
+  <div id="liveMonitorContent" style="max-width:1000px;margin:0 auto;"></div>
+</div>
+<div id="studentDetailPanel" style="display:none;position:fixed;inset:0;background:var(--paper);z-index:98;overflow-y:auto;padding:24px;">
+  <button class="qla-close no-print" onclick="closeStudentDetailPanel()">✕</button>
+  <div class="teacher-navbar no-print"><button onclick="exitTeacherViewToHome()">🏠 Home</button><button onclick="backToDashboardFrom('studentDetailPanel')">← Dashboard</button><button onclick="openWalkthrough()">📖 Walkthrough</button></div>
+  <div id="studentDetailContent" style="max-width:820px;margin:0 auto;"></div>
+</div>
+<div id="walkthroughPanel" style="display:none;position:fixed;inset:0;background:var(--paper);z-index:99;overflow-y:auto;padding:24px;">
+  <button class="qla-close" onclick="closeWalkthroughPanel()">✕</button>
+  <div class="teacher-navbar"><button onclick="exitTeacherViewToHome()">🏠 Home</button><button onclick="backToDashboardFrom('walkthroughPanel')">← Dashboard</button></div>
+  <div id="walkthroughContent" style="max-width:720px;margin:0 auto;"></div>
+</div>
+
+<!-- Custom dialog replacing alert()/confirm() (blocked in some sandboxed previews) -->
+<div id="customDialog">
+  <div class="dialog-box">
+    <p id="dialogMsg"></p>
+    <div class="dialog-actions" id="dialogActions"></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   AIM HIGH — YEAR 7/8 COMBINED BASELINE (NON-CALCULATOR)
+   Self-marking single-file exam app.
+
+   ARCHITECTURE (v2 — server-side marking):
+   This file contains NO answer key and NO mark functions — only the
+   question text, inputs, and diagrams needed to render the paper. Raw
+   student answers are POSTed to Apps Script (Y78_Code.gs), which
+   holds the actual answer key, marks the paper, writes it to the Sheet,
+   and returns a scored verdict (correct/incorrect + marks) back to the
+   browser. This means viewing this file's source no longer reveals any
+   answers. Never move QUESTIONS_KEY or mark functions back into this file.
+
+   Mirrors the Ascend / Ignite / Master architecture:
+   - Timer-driven session, auto-submit
+   - Time-per-question tracking (approximate, via first-interaction timestamps)
+   - Student-facing: score, RAG, estimated grade, strengths/weaknesses
+   - Teacher-facing (PIN 2468): full QLA breakdown, placement suggestion,
+     calibration logging
+   ========================================================================= */
+
+var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvvA_8S4mT-UjeO5P43hYXHI-zsLAR_MOcOXpfvtqBFjiSbcFMEssDSwIQUjjsYscU/exec";
+var TIME_LIMIT_SECONDS = 25 * 60;
+var TEACHER_PIN = "2468";
+
+/* ---------------- RAG boundaries ----------------
+   No external exam-board scale applies to a KS3 baseline — these are
+   internal RAG bands. Defaults: Green 70%+, Amber 40-69%, Red below
+   40%. If Ascend/Ignite/Master use different cut-offs, update these to
+   match — everything else derives from them. Must match GRADE_BOUNDARIES
+   in Y78_Code.gs exactly.
+------------------------------------------------------ */
+var TOTAL_MARKS = 39;
+var GRADE_BOUNDARIES = [
+  {grade:'Exceptional', mark:35},
+  {grade:'Green', mark:27},
+  {grade:'Amber', mark:15},
+  {grade:'Red', mark:0}
+];
+
+var TOPICS = {
+  BIO:  "Biology",
+  CHEM: "Chemistry",
+  PHY:  "Physics"
+};
+
+/* ---------------- Question bank (display-only) ----------------
+   IMPORTANT: this array intentionally contains NO answer key and NO
+   mark functions. All marking happens server-side in Y78_Code.gs —
+   the browser only ever sends raw answers and receives back a
+   correct/incorrect + marks-scored verdict per question, never the
+   correct answer values. See the architecture note at the top of
+   Y78_Code.gs before changing this.
+------------------------------------------------------------------------- */
+var QUESTIONS = [
+  {
+    id:'b1', topic:'BIO', grade:1, marks:1,
+    text:'Look at the diagram of an animal cell. Which letter shows the nucleus?',
+    diagram:'<svg width="380" height="320" viewBox="0 0 380 320" style="max-width:100%"> <ellipse cx="185" cy="155" rx="115" ry="92" fill="#fef9ee" stroke="#1a2332" stroke-width="3"/> <path d="M158,127 Q162,99 190,101 Q217,104 213,129 Q210,155 183,154 Q156,153 158,127 Z" fill="#c9d6e8" stroke="#1a2332" stroke-width="2.5"/> <g transform="rotate(-15 128 190)"> <ellipse cx="128" cy="190" rx="24" ry="13" fill="#e8b4a0" stroke="#1a2332" stroke-width="2"/> <path d="M109,185 Q116,180 122,185 Q128,190 134,185 Q140,180 147,185" stroke="#a8563a" stroke-width="2" fill="none" stroke-linecap="round"/> <path d="M109,195 Q116,190 122,195 Q128,200 134,195 Q140,190 147,195" stroke="#a8563a" stroke-width="2" fill="none" stroke-linecap="round"/> </g> <circle cx="215" cy="195" r="3.5" fill="#6d7b8f"/> <circle cx="228" cy="205" r="3.5" fill="#6d7b8f"/> <circle cx="205" cy="210" r="3.5" fill="#6d7b8f"/> <circle cx="222" cy="185" r="3.5" fill="#6d7b8f"/> <circle cx="238" cy="192" r="3.5" fill="#6d7b8f"/> <line x1="185" y1="97" x2="185" y2="30" stroke="#1a2332" stroke-width="1.5"/> <circle cx="185" cy="24" r="13" fill="#137a6f"/> <text x="185" y="28" font-size="13" fill="white" text-anchor="middle" font-weight="bold">A</text> <line x1="108" y1="197" x2="52" y2="235" stroke="#1a2332" stroke-width="1.5"/> <circle cx="38" cy="242" r="13" fill="#137a6f"/> <text x="38" y="246" font-size="13" fill="white" text-anchor="middle" font-weight="bold">B</text> <line x1="298" y1="155" x2="332" y2="155" stroke="#1a2332" stroke-width="1.5"/> <circle cx="349" cy="155" r="13" fill="#137a6f"/> <text x="349" y="159" font-size="13" fill="white" text-anchor="middle" font-weight="bold">C</text> <line x1="165" y1="200" x2="145" y2="248" stroke="#1a2332" stroke-width="1.5"/> <circle cx="137" cy="262" r="13" fill="#137a6f"/> <text x="137" y="266" font-size="13" fill="white" text-anchor="middle" font-weight="bold">D</text> <line x1="228" y1="199" x2="258" y2="248" stroke="#1a2332" stroke-width="1.5"/> <circle cx="268" cy="262" r="13" fill="#137a6f"/> <text x="268" y="266" font-size="13" fill="white" text-anchor="middle" font-weight="bold">E</text> </svg>',
+    inputs:[{id:'a', type:'mcq', options:['A','B','C','D','E']}],
+  },
+  {
+    id:'b2', topic:'BIO', grade:1, marks:1,
+    text:'Using the same diagram, which letter shows a mitochondrion?',
+    diagram:'<svg width="380" height="320" viewBox="0 0 380 320" style="max-width:100%"> <ellipse cx="185" cy="155" rx="115" ry="92" fill="#fef9ee" stroke="#1a2332" stroke-width="3"/> <path d="M158,127 Q162,99 190,101 Q217,104 213,129 Q210,155 183,154 Q156,153 158,127 Z" fill="#c9d6e8" stroke="#1a2332" stroke-width="2.5"/> <g transform="rotate(-15 128 190)"> <ellipse cx="128" cy="190" rx="24" ry="13" fill="#e8b4a0" stroke="#1a2332" stroke-width="2"/> <path d="M109,185 Q116,180 122,185 Q128,190 134,185 Q140,180 147,185" stroke="#a8563a" stroke-width="2" fill="none" stroke-linecap="round"/> <path d="M109,195 Q116,190 122,195 Q128,200 134,195 Q140,190 147,195" stroke="#a8563a" stroke-width="2" fill="none" stroke-linecap="round"/> </g> <circle cx="215" cy="195" r="3.5" fill="#6d7b8f"/> <circle cx="228" cy="205" r="3.5" fill="#6d7b8f"/> <circle cx="205" cy="210" r="3.5" fill="#6d7b8f"/> <circle cx="222" cy="185" r="3.5" fill="#6d7b8f"/> <circle cx="238" cy="192" r="3.5" fill="#6d7b8f"/> <line x1="185" y1="97" x2="185" y2="30" stroke="#1a2332" stroke-width="1.5"/> <circle cx="185" cy="24" r="13" fill="#137a6f"/> <text x="185" y="28" font-size="13" fill="white" text-anchor="middle" font-weight="bold">A</text> <line x1="108" y1="197" x2="52" y2="235" stroke="#1a2332" stroke-width="1.5"/> <circle cx="38" cy="242" r="13" fill="#137a6f"/> <text x="38" y="246" font-size="13" fill="white" text-anchor="middle" font-weight="bold">B</text> <line x1="298" y1="155" x2="332" y2="155" stroke="#1a2332" stroke-width="1.5"/> <circle cx="349" cy="155" r="13" fill="#137a6f"/> <text x="349" y="159" font-size="13" fill="white" text-anchor="middle" font-weight="bold">C</text> <line x1="165" y1="200" x2="145" y2="248" stroke="#1a2332" stroke-width="1.5"/> <circle cx="137" cy="262" r="13" fill="#137a6f"/> <text x="137" y="266" font-size="13" fill="white" text-anchor="middle" font-weight="bold">D</text> <line x1="228" y1="199" x2="258" y2="248" stroke="#1a2332" stroke-width="1.5"/> <circle cx="268" cy="262" r="13" fill="#137a6f"/> <text x="268" y="266" font-size="13" fill="white" text-anchor="middle" font-weight="bold">E</text> </svg>',
+    inputs:[{id:'a', type:'mcq', options:['A','B','C','D','E']}],
+  },
+  {
+    id:'b_ribo', topic:'BIO', grade:1, marks:1,
+    text:'Using the same diagram, which letter shows the ribosomes?',
+    diagram:'<svg width="380" height="320" viewBox="0 0 380 320" style="max-width:100%"> <ellipse cx="185" cy="155" rx="115" ry="92" fill="#fef9ee" stroke="#1a2332" stroke-width="3"/> <path d="M158,127 Q162,99 190,101 Q217,104 213,129 Q210,155 183,154 Q156,153 158,127 Z" fill="#c9d6e8" stroke="#1a2332" stroke-width="2.5"/> <g transform="rotate(-15 128 190)"> <ellipse cx="128" cy="190" rx="24" ry="13" fill="#e8b4a0" stroke="#1a2332" stroke-width="2"/> <path d="M109,185 Q116,180 122,185 Q128,190 134,185 Q140,180 147,185" stroke="#a8563a" stroke-width="2" fill="none" stroke-linecap="round"/> <path d="M109,195 Q116,190 122,195 Q128,200 134,195 Q140,190 147,195" stroke="#a8563a" stroke-width="2" fill="none" stroke-linecap="round"/> </g> <circle cx="215" cy="195" r="3.5" fill="#6d7b8f"/> <circle cx="228" cy="205" r="3.5" fill="#6d7b8f"/> <circle cx="205" cy="210" r="3.5" fill="#6d7b8f"/> <circle cx="222" cy="185" r="3.5" fill="#6d7b8f"/> <circle cx="238" cy="192" r="3.5" fill="#6d7b8f"/> <line x1="185" y1="97" x2="185" y2="30" stroke="#1a2332" stroke-width="1.5"/> <circle cx="185" cy="24" r="13" fill="#137a6f"/> <text x="185" y="28" font-size="13" fill="white" text-anchor="middle" font-weight="bold">A</text> <line x1="108" y1="197" x2="52" y2="235" stroke="#1a2332" stroke-width="1.5"/> <circle cx="38" cy="242" r="13" fill="#137a6f"/> <text x="38" y="246" font-size="13" fill="white" text-anchor="middle" font-weight="bold">B</text> <line x1="298" y1="155" x2="332" y2="155" stroke="#1a2332" stroke-width="1.5"/> <circle cx="349" cy="155" r="13" fill="#137a6f"/> <text x="349" y="159" font-size="13" fill="white" text-anchor="middle" font-weight="bold">C</text> <line x1="165" y1="200" x2="145" y2="248" stroke="#1a2332" stroke-width="1.5"/> <circle cx="137" cy="262" r="13" fill="#137a6f"/> <text x="137" y="266" font-size="13" fill="white" text-anchor="middle" font-weight="bold">D</text> <line x1="228" y1="199" x2="258" y2="248" stroke="#1a2332" stroke-width="1.5"/> <circle cx="268" cy="262" r="13" fill="#137a6f"/> <text x="268" y="266" font-size="13" fill="white" text-anchor="middle" font-weight="bold">E</text> </svg>',
+    inputs:[{id:'a', type:'mcq', options:['A','B','C','D','E']}],
+  },
+  {
+    id:'b3', topic:'BIO', grade:1, marks:1,
+    text:'A healthy plant is kept in a completely dark cupboard for a week. What will happen to it, and why?',
+    inputs:[{id:'a', type:'mcq', options:['It will grow faster, because it saves energy in the dark', 'It will die, because it cannot photosynthesise without light', 'Nothing will change — plants do not need light', 'It will turn red instead of green']}],
+  },
+  {
+    id:'b4', topic:'BIO', grade:1, marks:1,
+    text:'What is the main function of red blood cells?',
+    inputs:[{id:'a', type:'mcq', options:['Making antibodies to fight infection', 'Digesting food in the stomach', 'Carrying oxygen around the body', 'Producing hormones']}],
+  },
+  {
+    id:'b5', topic:'BIO', grade:2, marks:1,
+    text:'Why do the cells in your body divide?',
+    inputs:[{id:'a', type:'mcq', options:['To make the body smaller', 'To stop the body needing food', 'To make cells disappear', 'To help the body grow and repair damaged tissue']}],
+  },
+  {
+    id:'b6', topic:'BIO', grade:2, marks:1,
+    text:'Why do children often share physical characteristics, like eye colour or height, with their parents?',
+    inputs:[{id:'a', type:'mcq', options:['They inherit genetic information from their parents', 'They copy their parents\' behaviour', 'It is completely random and unrelated to parents', 'Diet alone determines these characteristics']}],
+  },
+  {
+    id:'b7', topic:'BIO', grade:2, marks:1,
+    text:'What is a gene?',
+    inputs:[{id:'a', type:'mcq', options:['A small section of DNA that carries instructions for a characteristic', 'A type of cell found only in the brain', 'A chemical used to kill bacteria', 'A part of the digestive system']}],
+  },
+  {
+    id:'b8', topic:'BIO', grade:1, marks:1,
+    text:'A farmer breeds together the tallest wheat plants each year, to produce taller wheat over time. What is this process called?',
+    inputs:[{id:'a', type:'mcq', options:['Genetic mutation', 'Natural selection', 'Selective breeding', 'Cross-pollination only']}],
+  },
+  {
+    id:'b9', topic:'BIO', grade:2, marks:1,
+    text:'Which of these is a way that diseases caused by pathogens can spread from person to person?',
+    inputs:[{id:'a', type:'mcq', options:['Through listening to loud music', 'Through exercising too much', 'Through eating too many vegetables', 'Through the air when someone coughs or sneezes']}],
+  },
+  {
+    id:'b10', topic:'BIO', grade:3, marks:2,
+    text:'Why does washing your hands regularly reduce the chance of getting ill from pathogens?',
+    inputs:[{id:'a', type:'mcq', options:[
+      'It kills all bacteria permanently on contact',
+      'It removes pathogens from your skin before they can enter your body',
+      'It increases your white blood cell count',
+      'It makes your skin cells stronger against infection'
+    ]}],
+  },
+  {
+    id:'b11', topic:'BIO', grade:2, marks:1,
+    text:'A person\'s pupils get smaller when they walk out into bright sunlight. What is the benefit of this response?',
+    inputs:[{id:'a', type:'mcq', options:['It protects the retina from too much light', 'It helps them see in the dark', 'It makes their eyes look bigger', 'It has no real benefit']}],
+  },
+  {
+    id:'c1', topic:'CHEM', grade:1, marks:1,
+    text:'What is found in the nucleus of an atom?',
+    inputs:[{id:'a', type:'mcq', options:['Protons and neutrons', 'Electrons only', 'Protons and electrons', 'Neutrons and electrons']}],
+  },
+  {
+    id:'c2', topic:'CHEM', grade:1, marks:1,
+    text:'How many electrons can the first electron shell of an atom hold?',
+    inputs:[{id:'a', type:'mcq', options:['8', '2', '18', '1']}],
+  },
+  {
+    id:'c3', topic:'CHEM', grade:2, marks:1,
+    text:'Which scientist is credited with arranging early versions of the periodic table, leaving gaps for elements not yet discovered?',
+    inputs:[{id:'a', type:'mcq', options:['Newton', 'Darwin', 'Mendeleev', 'Rutherford']}],
+  },
+  {
+    id:'c4', topic:'CHEM', grade:2, marks:1,
+    text:'A forensic scientist wants to work out which pen was used to write a note, by separating the different coloured dyes in the ink. Which technique should they use?',
+    inputs:[{id:'a', type:'mcq', options:['Filtration', 'Distillation', 'Electrolysis', 'Chromatography']}],
+  },
+  {
+    id:'c5', topic:'CHEM', grade:1, marks:1,
+    text:'A solution turns universal indicator red. What does this tell you about the solution?',
+    inputs:[{id:'a', type:'mcq', options:['It is strongly acidic', 'It is strongly alkaline', 'It is neutral', 'It is pure water']}],
+  },
+  {
+    id:'c6', topic:'CHEM', grade:1, marks:1,
+    text:'What pH value would you expect a neutral substance, like pure water, to have?',
+    inputs:[{id:'a', label:'Answer', width:90}],
+  },
+  {
+    id:'c7', topic:'CHEM', grade:2, marks:1,
+    text:'Magnesium reacts with hydrochloric acid, producing a gas. A student tests the gas with a lit splint. If the gas is hydrogen, what will happen?',
+    inputs:[{id:'a', type:'mcq', options:['The splint is instantly extinguished', 'The splint makes a squeaky pop', 'The splint glows brighter', 'Nothing happens at all']}],
+  },
+  {
+    id:'c8', topic:'CHEM', grade:1, marks:1,
+    text:'In the reactivity series, which of these metals is more reactive?',
+    inputs:[{id:'a', type:'mcq', options:['Copper', 'Gold', 'Iron', 'Silver']}],
+  },
+  {
+    id:'c9', topic:'CHEM', grade:2, marks:1,
+    text:'When a metal reacts with oxygen, what type of compound is formed?',
+    inputs:[{id:'a', type:'mcq', options:['A metal chloride', 'A metal sulfate', 'A metal hydroxide', 'A metal oxide']}],
+  },
+  {
+    id:'c10', topic:'CHEM', grade:2, marks:1,
+    text:'What is the chemical formula for water?',
+    inputs:[{id:'a', type:'mcq', options:['H2O', 'HO2', 'H2O2', 'OH']}],
+  },
+  {
+    id:'c11', topic:'CHEM', grade:2, marks:1,
+    text:'A mixture of sand and salt water needs to be separated. Which method would remove the sand first?',
+    inputs:[{id:'a', type:'mcq', options:['Evaporation', 'Filtration', 'Chromatography', 'Magnetism']}],
+  },
+  {
+    id:'c12', topic:'CHEM', grade:3, marks:2,
+    text:'What happens to the particles in a solid as it is heated until it melts?',
+    inputs:[{id:'a', type:'mcq', options:[
+      'The particles stop moving completely',
+      'The particles turn into a gas immediately',
+      'The particles gain energy, vibrate more, and eventually break free from their fixed positions',
+      'The particles shrink in size until they disappear'
+    ]}],
+  },
+  {
+    id:'p1', topic:'PHY', grade:1, marks:1,
+    text:'What type of energy store does a stretched elastic band have?',
+    inputs:[{id:'a', type:'mcq', options:['Kinetic energy', 'Thermal energy', 'Elastic potential energy', 'Chemical energy']}],
+  },
+  {
+    id:'p2', topic:'PHY', grade:1, marks:1,
+    text:'A car uses fuel to make it move. What type of energy store does the fuel have, before it is burned?',
+    inputs:[{id:'a', type:'mcq', options:['Kinetic energy', 'Gravitational energy', 'Electrical energy', 'Chemical energy']}],
+  },
+  {
+    id:'p3', topic:'PHY', grade:1, marks:1,
+    text:'Which of these is a renewable energy resource?',
+    inputs:[{id:'a', type:'mcq', options:['Wind', 'Coal', 'Natural gas', 'Oil']}],
+  },
+  {
+    id:'p4', topic:'PHY', grade:2, marks:1,
+    text:'A metal spoon left in a hot drink gets hot itself. What method of heat transfer is this an example of?',
+    inputs:[{id:'a', type:'mcq', options:['Convection', 'Conduction', 'Radiation', 'Evaporation']}],
+  },
+  {
+    id:'p5', topic:'PHY', grade:1, marks:1,
+    text:'Which material would make a better thermal insulator?',
+    inputs:[{id:'a', type:'mcq', options:['A sheet of metal', 'A glass window', 'Bubble wrap', 'Bare rock']}],
+  },
+  {
+    id:'p6', topic:'PHY', grade:1, marks:1,
+    text:'Sound waves need a medium (material) to travel through. Can sound travel through a vacuum (empty space with no particles)?',
+    inputs:[{id:'a', type:'mcq', options:['Yes', 'Only at high frequencies', 'Only in space', 'No']}],
+  },
+  {
+    id:'p7', topic:'PHY', grade:1, marks:1,
+    text:'Look at the circuit diagram. Which letter shows the switch?',
+    diagram:'<svg width="380" height="220" viewBox="0 0 380 220" style="max-width:100%"><rect x="75" y="45" width="220" height="115" fill="none" stroke="#1a2332" stroke-width="3"/><!-- Battery: standard symbol, one long-thin plate + one short-thick plate, drawn larger and bolder --><line x1="68" y1="82" x2="68" y2="106" stroke="#1a2332" stroke-width="3"/><line x1="75" y1="88" x2="75" y2="100" stroke="#1a2332" stroke-width="7"/><circle cx="148" cy="45" r="14" fill="#fef9ee" stroke="#1a2332" stroke-width="2.5"/><line x1="138" y1="35" x2="158" y2="55" stroke="#1a2332" stroke-width="2"/><line x1="158" y1="35" x2="138" y2="55" stroke="#1a2332" stroke-width="2"/><circle cx="227" cy="45" r="3" fill="#1a2332"/><circle cx="253" cy="45" r="3" fill="#1a2332"/><line x1="227" y1="45" x2="249" y2="33" stroke="#1a2332" stroke-width="2.5"/><polyline points="295,90 289,94 301,99 289,104 301,109 289,114 295,119" fill="none" stroke="#1a2332" stroke-width="2.5"/><!-- Label A: leader line points directly at the battery symbol centre --><line x1="45" y1="140" x2="60" y2="112" stroke="#1a2332" stroke-width="1.5"/><circle cx="35" cy="150" r="13" fill="#137a6f"/><text x="35" y="154" font-size="13" fill="white" text-anchor="middle" font-weight="bold">A</text><line x1="148" y1="72" x2="148" y2="59" stroke="#1a2332" stroke-width="1.5"/><circle cx="148" cy="86" r="13" fill="#137a6f"/><text x="148" y="90" font-size="13" fill="white" text-anchor="middle" font-weight="bold">B</text><line x1="240" y1="72" x2="240" y2="45" stroke="#1a2332" stroke-width="1.5"/><circle cx="240" cy="86" r="13" fill="#137a6f"/><text x="240" y="90" font-size="13" fill="white" text-anchor="middle" font-weight="bold">C</text><line x1="322" y1="104" x2="308" y2="104" stroke="#1a2332" stroke-width="1.5"/><circle cx="335" cy="104" r="13" fill="#137a6f"/><text x="335" y="108" font-size="13" fill="white" text-anchor="middle" font-weight="bold">D</text></svg>',
+    inputs:[{id:'a', type:'mcq', options:['A','B','C','D']}],
+  },
+  {
+    id:'p8', topic:'PHY', grade:1, marks:1,
+    text:'Using the same circuit diagram, which letter shows the resistor?',
+    diagram:'<svg width="380" height="220" viewBox="0 0 380 220" style="max-width:100%"><rect x="75" y="45" width="220" height="115" fill="none" stroke="#1a2332" stroke-width="3"/><!-- Battery: standard symbol, one long-thin plate + one short-thick plate, drawn larger and bolder --><line x1="68" y1="82" x2="68" y2="106" stroke="#1a2332" stroke-width="3"/><line x1="75" y1="88" x2="75" y2="100" stroke="#1a2332" stroke-width="7"/><circle cx="148" cy="45" r="14" fill="#fef9ee" stroke="#1a2332" stroke-width="2.5"/><line x1="138" y1="35" x2="158" y2="55" stroke="#1a2332" stroke-width="2"/><line x1="158" y1="35" x2="138" y2="55" stroke="#1a2332" stroke-width="2"/><circle cx="227" cy="45" r="3" fill="#1a2332"/><circle cx="253" cy="45" r="3" fill="#1a2332"/><line x1="227" y1="45" x2="249" y2="33" stroke="#1a2332" stroke-width="2.5"/><polyline points="295,90 289,94 301,99 289,104 301,109 289,114 295,119" fill="none" stroke="#1a2332" stroke-width="2.5"/><!-- Label A: leader line points directly at the battery symbol centre --><line x1="45" y1="140" x2="60" y2="112" stroke="#1a2332" stroke-width="1.5"/><circle cx="35" cy="150" r="13" fill="#137a6f"/><text x="35" y="154" font-size="13" fill="white" text-anchor="middle" font-weight="bold">A</text><line x1="148" y1="72" x2="148" y2="59" stroke="#1a2332" stroke-width="1.5"/><circle cx="148" cy="86" r="13" fill="#137a6f"/><text x="148" y="90" font-size="13" fill="white" text-anchor="middle" font-weight="bold">B</text><line x1="240" y1="72" x2="240" y2="45" stroke="#1a2332" stroke-width="1.5"/><circle cx="240" cy="86" r="13" fill="#137a6f"/><text x="240" y="90" font-size="13" fill="white" text-anchor="middle" font-weight="bold">C</text><line x1="322" y1="104" x2="308" y2="104" stroke="#1a2332" stroke-width="1.5"/><circle cx="335" cy="104" r="13" fill="#137a6f"/><text x="335" y="108" font-size="13" fill="white" text-anchor="middle" font-weight="bold">D</text></svg>',
+    inputs:[{id:'a', type:'mcq', options:['A','B','C','D']}],
+  },
+  {
+    id:'p9', topic:'PHY', grade:1, marks:1,
+    text:'When light hits a mirror and bounces back, what is this process called?',
+    inputs:[{id:'a', type:'mcq', options:['Refraction', 'Reflection', 'Absorption', 'Diffraction']}],
+  },
+  {
+    id:'p10', topic:'PHY', grade:2, marks:1,
+    text:'What happens to a sound wave\'s pitch when its frequency increases?',
+    inputs:[{id:'a', type:'mcq', options:['The pitch gets lower', 'The pitch stays exactly the same', 'The sound disappears completely', 'The pitch gets higher']}],
+  },
+  {
+    id:'p11', topic:'PHY', grade:2, marks:1,
+    text:'A car travels 100 metres in 20 seconds. What is its average speed, in m/s?',
+    inputs:[{id:'a', unit:'m/s', width:100}],
+  },
+  {
+    id:'p12', topic:'PHY', grade:3, marks:2,
+    text:'Why does wearing dark-coloured clothes on a sunny day make you feel hotter than wearing light-coloured clothes?',
+    inputs:[{id:'a', type:'mcq', options:[
+      'Dark colours are naturally warmer than light colours',
+      'Light colours block sunlight completely',
+      'Dark colours trap more air, which insulates heat',
+      'Dark colours absorb more light energy and convert it to heat, while light colours reflect more of it'
+    ]}],
+  }
+];
+
+// Keep the cover screen's displayed time/marks/question-count always
+// accurate to the real constants above — these used to be separately
+// hardcoded in the HTML and silently went stale on past edits (once
+// showing the wrong question count, once showing the wrong mark
+// total). Deriving them here means that specific bug class can't recur.
+document.getElementById('metaTime').textContent = Math.round(TIME_LIMIT_SECONDS/60) + ' minutes';
+document.getElementById('metaMarks').textContent = TOTAL_MARKS;
+document.getElementById('metaQ').textContent = QUESTIONS.length;
+
+/* ---------------- Custom dialog (replaces alert()/confirm()) ---------------- */
+function showAlert(msg){
+  document.getElementById('dialogMsg').textContent = msg;
+  document.getElementById('dialogActions').innerHTML = '<button class="btn-ok" onclick="closeDialog()">OK</button>';
+  document.getElementById('customDialog').style.display = 'flex';
+}
+function showConfirm(msg, onOk, onCancel, okLabel, cancelLabel){
+  document.getElementById('dialogMsg').textContent = msg;
+  var actions = document.getElementById('dialogActions');
+  actions.innerHTML = '';
+  var cancelBtn = document.createElement('button');
+  cancelBtn.className = 'btn-cancel'; cancelBtn.textContent = cancelLabel || 'Cancel';
+  cancelBtn.onclick = function(){ closeDialog(); if(onCancel) onCancel(); };
+  var okBtn = document.createElement('button');
+  okBtn.className = 'btn-ok'; okBtn.textContent = okLabel || 'Submit';
+  okBtn.onclick = function(){ closeDialog(); onOk(); };
+  actions.appendChild(cancelBtn); actions.appendChild(okBtn);
+  document.getElementById('customDialog').style.display = 'flex';
+}
+function closeDialog(){ document.getElementById('customDialog').style.display = 'none'; }
+
+/* ---------------- State ---------------- */
+var startTimestamp = null;
+var timerInterval = null;
+var remainingSeconds = TIME_LIMIT_SECONDS;
+var submitted = false;
+var studentMeta = {};
+var lastMarkData = null;      // server's marked response, populated after submit
+var lastRawPayload = null;    // kept around so a failed marking request can be retried
+var questionFirstFocus = {};  // qid -> ms timestamp of first interaction, for time-per-question
+var currentQuestionId = null; // most recently focused question — "what they're on right now" for the live monitor
+
+/* ---------------- Tutors dropdown (mirrors Tutors sheet pattern) ---------------- */
+function loadTutors(){
+  var sel = document.getElementById('tutorSelect');
+  var fallback = ['Mr A Mohammed','Arif Mohid','Aqil','Anisha','Other'];
+  function populate(names){
+    sel.innerHTML = '';
+    names.forEach(function(name){
+      var opt = document.createElement('option');
+      opt.value = name; opt.textContent = name;
+      sel.appendChild(opt);
+    });
+  }
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0){
+    populate(fallback);
+    return;
+  }
+  fetch(APPS_SCRIPT_URL + '?action=getTutors')
+    .then(function(res){ return res.json(); })
+    .then(function(data){ populate(data.tutors && data.tutors.length ? data.tutors : fallback); })
+    .catch(function(){ populate(fallback); });
+}
+loadTutors();
+
+/* ---------------- Classes dropdown (mirrors the Tutors pattern) ----------------
+   Populated from the "Classes" sheet tab — edit that sheet to add, rename,
+   or remove classes and the dropdown picks it up next load. "Other" always
+   stays available so a student can be entered even if their exact class
+   hasn't been added to the sheet yet — selecting it reveals a free-text
+   field so nothing blocks entry while you're still setting classes up.
+
+   Each class has a stable "name" (stored against the student) and an
+   optional "schedule" (day/time/tutor, shown in the dropdown text only —
+   never stored). This is what lets you update a class's day, time, or
+   tutor here without touching a single past student's record: only the
+   display text changes, not the stored class identifier.
+------------------------------------------------------------------------- */
+function loadClasses(){
+  var sel = document.getElementById('classGroup');
+  var fallback = [{name:'Other', schedule:''}];
+  function populate(list){
+    sel.innerHTML = '';
+    list.forEach(function(item){
+      var opt = document.createElement('option');
+      opt.value = item.name;
+      opt.textContent = item.schedule ? (item.name + ' — ' + item.schedule) : item.name;
+      sel.appendChild(opt);
+    });
+    onClassSelectChange();
+  }
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0){
+    populate(fallback);
+    return;
+  }
+  fetch(APPS_SCRIPT_URL + '?action=getClasses')
+    .then(function(res){ return res.json(); })
+    .then(function(data){ populate(data.classes && data.classes.length ? data.classes : fallback); })
+    .catch(function(){ populate(fallback); });
+}
+function onClassSelectChange(){
+  var sel = document.getElementById('classGroup');
+  var otherField = document.getElementById('classGroupOther');
+  otherField.style.display = (sel.value === 'Other') ? 'block' : 'none';
+}
+loadClasses();
+
+/* ---------------- Timer ---------------- */
+/* ---------------- RAG badge helpers ----------------
+   The grade badge circle was designed for a single GCSE digit (e.g.
+   "9") — "Green"/"Amber"/"Red" doesn't fit at that size, so the badge
+   shows a coloured initial (G/A/R) instead, with the full word spelled
+   out in the surrounding text wherever it appears. */
+function ragColor(grade){
+  if(grade==='Exceptional') return 'var(--gold)';
+  if(grade==='Green') return '#3a7d5c';
+  if(grade==='Amber') return '#c07e1f';
+  if(grade==='Red') return '#a8283a';
+  return 'var(--ink-soft)'; // 'U' or unrecognised
+}
+function ragLetter(grade){
+  if(grade==='Exceptional') return '★';
+  if(grade==='Green' || grade==='Amber' || grade==='Red') return grade.charAt(0);
+  return grade;
+}
+function formatTime(s){
+  var m = Math.floor(s/60), sec = s%60;
+  return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec;
+}
+function tick(){
+  remainingSeconds--;
+  var box = document.getElementById('timerBox');
+  box.textContent = formatTime(Math.max(0,remainingSeconds));
+  box.classList.remove('warn','danger');
+  if(remainingSeconds <= 300) box.classList.add('danger');
+  else if(remainingSeconds <= 600) box.classList.add('warn');
+  if(remainingSeconds <= 0){
+    clearInterval(timerInterval);
+    submitExam(true);
+  }
+}
+
+/* ---------------- Time-per-question tracking ----------------
+   Records the timestamp of first interaction with each question. On
+   submit, converts these into an approximate dwell time per question
+   (time until the student's next first-interaction, or until submit
+   for the last one touched) — sent to the sheet's QLA tab so tutors can
+   see where a student got stuck, not just what they got wrong.
+------------------------------------------------------------------------- */
+function recordFocus(qid){
+  if(!(qid in questionFirstFocus)) questionFirstFocus[qid] = Date.now();
+  currentQuestionId = qid; // updated every focus, not just first — this is "what they're on right now" for the live monitor
+}
+function computeQuestionTimings(submitTimestamp){
+  var entries = Object.keys(questionFirstFocus).map(function(qid){ return {qid:qid, t:questionFirstFocus[qid]}; });
+  entries.sort(function(a,b){ return a.t-b.t; });
+  var timings = {};
+  for(var i=0;i<entries.length;i++){
+    var endT = (i<entries.length-1) ? entries[i+1].t : submitTimestamp;
+    timings[entries[i].qid] = Math.max(0, Math.round((endT-entries[i].t)/1000));
+  }
+  return timings;
+}
+
+/* ---------------- Render exam ---------------- */
+function renderQuestion(q, idx){
+  var div = document.createElement('div');
+  div.className = 'qcard';
+  var inputsHtml = q.inputs.map(function(inp){
+    if(inp.type==='fraction'){
+      return '<label>'+inp.label+'</label>'+
+        '<div class="frac-input">'+
+          '<input inputmode="decimal" id="'+q.id+'_'+inp.id+'_num" placeholder="a" autocomplete="off" onfocus="recordFocus(\''+q.id+'\')" oninput="markDraftDirty()">'+
+          '<div class="frac-divider"></div>'+
+          '<input inputmode="decimal" id="'+q.id+'_'+inp.id+'_den" placeholder="b" autocomplete="off" onfocus="recordFocus(\''+q.id+'\')" oninput="markDraftDirty()">'+
+        '</div>';
+    }
+    if(inp.type==='mcq'){
+      // A hidden input holds the actual selected value, using the exact
+      // same id convention (q.id + '_' + inp.id) every other input type
+      // uses — so gatherRawAnswers() and the draft-save pipeline both work
+      // completely unmodified, they just read a value that happened to be
+      // set by a button click rather than typed.
+      var letters = ['A','B','C','D','E','F','G','H'].slice(0, inp.options.length);
+      var optsHtml = inp.options.map(function(opt, i){
+        var letter = letters[i];
+        return '<button type="button" class="mcq-opt" id="'+q.id+'_'+inp.id+'_opt'+i+'" '+
+          'onclick="selectMcqOption(\''+q.id+'\',\''+inp.id+'\',\''+letter+'\',this)">'+
+          '<span class="mcq-letter">'+letter+'</span><span class="mcq-text">'+opt+'</span>'+
+          '</button>';
+      }).join('');
+      return '<input type="hidden" id="'+q.id+'_'+inp.id+'" value="">'+
+        '<div class="mcq-grid">'+optsHtml+'</div>';
+    }
+    var inputTag = '<input class="ans-input" style="width:'+(inp.width||110)+'px" id="'+q.id+'_'+inp.id+'" placeholder="'+(inp.placeholder||'')+'" autocomplete="off" onfocus="recordFocus(\''+q.id+'\')" oninput="markDraftDirty()">';
+    if(inp.unit){
+      // Unit reads more naturally after the box (e.g. "[13] cm"), matching
+      // how it's printed on a real exam paper, rather than "cm [13]".
+      return inputTag+'<span class="unit-suffix">'+inp.unit+'</span>';
+    }
+    return '<label>'+inp.label+'</label>'+inputTag;
+  }).join('');
+  var toolbarHtml = '';
+  if(q.toolbar){
+    var targetId = q.id+'_'+q.inputs[0].id;
+    toolbarHtml = '<div class="qtoolbar">'+
+      '<button type="button" onclick="insertAtField(\''+targetId+'\',\'^2\')">x²</button>'+
+      '<button type="button" onclick="insertAtField(\''+targetId+'\',\'^\')">x^n</button>'+
+      '<button type="button" onclick="insertAtField(\''+targetId+'\',\'sqrt()\')">√</button>'+
+      '<button type="button" onclick="insertAtField(\''+targetId+'\',\'/\')">a/b</button>'+
+      '<button type="button" onclick="insertAtField(\''+targetId+'\',\'()\')">( )</button>'+
+    '</div>';
+  }
+  var diagramHtml = q.diagram ? '<div class="qdiagram">'+q.diagram+'</div>' : '';
+  div.innerHTML =
+    '<div class="qcard-head"><span class="qnum">Question '+(idx+1)+'</span><span class="qmarks">'+q.marks+' mark'+(q.marks>1?'s':'')+'</span></div>'+
+    '<div class="qbody">'+
+      '<div class="qtext">'+q.text+'</div>'+
+      diagramHtml+
+      '<div class="answer-row">'+inputsHtml+'</div>'+
+      toolbarHtml+
+      (q.hint ? '<div class="hint">'+q.hint+'</div>' : '')+
+    '</div>';
+  return div;
+}
+function insertAtField(fieldId, snippet){
+  var el = document.getElementById(fieldId);
+  if(!el) return;
+  recordFocus(fieldId.split('_')[0]);
+  var start = el.selectionStart===null||el.selectionStart===undefined ? el.value.length : el.selectionStart;
+  var end = el.selectionEnd===null||el.selectionEnd===undefined ? el.value.length : el.selectionEnd;
+  el.value = el.value.slice(0,start) + snippet + el.value.slice(end);
+  el.focus();
+  var cursorPos = start + (snippet==='sqrt()' || snippet==='()' ? snippet.length-1 : snippet.length);
+  el.setSelectionRange(cursorPos, cursorPos);
+  markDraftDirty(); // programmatic value change — doesn't fire a native 'input' event on its own
+}
+function selectMcqOption(qId, inpId, letter, btnEl){
+  recordFocus(qId);
+  var hidden = document.getElementById(qId+'_'+inpId);
+  if(hidden) hidden.value = letter;
+  // Clear "selected" styling from every option in this question, then
+  // apply it to just the one clicked — btnEl.parentElement is the
+  // .mcq-grid wrapper, so this only touches this question's own buttons.
+  var siblings = btnEl.parentElement.querySelectorAll('.mcq-opt');
+  siblings.forEach(function(b){ b.classList.remove('mcq-selected'); });
+  btnEl.classList.add('mcq-selected');
+  markDraftDirty();
+}
+
+function buildExam(){
+  var wrap = document.getElementById('examWrap');
+  wrap.innerHTML = '';
+  QUESTIONS.forEach(function(q, idx){
+    wrap.appendChild(renderQuestion(q, idx));
+  });
+  window.addEventListener('scroll', updateProgress);
+}
+function updateProgress(){
+  var docH = document.documentElement.scrollHeight - window.innerHeight;
+  var pct = docH>0 ? Math.min(100, (window.scrollY/docH)*100) : 0;
+  document.getElementById('progressFill').style.width = pct+'%';
+}
+
+function resolveSelectedClass(){
+  var sel = document.getElementById('classGroup').value;
+  if(sel === 'Other'){
+    var typed = document.getElementById('classGroupOther').value.trim();
+    return typed || 'Other';
+  }
+  return sel;
+}
+
+/* ---------------- In-progress draft resume ----------------
+   Checked when "Begin Paper 1" is clicked, before a fresh session
+   starts. If a match is found, the student chooses to resume (answers
+   and remaining time restored, using WALL-CLOCK elapsed time from the
+   original start — not paused, same as a real exam hall) or start over
+   (old draft discarded).
+------------------------------------------------------------------------- */
+
+function checkForDraftThenStart(){
+  var firstName = document.getElementById('studentFirstName').value.trim();
+  var surname = document.getElementById('studentSurname').value.trim();
+  var name = firstName + (surname ? ' ' + surname : '');
+  if(!firstName){ showAlert('Please enter the student first name to begin.'); return; }
+  var yearGroup = document.getElementById('yearGroup').value;
+  var school = document.getElementById('schoolName').value.trim();
+
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0){
+    startExam();
+    return;
+  }
+  var url = APPS_SCRIPT_URL + '?action=getDraft&student=' + encodeURIComponent(name) + '&year=' + encodeURIComponent(yearGroup) + '&school=' + encodeURIComponent(school);
+  fetch(url)
+    .then(function(res){ return res.json(); })
+    .then(function(draft){
+      if(draft && draft.startTimestamp){
+        var mins = Math.max(0, Math.round((Date.now() - new Date(draft.startTimestamp).getTime())/60000));
+        showConfirm(
+          'We found an unfinished paper for '+name+', started '+mins+' minute'+(mins===1?'':'s')+' ago. Resume where you left off?',
+          function(){ resumeFromDraft(draft); },
+          function(){ deleteDraftOnServer(name, yearGroup, school); startExam(); },
+          'Resume', 'Start Fresh'
+        );
+      } else {
+        startExam();
+      }
+    })
+    .catch(function(){ startExam(); }); // if the check fails, don't block starting
+}
+
+function resumeFromDraft(draft){
+  studentMeta = {
+    name: draft.name, yearGroup: draft.yearGroup, className: draft.className,
+    school: draft.school, tutor: draft.tutor, status: draft.status
+  };
+  document.getElementById('coverScreen').style.display = 'none';
+  document.getElementById('examScreen').style.display = 'block';
+  buildExam();
+
+  // Restore each answer into its input field.
+  Object.keys(draft.rawAnswers || {}).forEach(function(qid){
+    var ans = draft.rawAnswers[qid];
+    var q = QUESTIONS.filter(function(qq){ return qq.id===qid; })[0];
+    if(!q) return;
+    q.inputs.forEach(function(inp){
+      if(inp.type==='fraction'){
+        var val = ans[inp.id] || '';
+        var parts = val.split('/');
+        var numEl = document.getElementById(q.id+'_'+inp.id+'_num');
+        var denEl = document.getElementById(q.id+'_'+inp.id+'_den');
+        if(numEl) numEl.value = parts[0] || '';
+        if(denEl && parts.length > 1) denEl.value = parts[1] || '';
+        return;
+      }
+      var el = document.getElementById(q.id+'_'+inp.id);
+      if(el && ans[inp.id] !== undefined) el.value = ans[inp.id];
+    });
+  });
+
+  // Wall-clock timing: the original start time is preserved, so a long
+  // gap away counts against the student, same as it would in a real
+  // exam hall — this is deliberate, not a bug.
+  startTimestamp = new Date(draft.startTimestamp);
+  var elapsedSec = Math.floor((Date.now() - startTimestamp.getTime())/1000);
+  remainingSeconds = Math.max(0, TIME_LIMIT_SECONDS - elapsedSec);
+  document.getElementById('timerBox').textContent = formatTime(remainingSeconds);
+
+  if(remainingSeconds <= 0){
+    // Time already ran out while the student was away — submit
+    // immediately with whatever was saved, same as a normal expiry.
+    submitExam(true);
+    return;
+  }
+  timerInterval = setInterval(tick, 1000);
+  startDraftAutosave();
+}
+
+/* ---------------- Draft autosave (change-triggered, jittered, retry-safe) ----------------
+   Rebuilt from a naive fixed-20s-interval version to something that
+   actually holds up with many students saving simultaneously:
+
+   - DEBOUNCED, not polled: saves ~3s after the student stops typing,
+     not on a rigid clock. Near-immediate protection against data loss,
+     and far fewer requests than polling every 20s regardless of activity.
+   - DIRTY-TRACKED: a save is skipped entirely if nothing changed since
+     the last successful one — the periodic fallback below would
+     otherwise fire uselessly every cycle for a student who's just
+     reading a question.
+   - JITTERED fallback: a safety-net save still fires periodically
+     (45-60s, randomised) in case the debounce path ever misses. The
+     randomisation matters at scale — without it, every student who
+     started the exam around the same moment would have their fallback
+     saves land in the same second, creating request spikes against
+     Apps Script's execution quota instead of spreading load out.
+   - MUTEX'd: only one save is ever in flight per student. If new edits
+     arrive while a save is still in progress, they're queued and sent
+     as soon as the current one finishes, rather than firing overlapping
+     requests.
+   - RETRIED: a failed save (network blip, momentary quota rejection)
+     retries with backoff (2s, then 4s) before falling back to the next
+     scheduled attempt — a single dropped request doesn't just vanish.
+
+   Deliberately NOT using a server-side lock (e.g. Apps Script's
+   LockService) to guard against duplicate rows — that lock would be
+   script-wide, serialising saves across EVERY student, not just one.
+   That would turn into exactly the scale bottleneck this is meant to
+   avoid. A same-student duplicate row is a rare, harmless edge case
+   instead (getDraft always resolves to the most recently saved one —
+   see Y78_Code.gs), so it's tolerated rather than prevented.
+------------------------------------------------------------------------- */
+var draftSaveState = { dirty:false, saving:false, debounceTimer:null, fallbackTimer:null };
+var DEBOUNCE_MS = 3000;
+var FALLBACK_BASE_MS = 45000;
+var FALLBACK_JITTER_MS = 15000;
+var MAX_SAVE_RETRIES = 2;
+
+function markDraftDirty(){
+  draftSaveState.dirty = true;
+  if(draftSaveState.debounceTimer) clearTimeout(draftSaveState.debounceTimer);
+  draftSaveState.debounceTimer = setTimeout(function(){ attemptDraftSave(0); }, DEBOUNCE_MS);
+}
+
+function startDraftAutosave(){
+  stopDraftAutosave();
+  scheduleFallbackSave();
+}
+function scheduleFallbackSave(){
+  var delay = FALLBACK_BASE_MS + Math.random()*FALLBACK_JITTER_MS;
+  draftSaveState.fallbackTimer = setTimeout(function(){
+    attemptDraftSave(0);
+    scheduleFallbackSave(); // re-randomise each cycle rather than a fixed setInterval
+  }, delay);
+}
+function stopDraftAutosave(){
+  if(draftSaveState.debounceTimer){ clearTimeout(draftSaveState.debounceTimer); draftSaveState.debounceTimer=null; }
+  if(draftSaveState.fallbackTimer){ clearTimeout(draftSaveState.fallbackTimer); draftSaveState.fallbackTimer=null; }
+  draftSaveState.dirty = false;
+  draftSaveState.saving = false;
+}
+
+function attemptDraftSave(retryAttempt){
+  if(submitted || !startTimestamp) return;
+  if(!draftSaveState.dirty && retryAttempt===0) return; // nothing changed — skip, saves quota
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0) return;
+  if(draftSaveState.saving){
+    draftSaveState.dirty = true; // a save is already in flight — queue this one for right after
+    return;
+  }
+
+  draftSaveState.saving = true;
+  draftSaveState.dirty = false; // optimistic clear; re-set to true below if this attempt fails or new edits land mid-flight
+
+  var currentAnswers = gatherRawAnswers();
+  var payload = {
+    action: 'saveDraft',
+    student: studentMeta,
+    startTimestamp: startTimestamp.toISOString(),
+    rawAnswers: currentAnswers,
+    questionTimings: computeQuestionTimings(Date.now()),
+    currentQuestionLabel: currentQuestionLabel(),
+    answeredCount: countAnsweredQuestions(currentAnswers)
+  };
+
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST', headers: {'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload)
+  })
+  .then(function(res){ if(!res.ok) throw new Error('HTTP '+res.status); return res.json(); })
+  .then(function(data){
+    draftSaveState.saving = false;
+    if(data && data.status === 'error') throw new Error(data.message || 'server error');
+    if(draftSaveState.dirty) attemptDraftSave(0); // new edits arrived while this save was in flight
+  })
+  .catch(function(err){
+    console.warn('Draft autosave failed:', err);
+    draftSaveState.saving = false;
+    draftSaveState.dirty = true; // make sure this data isn't lost
+    if(retryAttempt < MAX_SAVE_RETRIES){
+      var backoff = 2000 * Math.pow(2, retryAttempt); // 2s, then 4s
+      setTimeout(function(){ attemptDraftSave(retryAttempt+1); }, backoff);
+    }
+    // otherwise, the next debounce/fallback cycle will pick it up
+  });
+}
+
+function deleteDraftOnServer(name, year, school){
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0) return;
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST', headers: {'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify({action:'deleteDraft', student:{name:name, yearGroup:year, school:school}})
+  }).catch(function(){});
+}
+// Best-effort save on tab close / navigation — uses sendBeacon since a
+// normal fetch can get cancelled when the page unloads, while sendBeacon
+// is specifically designed to survive it. Note this does NOT help with a
+// genuine crash or power loss — only the debounce/fallback saves above
+// protect against that; this just catches the "closed the tab" case.
+window.addEventListener('beforeunload', function(){
+  if(submitted || !startTimestamp) return;
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0) return;
+  var currentAnswers = gatherRawAnswers();
+  var payload = JSON.stringify({
+    action: 'saveDraft', student: studentMeta, startTimestamp: startTimestamp.toISOString(),
+    rawAnswers: currentAnswers, questionTimings: computeQuestionTimings(Date.now()),
+    currentQuestionLabel: currentQuestionLabel(), answeredCount: countAnsweredQuestions(currentAnswers)
+  });
+  navigator.sendBeacon(APPS_SCRIPT_URL, new Blob([payload], {type:'text/plain;charset=utf-8'}));
+});
+
+function startExam(){
+  var firstName = document.getElementById('studentFirstName').value.trim();
+  var surname = document.getElementById('studentSurname').value.trim();
+  var name = firstName + (surname ? ' ' + surname : '');
+  if(!firstName){ showAlert('Please enter the student first name to begin.'); return; }
+  studentMeta = {
+    name: name,
+    yearGroup: document.getElementById('yearGroup').value,
+    className: resolveSelectedClass(),
+    school: document.getElementById('schoolName').value.trim(),
+    tutor: document.getElementById('tutorSelect').value,
+    status: document.getElementById('studentStatus').value
+  };
+  document.getElementById('coverScreen').style.display = 'none';
+  document.getElementById('examScreen').style.display = 'block';
+  buildExam();
+  startTimestamp = new Date();
+  remainingSeconds = TIME_LIMIT_SECONDS;
+  document.getElementById('timerBox').textContent = formatTime(remainingSeconds);
+  timerInterval = setInterval(tick, 1000);
+  startDraftAutosave();
+}
+
+function confirmSubmit(){
+  var answered = QUESTIONS.filter(function(q){
+    return q.inputs.some(function(inp){
+      if(inp.type==='fraction'){
+        var numEl = document.getElementById(q.id+'_'+inp.id+'_num');
+        return numEl && numEl.value.trim()!=='';
+      }
+      var el = document.getElementById(q.id+'_'+inp.id);
+      return el && el.value.trim()!=='';
+    });
+  }).length;
+  var msg = answered < QUESTIONS.length
+    ? 'You have answered '+answered+' of '+QUESTIONS.length+' questions. Submit anyway?'
+    : 'Submit Paper 1 for marking?';
+  showConfirm(msg, function(){ submitExam(false); });
+}
+
+/* ---------------- Submit & server-side marking ----------------
+   The browser only gathers raw answers here — it never marks them.
+   They're POSTed to Apps Script, which holds the answer key and
+   returns a scored verdict (correct/incorrect + marks) per question.
+------------------------------------------------------------------------- */
+function gatherRawAnswers(){
+  var rawAnswers = {};
+  QUESTIONS.forEach(function(q){
+    var ans = {};
+    q.inputs.forEach(function(inp){
+      if(inp.type==='fraction'){
+        var numEl = document.getElementById(q.id+'_'+inp.id+'_num');
+        var denEl = document.getElementById(q.id+'_'+inp.id+'_den');
+        var numV = numEl ? numEl.value.trim() : '';
+        var denV = denEl ? denEl.value.trim() : '';
+        ans[inp.id] = (denV!=='' && denV!=='0') ? (numV+'/'+denV) : numV;
+        return;
+      }
+      var el = document.getElementById(q.id+'_'+inp.id);
+      ans[inp.id] = el ? el.value.trim() : '';
+    });
+    rawAnswers[q.id] = ans;
+  });
+  return rawAnswers;
+}
+function countAnsweredQuestions(rawAnswers){
+  return Object.keys(rawAnswers).filter(function(qid){
+    var ans = rawAnswers[qid];
+    return Object.keys(ans).some(function(k){ return ans[k] && ans[k].trim() !== ''; });
+  }).length;
+}
+function currentQuestionLabel(){
+  if(!currentQuestionId) return '';
+  var idx = QUESTIONS.findIndex(function(q){ return q.id===currentQuestionId; });
+  return idx===-1 ? '' : 'Q'+(idx+1);
+}
+
+function submitExam(auto){
+  if(submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  stopDraftAutosave();
+  var timeTakenSec = TIME_LIMIT_SECONDS - Math.max(0,remainingSeconds);
+  var submitTimestamp = Date.now();
+
+  var payload = {
+    action: 'markPaper1',
+    student: studentMeta,
+    rawAnswers: gatherRawAnswers(),
+    timeTakenSeconds: timeTakenSec,
+    questionTimings: computeQuestionTimings(submitTimestamp)
+  };
+  lastRawPayload = payload;
+
+  document.getElementById('examScreen').style.display = 'none';
+  document.getElementById('resultsScreen').style.display = 'block';
+  window.scrollTo(0,0);
+  showMarkingLoader(auto);
+  sendForMarking(payload, 0);
+}
+
+function showMarkingLoader(auto, retrying, retryAttempt){
+  var msg = retrying
+    ? 'Still trying to reach the marking server (attempt '+(retryAttempt+1)+' of '+(MAX_MARKING_RETRIES+1)+')…'
+    : (auto ? 'Time expired — marking your paper…' : 'Marking your paper…');
+  document.getElementById('resultsWrap').innerHTML =
+    '<div style="text-align:center;padding:100px 20px;">'+
+      '<div class="spinner"></div>'+
+      '<p style="margin-top:20px;font-size:15px;color:var(--white);">'+msg+'</p>'+
+      (retrying ? '<p style="margin-top:8px;font-size:13px;color:rgba(255,255,255,.6);">Your answers are saved — this is just the server catching up.</p>' : '')+
+    '</div>';
+}
+function showMarkingError(msg){
+  document.getElementById('resultsWrap').innerHTML =
+    '<div style="max-width:480px;margin:60px auto;text-align:center;">'+
+      '<div class="feedback-card weakness" style="text-align:left;"><h4>⚠️ Marking failed</h4><p style="font-size:13.5px;color:var(--ink-soft);margin:0;">'+msg+'</p></div>'+
+      '<button class="start-btn" style="margin-top:16px;" onclick="retrySubmit()">Retry</button>'+
+    '</div>';
+}
+function retrySubmit(){
+  if(lastRawPayload){ showMarkingLoader(false); sendForMarking(lastRawPayload, 0); }
+}
+
+/* Automatic retry with backoff before ever falling back to the manual
+   "Retry" button — matches the draft-autosave retry pattern. This
+   matters most exactly when it's most stressful: a whole class
+   auto-submitting within the same few seconds hits Apps Script's
+   simultaneous-execution ceiling, and those requests queue rather than
+   fail outright — a short automatic retry window rides that out
+   instead of showing a scary error for something that resolves itself
+   in a few seconds. */
+var MAX_MARKING_RETRIES = 3;
+function sendForMarking(payload, retryAttempt){
+  retryAttempt = retryAttempt || 0;
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0){
+    showMarkingError('This paper isn\'t connected to its Apps Script backend yet, so it can\'t mark submissions. Paste the deployed Apps Script URL into APPS_SCRIPT_URL in index.html — see Y78_Code.gs.');
+    return;
+  }
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    headers: {'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify(payload)
+  })
+  .then(function(res){ if(!res.ok) throw new Error('HTTP '+res.status); return res.json(); })
+  .then(function(data){
+    if(data && data.status === 'error') throw new Error(data.message || 'server error');
+    lastMarkData = data;
+    renderResults(data, data.percentage, data.grade, false, payload.timeTakenSeconds);
+  })
+  .catch(function(err){
+    console.error('Marking request failed (attempt '+(retryAttempt+1)+'):', err);
+    if(retryAttempt < MAX_MARKING_RETRIES){
+      var backoff = 3000 * Math.pow(2, retryAttempt); // 3s, 6s, 12s
+      showMarkingLoader(false, true, retryAttempt);
+      setTimeout(function(){ sendForMarking(payload, retryAttempt+1); }, backoff);
+    } else {
+      showMarkingError('Could not reach the marking server after several attempts. Your answers are safe and haven\'t been lost — check your connection and try again.');
+    }
+  });
+}
+
+function nextBoundary(score){
+  for(var i=GRADE_BOUNDARIES.length-1;i>=0;i--){
+    if(score < GRADE_BOUNDARIES[i].mark) return GRADE_BOUNDARIES[i];
+  }
+  return null;
+}
+function ragForPct(pct){
+  if(pct >= 70) return 'green';
+  if(pct >= 45) return 'amber';
+  return 'red';
+}
+
+/* ---------------- Results rendering ---------------- */
+function topicStrengthsWeaknesses(topicTotals){
+  var rows = Object.keys(TOPICS).map(function(t){
+    var d = topicTotals[t];
+    var pct = d.possible>0 ? (d.scored/d.possible)*100 : 0;
+    return {topic:TOPICS[t], key:t, pct:pct, scored:d.scored, possible:d.possible};
+  });
+  rows.sort(function(a,b){ return b.pct - a.pct; });
+  var strengths = rows.filter(function(r){ return r.pct >= 70; });
+  var weaknesses = rows.filter(function(r){ return r.pct < 45; });
+  if(strengths.length===0 && rows.length) strengths = [rows[0]];
+  if(weaknesses.length===0 && rows.length) weaknesses = [rows[rows.length-1]];
+  return {strengths:strengths, weaknesses:weaknesses, rows:rows};
+}
+
+/* ---------------- Shared report letterhead + lead-nurture CTA ----------------
+   Used by both the student's own immediate post-exam screen and the
+   dashboard's historical "View" report, so both print as a consistent,
+   professional one-pager — polished enough to hand to a parent, or to
+   send a Trial Student as a personalised, low-pressure reason to
+   enrol (their actual strengths and gaps, not a generic pitch).
+------------------------------------------------------------------------- */
+function reportLetterheadHtml(dateStr){
+  return '<div class="report-letterhead">'+
+    '<div><div class="rl-brand">Aim High Tuition</div><div class="rl-tag">KS3 Stage 1 Science — Diagnostic Assessment Report</div></div>'+
+    '<div class="rl-meta">KS3 Stage 1 Science Baseline<br>'+(dateStr||'')+'</div>'+
+  '</div>';
+}
+function leadNurtureCtaHtml(status, name){
+  if(status !== 'Trial Student') return '';
+  return '<div class="cta-card">'+
+    '<h4>📈 Ready to build on this?</h4>'+
+    '<p>'+name+' showed real, specific strengths and gaps in this diagnostic. Aim High Tuition can build a personalised plan around exactly these results — get in touch to find out more.</p>'+
+  '</div>';
+}
+
+function renderResults(data, pct, grade, auto, timeTakenSec){
+  var sw = topicStrengthsWeaknesses(data.topicTotals);
+  var wrap = document.getElementById('resultsWrap');
+
+  var topicCardsHtml = sw.rows.map(function(r){
+    var rag = ragForPct(r.pct);
+    var color = rag==='green' ? 'var(--green)' : rag==='amber' ? 'var(--amber)' : 'var(--red)';
+    return '<div class="topic-card">'+
+      '<div class="rag-dot rag-'+rag+'"></div>'+
+      '<div class="topic-info"><div class="tname">'+r.topic+'</div><div class="tscore">'+r.scored+' / '+r.possible+' marks</div></div>'+
+      '<div class="topic-bar-track"><div class="topic-bar-fill" style="width:'+Math.round(r.pct)+'%;background:'+color+'"></div></div>'+
+    '</div>';
+  }).join('');
+
+  var strengthsHtml = sw.strengths.map(function(r){ return '<li><strong>'+r.topic+'</strong> — '+Math.round(r.pct)+'% ('+r.scored+'/'+r.possible+')</li>'; }).join('');
+  var weaknessesHtml = sw.weaknesses.map(function(r){ return '<li><strong>'+r.topic+'</strong> — '+Math.round(r.pct)+'% ('+r.scored+'/'+r.possible+'). Focus revision here next.</li>'; }).join('');
+
+  wrap.innerHTML =
+    reportLetterheadHtml(new Date().toLocaleDateString('en-GB'))+
+
+    '<div class="result-hero">'+
+      '<div class="grade-badge display" style="background:var(--crimson);color:white;">✓</div>'+
+      '<h2>'+studentMeta.name+' — Paper 1 Complete</h2>'+
+      '<p>'+(auto?'Time expired — paper auto-submitted. ':'')+'Well done for completing the paper!</p>'+
+    '</div>'+
+
+    '<div class="score-strip">'+
+      '<div class="score-box"><div class="num">'+data.totalScore+'/'+data.totalMarks+'</div><div class="lbl">Raw Score</div></div>'+
+      '<div class="score-box"><div class="num">'+pct+'%</div><div class="lbl">Percentage</div></div>'+
+      '<div class="score-box"><div class="num">'+formatTime(timeTakenSec)+'</div><div class="lbl">Time Taken</div></div>'+
+    '</div>'+
+
+    '<div class="section-title">Topic Breakdown</div>'+
+    topicCardsHtml+
+
+    '<div class="section-title">Strengths &amp; Areas to Focus</div>'+
+    '<div class="feedback-card strength"><h4>✅ Strengths</h4><ul>'+strengthsHtml+'</ul></div>'+
+    '<div class="feedback-card weakness"><h4>🎯 Focus for next session</h4><ul>'+weaknessesHtml+'</ul></div>'+
+    leadNurtureCtaHtml(studentMeta.status, studentMeta.name)+
+    '<div class="action-row">'+
+      '<button class="btn-secondary" onclick="window.print()">Print / Save Report</button>'+
+    '</div>';
+}
+
+/* ---------------- Teacher mode / QLA ---------------- */
+function openTeacherModal(){ document.getElementById('teacherModal').style.display='flex'; document.getElementById('teacherPin').value=''; document.getElementById('teacherPin').focus(); }
+function closeTeacherModal(){ document.getElementById('teacherModal').style.display='none'; }
+var answerKeyMap = {}; // populated after PIN verification, via the server-checked endpoint
+var verifiedTeacherPin = null; // kept for re-use by other PIN-gated endpoints (e.g. Live Monitor) without re-prompting
+
+function checkTeacherPin(){
+  var val = document.getElementById('teacherPin').value;
+  if(val===TEACHER_PIN){
+    verifiedTeacherPin = val;
+    closeTeacherModal();
+    if(pendingDeepLink && pendingDeepLink.name){
+      openStudentDetailFromDeepLink(val, pendingDeepLink);
+      pendingDeepLink = null;
+    } else {
+      openDashboardFast(val);
+    }
+  } else {
+    showAlert('Incorrect PIN.');
+  }
+}
+
+/* ---------------- Deep link support (from the submission email) ----------------
+   ?view=student&name=...&yearGroup=...&school=...&tutor=...&timestamp=...
+   The link only pre-fills WHICH student to open — the PIN is still required,
+   same as opening Teacher Mode any other way. This is a convenience, not a
+   bypass of the PIN security.
+------------------------------------------------------------------------- */
+function getDeepLinkParams(){
+  var params = new URLSearchParams(window.location.search);
+  if(params.get('view') !== 'student') return null;
+  return {
+    name: params.get('name') || '',
+    yearGroup: params.get('yearGroup') || '',
+    school: params.get('school') || '',
+    tutor: params.get('tutor') || '',
+    timestamp: params.get('timestamp') || ''
+  };
+}
+var pendingDeepLink = getDeepLinkParams();
+if(pendingDeepLink){
+  document.addEventListener('DOMContentLoaded', function(){
+    document.getElementById('teacherModal').style.display = 'flex';
+  });
+}
+
+function openStudentDetailFromDeepLink(pin, link){
+  document.getElementById('dashboardPanel').style.display = 'block';
+  document.getElementById('dashboardContent').innerHTML = '<p style="text-align:center;padding:60px 20px;color:var(--ink-soft);">Loading student…</p>';
+  Promise.all([
+    fetch(APPS_SCRIPT_URL + '?action=getAllResults').then(function(res){ return res.json(); }), // no year filter — search every year, since the link doesn't encode which one
+    fetch(APPS_SCRIPT_URL + '?action=getAllQla').then(function(res){ return res.json(); }),
+    fetch(APPS_SCRIPT_URL + '?action=getAnswerKey&pin=' + encodeURIComponent(pin)).then(function(res){ return res.json(); }).catch(function(){ return null; })
+  ]).then(function(results){
+    allResultsData = results[0] || [];
+    allQlaData = results[1] || [];
+    if(results[2] && results[2].answers) answerKeyMap = results[2].answers;
+    dashFilters = { academicYear:'All', term:'All', status:'All', grade:'All', tutor:'All', className:'All' }; // permissive, so the target row can't be filtered out
+    renderDashboard();
+    var idx = currentDashboardRows.findIndex(function(r){
+      var nameMatch = String(r['Student Name']||'').trim() === link.name.trim();
+      var rowTime = new Date(r['Timestamp']||0).getTime();
+      var linkTime = new Date(link.timestamp||0).getTime();
+      var timeMatch = Math.abs(rowTime - linkTime) < 2000; // small tolerance in case Sheets rounds precision slightly
+      return nameMatch && timeMatch;
+    });
+    if(idx === -1){
+      showAlert('Could not find that specific submission — it may have been deleted, or the link is out of date. Showing the Dashboard instead.');
+      return;
+    }
+    openStudentDetail(idx);
+  }).catch(function(){
+    showAlert('Could not load that student. Check your connection and try again.');
+  });
+}
+var currentlyLoadedYear = null;    // which year's Results/QLA are actually in memory right now
+var availableAcademicYears = [];   // from the lightweight getAcademicYears endpoint, populates the dropdown
+var dashboardTutorList = [];       // canonical list (same source as the exam's own tutor dropdown), NOT derived from loaded result rows
+var dashboardClassList = [];
+
+function openDashboardFast(pin){
+  document.getElementById('dashboardPanel').style.display = 'block';
+  document.getElementById('dashboardContent').innerHTML = '<p style="text-align:center;padding:60px 20px;color:var(--ink-soft);">Loading results…</p>';
+  dashFilters = { academicYear:'current', term:'All', status:'Enrolled Student', grade:'All', tutor:'All', className:'All' };
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0){
+    document.getElementById('dashboardContent').innerHTML = '<p style="text-align:center;padding:60px 20px;color:var(--crimson);">Apps Script isn\'t configured yet.</p>';
+    return;
+  }
+  var yearToLoad = currentAcademicYearLabel();
+  Promise.all([
+    fetch(APPS_SCRIPT_URL + '?action=getAllResults&year=' + encodeURIComponent(yearToLoad)).then(function(res){ return res.json(); }),
+    fetch(APPS_SCRIPT_URL + '?action=getAllQla&year=' + encodeURIComponent(yearToLoad)).then(function(res){ return res.json(); }),
+    fetch(APPS_SCRIPT_URL + '?action=getAnswerKey&pin=' + encodeURIComponent(pin)).then(function(res){ return res.json(); }).catch(function(){ return null; }),
+    fetch(APPS_SCRIPT_URL + '?action=getAcademicYears').then(function(res){ return res.json(); }).catch(function(){ return []; }),
+    fetch(APPS_SCRIPT_URL + '?action=getTutors').then(function(res){ return res.json(); }).catch(function(){ return []; }),
+    fetch(APPS_SCRIPT_URL + '?action=getClasses').then(function(res){ return res.json(); }).catch(function(){ return []; })
+  ])
+    .then(function(results){
+      allResultsData = results[0] || [];
+      allQlaData = results[1] || [];
+      if(results[2] && results[2].answers) answerKeyMap = results[2].answers;
+      availableAcademicYears = results[3] || [];
+      dashboardTutorList = ((results[4] && results[4].tutors) || []).filter(function(t){ return t !== 'Other'; });
+      dashboardClassList = ((results[5] && results[5].classes) || []).map(function(c){ return c.name; }).filter(function(c){ return c && c !== 'Other'; });
+      currentlyLoadedYear = yearToLoad;
+      renderDashboard();
+    })
+    .catch(function(){
+      document.getElementById('dashboardContent').innerHTML = '<p style="text-align:center;padding:60px 20px;color:var(--crimson);">Could not load results. Check your connection and try again.</p>';
+    });
+}
+function fetchYearAndRender(resolvedYear, dropdownValue){
+  document.getElementById('dashboardContent').innerHTML = '<p style="text-align:center;padding:60px 20px;color:var(--ink-soft);">Loading '+(dropdownValue==='All'?'all years':dropdownValue)+'…</p>';
+  Promise.all([
+    fetch(APPS_SCRIPT_URL + '?action=getAllResults' + (resolvedYear?('&year='+encodeURIComponent(resolvedYear)):'')).then(function(res){ return res.json(); }),
+    fetch(APPS_SCRIPT_URL + '?action=getAllQla' + (resolvedYear?('&year='+encodeURIComponent(resolvedYear)):'')).then(function(res){ return res.json(); })
+  ])
+    .then(function(results){
+      allResultsData = results[0] || [];
+      allQlaData = results[1] || [];
+      currentlyLoadedYear = resolvedYear;
+      renderDashboard();
+    })
+    .catch(function(){
+      document.getElementById('dashboardContent').innerHTML = '<p style="text-align:center;padding:60px 20px;color:var(--crimson);">Could not load results. Check your connection and try again.</p>';
+    });
+}
+function closeQla(){ document.getElementById('qlaPanel').style.display='none'; }
+function renderQla(){
+  var rows = lastMarkData.questionResults.map(function(r){
+    var ansStr = Object.keys(r.studentAnswer).map(function(k){ return r.studentAnswer[k]; }).join(', ');
+    var correctAns = answerKeyMap[r.id] || '—';
+    return '<tr><td>'+r.id+'</td><td>'+TOPICS[r.topic]+'</td><td>G'+r.grade+'</td><td>'+ansStr+'</td><td>'+correctAns+'</td><td>'+r.scored+'/'+r.marks+'</td>'+
+      '<td class="'+(r.correct?'tag-correct':'tag-incorrect')+'">'+(r.correct?'Correct':(r.scored>0?'Partial':'Incorrect'))+'</td></tr>';
+  }).join('');
+  document.getElementById('qlaContent').innerHTML =
+    '<h2 class="display">Question-Level Analysis</h2>'+
+    '<p><strong>'+studentMeta.name+'</strong> · '+studentMeta.yearGroup+' · '+(studentMeta.school||'—')+' · Tutor: '+(studentMeta.tutor||'—')+'</p>'+
+    '<p>Score: <strong>'+lastMarkData.totalScore+'/'+lastMarkData.totalMarks+'</strong> &nbsp;|&nbsp; Estimated Grade: <strong>'+lastMarkData.grade+'</strong> &nbsp;|&nbsp; Placement suggestion: <strong>'+lastMarkData.placementSuggestion+'</strong></p>'+
+    '<table class="qla-table"><thead><tr><th>Q</th><th>Topic</th><th>Grade</th><th>Student Answer</th><th>Correct Answer</th><th>Marks</th><th>Result</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+
+    '<div class="section-title" style="margin-top:28px;">Calibration Check</div>'+
+    '<div class="feedback-card">'+
+      '<p style="font-size:13px;color:var(--ink-soft);margin:0 0 12px;">Log your own independent grade estimate for this student — helps sanity-check the boundary scaling over time against real teacher judgement.</p>'+
+      '<div class="field-row">'+
+        '<div class="field"><label>Actual / Known RAG</label><select id="calActualGrade"><option value="">— Select —</option>'+
+          ['Exceptional','Green','Amber','Red','U'].map(function(g){ return '<option value="'+g+'">'+g+'</option>'; }).join('')+
+        '</select></div>'+
+        '<div class="field"><label>Notes (optional)</label><input type="text" id="calNotes" placeholder="e.g. seemed nervous, usually stronger"></div>'+
+      '</div>'+
+      '<button class="btn-secondary" onclick="saveCalibration()">Save to Calibration Log</button>'+
+    '</div>';
+}
+
+function saveCalibration(){
+  var actualGrade = document.getElementById('calActualGrade').value;
+  var notes = document.getElementById('calNotes').value.trim();
+  if(!actualGrade){ showAlert('Please select a grade before saving.'); return; }
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0){ showAlert('Apps Script isn\'t configured yet — see Y78_Code.gs.'); return; }
+  var payload = {
+    action: 'logCalibration', paper: 'F1',
+    studentName: studentMeta.name, yearGroup: studentMeta.yearGroup, school: studentMeta.school, tutor: studentMeta.tutor,
+    estimatedGrade: lastMarkData.grade, actualGrade: actualGrade, notes: notes
+  };
+  fetch(APPS_SCRIPT_URL, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload)})
+    .then(function(){ showAlert('Saved to calibration log.'); })
+    .catch(function(){ showAlert('Could not save — check your connection and try again.'); });
+}
+
+
+/* ---------------- Teacher Dashboard (all students, filterable) ----------------
+   Mirrors the Ascend / Ignite / Master dashboard pattern: Academic Year
+   (defaults to current), Term, Student Status (defaults to hiding
+   Test-Demo entries), plus a Grade filter. "Reset to default view"
+   restores those defaults rather than clearing to "show everything".
+------------------------------------------------------------------------- */
+var allResultsData = [];
+var allQlaData = [];
+var currentDashboardRows = [];
+var dashFilters = { academicYear:'current', term:'All', status:'Enrolled Student', grade:'All', tutor:'All', className:'All' };
+
+function currentAcademicYearLabel(){
+  var d = new Date();
+  var y = d.getFullYear(), m = d.getMonth();
+  var startYear = (m>=8) ? y : y-1;
+  return startYear + '/' + String(startYear+1).slice(-2);
+}
+function closeDashboardPanel(){ document.getElementById('dashboardPanel').style.display = 'none'; }
+
+/* ---------------- Teacher navigation ----------------
+   Lets a tutor move between Dashboard / Live Monitor / Student Detail /
+   Combined Report without closing back out to the student cover screen
+   and re-entering the PIN each time.
+------------------------------------------------------------------------- */
+function exitTeacherViewToHome(){
+  document.getElementById('dashboardPanel').style.display = 'none';
+  document.getElementById('liveMonitorPanel').style.display = 'none';
+  document.getElementById('studentDetailPanel').style.display = 'none';
+  document.getElementById('walkthroughPanel').style.display = 'none';
+  if(liveMonitorInterval){ clearInterval(liveMonitorInterval); liveMonitorInterval = null; }
+}
+function backToDashboardFrom(panelId){
+  document.getElementById(panelId).style.display = 'none';
+  if(panelId === 'liveMonitorPanel' && liveMonitorInterval){ clearInterval(liveMonitorInterval); liveMonitorInterval = null; }
+  document.getElementById('dashboardPanel').style.display = 'block';
+}
+
+/* ---------------- Question Walkthrough ----------------
+   Read-only, one-question-at-a-time view for a tutor to go through the
+   paper WITH a student — same text/diagram layout as the live exam,
+   but no live inputs, plus an optional "Reveal Answer" per question
+   sourced from the already-PIN-verified answerKeyMap.
+------------------------------------------------------------------------- */
+var walkthroughIdx = 0;
+var walkthroughAnswerRevealed = {};
+
+function openWalkthrough(){
+  document.getElementById('walkthroughPanel').style.display = 'block';
+  renderWalkthroughQuestion();
+}
+function closeWalkthroughPanel(){ document.getElementById('walkthroughPanel').style.display = 'none'; }
+
+function renderWalkthroughQuestion(){
+  var q = QUESTIONS[walkthroughIdx];
+  var diagramHtml = q.diagram ? '<div class="qdiagram">'+q.diagram+'</div>' : '';
+  var isRevealed = !!walkthroughAnswerRevealed[q.id];
+  var answerText = answerKeyMap[q.id] || 'Not available';
+  var answerHtml = isRevealed
+    ? '<div class="feedback-card strength" style="margin-top:18px;"><h4>✅ Answer</h4><p style="font-size:16px;font-family:\'SF Mono\',Consolas,monospace;margin:0;font-weight:700;">'+answerText+'</p></div>'
+    : '<button class="btn-secondary" style="margin-top:18px;" onclick="toggleWalkthroughAnswer()">Reveal Answer</button>';
+
+  var jumpOptions = QUESTIONS.map(function(qq,i){ return '<option value="'+i+'"'+(i===walkthroughIdx?' selected':'')+'>Q'+(i+1)+'</option>'; }).join('');
+
+  document.getElementById('walkthroughContent').innerHTML =
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">'+
+      '<h2 class="display" style="margin:0;">Question Walkthrough</h2>'+
+      '<div style="display:flex;align-items:center;gap:8px;">'+
+        '<label style="font-size:13px;color:var(--ink-soft);">Jump to</label>'+
+        '<select onchange="jumpToWalkthroughQuestion(this.value)" style="padding:6px 10px;border-radius:6px;border:1px solid var(--paper-line);font-size:13px;">'+jumpOptions+'</select>'+
+      '</div>'+
+    '</div>'+
+    '<div class="qcard">'+
+      '<div class="qcard-head"><span class="qnum">Question '+(walkthroughIdx+1)+' of '+QUESTIONS.length+'</span><span class="qmarks">'+q.marks+' mark'+(q.marks>1?'s':'')+'</span></div>'+
+      '<div class="qbody">'+
+        '<div class="qtext">'+q.text+'</div>'+
+        diagramHtml+
+        (q.hint ? '<div class="hint">'+q.hint+'</div>' : '')+
+        answerHtml+
+      '</div>'+
+    '</div>'+
+    '<div style="display:flex;justify-content:space-between;margin-top:20px;">'+
+      '<button class="btn-secondary"'+(walkthroughIdx===0?' disabled style="opacity:.4;cursor:not-allowed;"':'')+' onclick="prevWalkthroughQuestion()">← Previous</button>'+
+      '<button class="btn-secondary"'+(walkthroughIdx===QUESTIONS.length-1?' disabled style="opacity:.4;cursor:not-allowed;"':'')+' onclick="nextWalkthroughQuestion()">Next →</button>'+
+    '</div>';
+}
+function nextWalkthroughQuestion(){ if(walkthroughIdx < QUESTIONS.length-1){ walkthroughIdx++; renderWalkthroughQuestion(); } }
+function prevWalkthroughQuestion(){ if(walkthroughIdx > 0){ walkthroughIdx--; renderWalkthroughQuestion(); } }
+function jumpToWalkthroughQuestion(idx){ walkthroughIdx = parseInt(idx,10); renderWalkthroughQuestion(); }
+function toggleWalkthroughAnswer(){
+  var q = QUESTIONS[walkthroughIdx];
+  walkthroughAnswerRevealed[q.id] = true;
+  renderWalkthroughQuestion();
+}
+
+/* ---------------- Live Monitor (near-real-time, ~12s polling) ----------------
+   Not truly instant — Apps Script/Sheets has no push mechanism, so this
+   polls getActiveDrafts every 12 seconds while the panel is open. Good
+   enough to spot who's stuck or stalled during a live sitting; not a
+   substitute for a real push-based tool if millisecond-live matters.
+------------------------------------------------------------------------- */
+var liveMonitorInterval = null;
+var LIVE_MONITOR_POLL_MS = 12000;
+var STALE_THRESHOLD_SEC = 90; // if last save is older than this, flag as possibly stalled/disconnected
+var lastActiveDrafts = [];       // cached from the last successful poll, so toggling an answers panel doesn't need a fresh fetch
+var lastFilteredDrafts = [];     // the currently-displayed (post-filter) list — what toggleMonitorCard's index actually refers to
+var expandedMonitorCards = {};   // keyed by student name (not array position), so it survives the active list reordering between polls
+
+function openLiveMonitor(){
+  document.getElementById('liveMonitorPanel').style.display = 'block';
+  document.getElementById('liveMonitorContent').innerHTML = '<p style="text-align:center;padding:60px 20px;color:var(--ink-soft);">Loading…</p>';
+  expandedMonitorCards = {}; // start collapsed each time the panel is opened
+  pollLiveMonitor();
+  if(liveMonitorInterval) clearInterval(liveMonitorInterval);
+  liveMonitorInterval = setInterval(pollLiveMonitor, LIVE_MONITOR_POLL_MS);
+}
+function closeLiveMonitor(){
+  document.getElementById('liveMonitorPanel').style.display = 'none';
+  if(liveMonitorInterval){ clearInterval(liveMonitorInterval); liveMonitorInterval = null; }
+}
+function pollLiveMonitor(){
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0 || !verifiedTeacherPin) return;
+  fetch(APPS_SCRIPT_URL + '?action=getActiveDrafts&pin=' + encodeURIComponent(verifiedTeacherPin))
+    .then(function(res){ return res.json(); })
+    .then(function(data){
+      if(data && data.error) return; // PIN somehow invalid — just leave the last good render up
+      lastActiveDrafts = data || [];
+      renderLiveMonitor(lastActiveDrafts);
+    })
+    .catch(function(){ /* leave last successful render in place rather than clearing it on a blip */ });
+}
+function toggleMonitorCard(idx){
+  var entry = lastFilteredDrafts[idx];
+  if(!entry) return;
+  var name = entry['Student Name'] || ('idx:'+idx);
+  expandedMonitorCards[name] = !expandedMonitorCards[name];
+  renderLiveMonitor(lastActiveDrafts); // re-render from cache, no extra network call
+}
+function liveAnswersTableHtml(rawAnswersJson){
+  var rawAnswers;
+  try{ rawAnswers = JSON.parse(rawAnswersJson || '{}'); }catch(e){ rawAnswers = {}; }
+  var entries = Object.keys(rawAnswers).map(function(qid){
+    var ans = rawAnswers[qid] || {};
+    var ansStr = Object.keys(ans).map(function(k){ return ans[k]; }).filter(function(v){ return v && v.trim()!==''; }).join(', ');
+    var order = questionOrder[qid]!==undefined ? questionOrder[qid] : 999;
+    return { order:order, ansStr:ansStr };
+  }).filter(function(e){ return e.ansStr!==''; }).sort(function(a,b){ return a.order-b.order; });
+
+  if(!entries.length){
+    return '<div style="font-size:12px;color:var(--ink-soft);padding:8px 2px;">No answers typed yet.</div>';
+  }
+  var rows = entries.map(function(e){
+    return '<tr><td>Q'+(e.order+1)+'</td><td style="font-family:\'SF Mono\',Consolas,monospace;">'+e.ansStr+'</td></tr>';
+  }).join('');
+  return '<table class="qla-table" style="margin-top:8px;width:100%;"><thead><tr><th>Q</th><th>Current Answer</th></tr></thead><tbody>'+rows+'</tbody></table>';
+}
+function renderLiveMonitor(activeDrafts){
+  var nowMs = Date.now();
+  // Only show students whose exam clock hasn't run out — once time's up,
+  // they're not "currently sitting" it in any meaningful live sense,
+  // regardless of how long the underlying draft row lingers server-side
+  // before its 1-hour grace period expires and it gets purged.
+  var filtered = activeDrafts.filter(function(s){
+    var startMs = new Date(s['Start Timestamp']).getTime();
+    var elapsedSec = (nowMs - startMs) / 1000;
+    return elapsedSec < TIME_LIMIT_SECONDS;
+  });
+  lastFilteredDrafts = filtered;
+
+  var cardsHtml = filtered.map(function(s, idx){
+    var startMs = new Date(s['Start Timestamp']).getTime();
+    var elapsedSec = Math.floor((nowMs - startMs)/1000);
+    var remainingSec = Math.max(0, TIME_LIMIT_SECONDS - elapsedSec);
+    var lastSavedMs = new Date(s['Last Saved']).getTime();
+    var sinceLastSaveSec = Math.floor((nowMs - lastSavedMs)/1000);
+    var isStale = sinceLastSaveSec > STALE_THRESHOLD_SEC;
+    var answered = Number(s['Answered Count'])||0;
+    var pct = Math.round((answered/QUESTIONS.length)*100);
+    var statusColor = isStale ? 'var(--crimson)' : (remainingSec<=300 ? 'var(--amber)' : 'var(--green)');
+    var statusLabel = isStale ? 'No update for '+sinceLastSaveSec+'s — may have disconnected' : ('Active · last saved '+sinceLastSaveSec+'s ago');
+    var isExpanded = !!expandedMonitorCards[s['Student Name']];
+    return '<div class="topic-card" style="align-items:flex-start;flex-direction:column;">'+
+      '<div style="display:flex;align-items:flex-start;width:100%;gap:14px;">'+
+        '<div class="rag-dot" style="background:'+statusColor+';margin-top:4px;"></div>'+
+        '<div class="topic-info">'+
+          '<div class="tname">'+(s['Student Name']||'')+' <span style="font-weight:400;color:var(--ink-soft);font-size:12px;">'+(s['Class']||s['Year Group']||'')+'</span></div>'+
+          '<div class="tscore">On <strong>'+(s['Current Question']||'—')+'</strong> · '+answered+'/'+QUESTIONS.length+' answered · '+formatTime(Math.max(0,remainingSec))+' remaining</div>'+
+          '<div style="font-size:11.5px;color:'+statusColor+';margin-top:3px;">'+statusLabel+'</div>'+
+        '</div>'+
+        '<div class="topic-bar-track" style="width:80px;flex-shrink:0;"><div class="topic-bar-fill" style="width:'+pct+'%;background:'+(isStale?'var(--crimson)':'var(--gold)')+'"></div></div>'+
+      '</div>'+
+      '<button class="btn-secondary" style="padding:4px 12px;font-size:11px;margin-top:8px;flex:none;" onclick="toggleMonitorCard('+idx+')">'+(isExpanded?'Hide':'View')+' live answers</button>'+
+      (isExpanded ? liveAnswersTableHtml(s['Raw Answers JSON']) : '')+
+    '</div>';
+  }).join('');
+
+  document.getElementById('liveMonitorContent').innerHTML =
+    '<h2 class="display">Live Monitor</h2>'+
+    '<p style="color:var(--ink-soft);font-size:13px;margin-bottom:18px;">Refreshes automatically every 12 seconds · '+filtered.length+' student'+(filtered.length===1?'':'s')+' currently sitting Paper 1</p>'+
+    (filtered.length ? cardsHtml : '<div class="instructions">No students are currently mid-paper. This updates automatically once someone starts.</div>');
+}
+
+function gradeClass(g){
+  if(g==='Exceptional') return 'g-exceptional';
+  if(g==='Green') return 'g-high';
+  if(g==='Amber') return 'g-mid';
+  return 'g-low'; // Red or U
+}
+
+function computeCohortAnalysis(rows){
+  var gradeDist = {}; ['Exceptional','Green','Amber','Red','U'].forEach(function(g){ gradeDist[g]=0; });
+  rows.forEach(function(r){
+    var g = String(r['Estimated Grade']);
+    if(gradeDist[g]===undefined) gradeDist[g]=0;
+    gradeDist[g]++;
+  });
+
+  var topicSums = {}, topicCounts = {};
+  Object.keys(TOPICS).forEach(function(k){ topicSums[k]=0; topicCounts[k]=0; });
+  rows.forEach(function(r){
+    Object.keys(TOPICS).forEach(function(k){
+      var v = r[TOPICS[k]+' %'];
+      if(v!=='' && v!==null && v!==undefined && !isNaN(v)){ topicSums[k]+=Number(v); topicCounts[k]++; }
+    });
+  });
+  var topicAverages = {};
+  Object.keys(TOPICS).forEach(function(k){
+    topicAverages[k] = topicCounts[k] ? Math.round((topicSums[k]/topicCounts[k])*10)/10 : null;
+  });
+
+  return { gradeDist: gradeDist, topicAverages: topicAverages };
+}
+
+/* ---------------- Question Analysis ("common questions students got wrong") ----------------
+   Joins the filtered Results rows against the full QLA feed (by student
+   name + timestamp, matching within a few seconds) so this respects
+   whatever Academic Year / Term / Status / Grade / Tutor filters are
+   active — "common in this class" rather than "common ever". Sorted
+   worst-first, and surfaces the single most common wrong answer per
+   question since that's usually more actionable than the % alone.
+------------------------------------------------------------------------- */
+function isQlaCorrect(v){ return v===true || v==='true'; }
+
+function computeQuestionAnalysis(filteredRows){
+  var accepted = filteredRows.map(function(r){
+    return { name: String(r['Student Name']||'').trim().toLowerCase(), time: new Date(r['Timestamp']).getTime() };
+  });
+  function isAccepted(qlaRow){
+    var name = String(qlaRow['Student Name']||'').trim().toLowerCase();
+    var time = new Date(qlaRow['Timestamp']).getTime();
+    return accepted.some(function(a){ return a.name===name && Math.abs(a.time-time) <= 5000; });
+  }
+  var matchingQla = allQlaData.filter(isAccepted);
+
+  var byQuestion = {};
+  matchingQla.forEach(function(q){
+    var id = q['Question ID'];
+    if(!byQuestion[id]) byQuestion[id] = { correct:0, partial:0, incorrect:0, total:0, wrongAnswers:{} };
+    var scored = Number(q['Marks Scored'])||0;
+    var correct = isQlaCorrect(q['Correct']);
+    byQuestion[id].total++;
+    if(correct){
+      byQuestion[id].correct++;
+    } else if(scored>0){
+      byQuestion[id].partial++;
+    } else {
+      byQuestion[id].incorrect++;
+      var ansStr;
+      try{
+        var parsed = JSON.parse(q['Student Answer']);
+        ansStr = Object.keys(parsed).map(function(k){ return parsed[k]; }).filter(function(v){ return v!==''; }).join(', ');
+      }catch(e){ ansStr = String(q['Student Answer']||''); }
+      if(ansStr && ansStr.trim()!==''){
+        byQuestion[id].wrongAnswers[ansStr] = (byQuestion[id].wrongAnswers[ansStr]||0)+1;
+      }
+    }
+  });
+
+  return Object.keys(byQuestion).map(function(id){
+    var d = byQuestion[id];
+    var pctCorrect = d.total ? Math.round((d.correct/d.total)*100) : 0;
+    var topWrong = null, topWrongCount = 0;
+    Object.keys(d.wrongAnswers).forEach(function(a){
+      if(d.wrongAnswers[a] > topWrongCount){ topWrong = a; topWrongCount = d.wrongAnswers[a]; }
+    });
+    return {
+      id: id, total: d.total, correct: d.correct, partial: d.partial, incorrect: d.incorrect,
+      pctCorrect: pctCorrect, topWrongAnswer: topWrong, topWrongCount: topWrongCount
+    };
+  }).sort(function(a,b){ return (questionOrder[a.id]||0) - (questionOrder[b.id]||0); }); // paper order by default
+}
+
+var qaSortMode = 'paper'; // 'paper' or 'worst' — toggled from the dashboard
+function setQaSortMode(mode){ qaSortMode = mode; renderDashboard(); }
+
+/* ---------------- Printable blank paper ----------------
+   Renders every question with a blank answer space instead of a live
+   input — for printing/PDF export so students can sit the paper on
+   paper (absence catch-up, exam-hall conditions practice, or tutors
+   who just prefer it). Deliberately does NOT include the answer key —
+   that lives only in Y78_Code.gs, same security boundary as the
+   digital version.
+------------------------------------------------------------------------- */
+function blankAnswerFieldHtml(inp){
+  if(inp.type==='fraction'){
+    return (inp.label?inp.label+' ':'')+'<span style="display:inline-block;border-bottom:1.5px solid #000;width:50px;height:22px;"></span>'+
+      ' / <span style="display:inline-block;border-bottom:1.5px solid #000;width:50px;height:22px;"></span>';
+  }
+  var label = inp.label ? inp.label+' ' : '';
+  var unit = inp.unit ? ' '+inp.unit : '';
+  return label+'<span style="display:inline-block;border-bottom:1.5px solid #000;width:'+(inp.width||110)+'px;height:22px;"></span>'+unit;
+}
+function buildPrintableQuestionBlock(q, idx){
+  var inputsHtml = q.inputs.map(blankAnswerFieldHtml).join('&nbsp;&nbsp;&nbsp;');
+  var diagramHtml = q.diagram ? '<div class="qdiagram">'+q.diagram+'</div>' : '';
+  return '<div class="qcard" style="break-inside:avoid;page-break-inside:avoid;">'+
+    '<div class="qcard-head"><span class="qnum">Question '+(idx+1)+'</span><span class="qmarks">'+q.marks+' mark'+(q.marks>1?'s':'')+'</span></div>'+
+    '<div class="qbody">'+
+      '<div class="qtext">'+q.text+'</div>'+
+      diagramHtml+
+      '<div style="margin-top:16px;font-size:15px;">'+inputsHtml+'</div>'+
+      (q.hint ? '<div class="hint">'+q.hint+'</div>' : '')+
+    '</div>'+
+  '</div>';
+}
+function openPrintablePaper(){
+  var questionsHtml = QUESTIONS.map(function(q,idx){ return buildPrintableQuestionBlock(q, idx); }).join('');
+  var coverHtml =
+    '<div style="text-align:center;margin-bottom:26px;padding-bottom:18px;border-bottom:3px solid var(--crimson);">'+
+      '<div style="font-family:\'Iowan Old Style\',Georgia,serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson);">Aim High Tuition</div>'+
+      '<h1 style="font-family:\'Iowan Old Style\',Georgia,serif;font-size:28px;margin:8px 0 4px;">KS3 Stage 1 Science</h1>'+
+      '<p style="font-size:15px;color:var(--ink-soft);margin:0 0 10px;">Combined Baseline Assessment (Non-Calculator)</p>'+
+      '<svg width="40" height="40" viewBox="0 0 48 48" style="margin-bottom:8px;" aria-label="No calculator permitted">'+
+        '<rect x="10" y="4" width="28" height="40" rx="3" fill="none" stroke="#1a2332" stroke-width="2.5"/>'+
+        '<rect x="14" y="9" width="20" height="8" fill="none" stroke="#1a2332" stroke-width="2"/>'+
+        '<circle cx="18" cy="24" r="1.8" fill="#1a2332"/><circle cx="24" cy="24" r="1.8" fill="#1a2332"/><circle cx="30" cy="24" r="1.8" fill="#1a2332"/>'+
+        '<circle cx="18" cy="31" r="1.8" fill="#1a2332"/><circle cx="24" cy="31" r="1.8" fill="#1a2332"/><circle cx="30" cy="31" r="1.8" fill="#1a2332"/>'+
+        '<circle cx="18" cy="38" r="1.8" fill="#1a2332"/><circle cx="24" cy="38" r="1.8" fill="#1a2332"/><circle cx="30" cy="38" r="1.8" fill="#1a2332"/>'+
+        '<line x1="4" y1="44" x2="44" y2="4" stroke="#137a6f" stroke-width="4" stroke-linecap="round"/>'+
+      '</svg>'+
+      '<div style="font-size:13px;color:var(--ink-soft);">Time allowed: <strong>'+Math.round(TIME_LIMIT_SECONDS/60)+' minutes</strong> &nbsp;|&nbsp; Total marks: <strong>'+TOTAL_MARKS+'</strong> &nbsp;|&nbsp; Calculator: <strong>Not permitted</strong></div>'+
+    '</div>'+
+    '<div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:14px;flex-wrap:wrap;gap:12px;">'+
+      '<div>Name: <span style="display:inline-block;border-bottom:1.5px solid #000;width:180px;"></span></div>'+
+      '<div>Class: <span style="display:inline-block;border-bottom:1.5px solid #000;width:140px;"></span></div>'+
+      '<div>Date: <span style="display:inline-block;border-bottom:1.5px solid #000;width:110px;"></span></div>'+
+    '</div>'+
+    '<div class="instructions" style="margin-bottom:22px;">Answer every question in the space provided. Where a question asks for a number, include the correct unit if one is shown.</div>'+
+    '<div class="instructions" style="border-left:4px solid var(--crimson); background:#fdf1f1; margin-bottom:22px;"><strong>Important.</strong> This is a diagnostic baseline, not a graded exam, completed entirely on your own — no notes, textbooks, the internet, AI tools, or help from anyone else. Only attempt this once: your first attempt is the one that counts, regardless of circumstances.</div>';
+  document.getElementById('printablePaperContent').innerHTML = coverHtml + questionsHtml;
+  document.getElementById('printablePaperPanel').style.display = 'block';
+}
+function closePrintablePaperPanel(){ document.getElementById('printablePaperPanel').style.display = 'none'; }
+
+var expandedQaRows = {};
+
+function toggleQaRow(qid){
+  expandedQaRows[qid] = !expandedQaRows[qid];
+  renderDashboard();
+}
+
+function questionAnalysisHtml(filteredRows){
+  var qa = computeQuestionAnalysis(filteredRows);
+  if(qaSortMode==='worst'){
+    qa = qa.slice().sort(function(a,b){ return a.pctCorrect - b.pctCorrect; });
+  } else if(qaSortMode==='best'){
+    qa = qa.slice().sort(function(a,b){ return b.pctCorrect - a.pctCorrect; });
+  }
+  if(!qa.length) return '';
+  var rowsHtml = qa.map(function(d){
+    var qDef = questionById[d.id];
+    var posLabel = (qDef && questionOrder[d.id]!==undefined) ? ('Q'+(questionOrder[d.id]+1)) : d.id;
+    var rag = d.pctCorrect>=70 ? 'green' : d.pctCorrect>=45 ? 'amber' : 'red';
+    var color = rag==='green' ? 'var(--green)' : rag==='amber' ? 'var(--amber)' : 'var(--red)';
+    var isExpanded = !!expandedQaRows[d.id];
+    var mainRow = '<tr style="cursor:pointer;" onclick="toggleQaRow(\''+d.id+'\')">'+
+      '<td style="font-weight:700;color:var(--crimson);">'+(isExpanded?'▾ ':'▸ ')+posLabel+'</td>'+
+      '<td>'+(qDef ? TOPICS[qDef.topic] : '')+'</td>'+
+      '<td>G'+(qDef ? qDef.grade : '')+'</td>'+
+      '<td>'+d.correct+'/'+d.total+'</td>'+
+      '<td><div style="display:flex;align-items:center;gap:8px;"><div class="topic-bar-track" style="width:70px;"><div class="topic-bar-fill" style="width:'+d.pctCorrect+'%;background:'+color+'"></div></div><span>'+d.pctCorrect+'%</span></div></td>'+
+      '<td>'+(d.topWrongAnswer ? ('"'+d.topWrongAnswer+'" ('+d.topWrongCount+'x)') : '—')+'</td>'+
+    '</tr>';
+    var detailRow = '';
+    if(isExpanded && qDef){
+      var diagramHtml = qDef.diagram ? '<div class="qdiagram" style="margin-top:8px;">'+qDef.diagram+'</div>' : '';
+      detailRow = '<tr><td colspan="6" style="background:var(--paper);padding:16px 18px;">'+
+        '<div style="font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Full question — '+posLabel+' ('+TOPICS[qDef.topic]+', Grade '+qDef.grade+', '+qDef.marks+' mark'+(qDef.marks>1?'s':'')+')</div>'+
+        '<div class="qtext">'+qDef.text+'</div>'+diagramHtml+
+      '</td></tr>';
+    }
+    return mainRow + detailRow;
+  }).join('');
+  return '<div class="table-scroll"><table class="results-table"><thead><tr><th>Q</th><th>Topic</th><th>Grade</th><th>Correct</th><th>% Correct</th><th>Most Common Wrong Answer</th></tr></thead><tbody>'+rowsHtml+'</tbody></table></div>'+
+    '<p style="font-size:11.5px;color:var(--ink-soft);margin-top:6px;">Click any row to see the full question.</p>';
+}
+
+function distinctAcademicYears(){
+  var years = availableAcademicYears.slice();
+  var current = currentAcademicYearLabel();
+  if(years.indexOf(current)===-1) years.push(current);
+  years.sort();
+  return years;
+}
+function distinctTutors(){
+  return dashboardTutorList.slice().sort();
+}
+function distinctClasses(){
+  return dashboardClassList.slice().sort();
+}
+
+function filteredResults(opts){
+  opts = opts || {};
+  return allResultsData.filter(function(r){
+    if(dashFilters.academicYear==='current' && r['Academic Year']!==currentAcademicYearLabel()) return false;
+    if(dashFilters.academicYear!=='current' && dashFilters.academicYear!=='All' && r['Academic Year']!==dashFilters.academicYear) return false;
+    if(dashFilters.term!=='All' && r['Term']!==dashFilters.term) return false;
+    if(dashFilters.status!=='All' && r['Student Status']!==dashFilters.status) return false;
+    if(dashFilters.grade!=='All' && String(r['Estimated Grade'])!==dashFilters.grade) return false;
+    if(!opts.ignoreTutor && dashFilters.tutor!=='All' && r['Tutor']!==dashFilters.tutor) return false;
+    if(dashFilters.className!=='All' && (r['Class']||'') !== dashFilters.className) return false;
+    return true;
+  }).sort(function(a,b){ return new Date(b['Timestamp']) - new Date(a['Timestamp']); });
+}
+
+function computeTutorComparison(rows){
+  var byTutor = {};
+  rows.forEach(function(r){
+    var t = r['Tutor'] || '(no tutor set)';
+    if(!byTutor[t]) byTutor[t] = { count:0, gradeSum:0, gradeCount:0, pctSum:0 };
+    byTutor[t].count++;
+    var g = r['Estimated Grade'];
+    var gNum = (g==='U' || g==='' || g===undefined || g===null) ? null : Number(g);
+    if(gNum!==null && !isNaN(gNum)){ byTutor[t].gradeSum += gNum; byTutor[t].gradeCount++; }
+    var pct = Number(r['Percentage']);
+    if(!isNaN(pct)) byTutor[t].pctSum += pct;
+  });
+  return Object.keys(byTutor).map(function(t){
+    var d = byTutor[t];
+    return {
+      tutor: t,
+      count: d.count,
+      avgGrade: d.gradeCount ? Math.round((d.gradeSum/d.gradeCount)*10)/10 : null,
+      avgPct: d.count ? Math.round((d.pctSum/d.count)*10)/10 : null
+    };
+  }).sort(function(a,b){ return (b.avgGrade||0) - (a.avgGrade||0); });
+}
+
+function renderDashboard(){
+  var years = distinctAcademicYears();
+  var rows = filteredResults();
+
+  var yearOptionsHtml = '<option value="current">Current ('+currentAcademicYearLabel()+')</option><option value="All">All years</option>'+
+    years.map(function(y){ return '<option value="'+y+'"'+(dashFilters.academicYear===y?' selected':'')+'>'+y+'</option>'; }).join('');
+
+  var termOptionsHtml = ['All','Autumn','Spring','Summer'].map(function(t){
+    return '<option value="'+t+'"'+(dashFilters.term===t?' selected':'')+'>'+(t==='All'?'All terms':t)+'</option>';
+  }).join('');
+
+  var statusOptionsHtml = [
+    {v:'Enrolled Student', l:'Enrolled Student'},
+    {v:'Trial Student', l:'Trial Student'},
+    {v:'All', l:'All Students'}
+  ].map(function(o){ return '<option value="'+o.v+'"'+(dashFilters.status===o.v?' selected':'')+'>'+o.l+'</option>'; }).join('');
+
+  var gradeOptionsHtml = ['All','Exceptional','Green','Amber','Red','U'].map(function(g){
+    return '<option value="'+g+'"'+(dashFilters.grade==String(g)?' selected':'')+'>'+(g==='All'?'All RAG bands':g)+'</option>';
+  }).join('');
+
+  var tutorOptionsHtml = '<option value="All">All tutors</option>'+
+    distinctTutors().map(function(t){ return '<option value="'+t+'"'+(dashFilters.tutor===t?' selected':'')+'>'+t+'</option>'; }).join('');
+
+  var classOptionsHtml = '<option value="All">All classes</option>'+
+    distinctClasses().map(function(c){ return '<option value="'+c+'"'+(dashFilters.className===c?' selected':'')+'>'+c+'</option>'; }).join('');
+
+  var tutorComparisonRows = filteredResults({ ignoreTutor:true });
+  var tutorComparison = computeTutorComparison(tutorComparisonRows);
+  var tutorTableHtml = tutorComparison.map(function(t){
+    return '<tr>'+
+      '<td>'+t.tutor+'</td>'+
+      '<td>'+t.count+'</td>'+
+      '<td>'+(t.avgGrade===null ? '—' : t.avgGrade)+'</td>'+
+      '<td>'+(t.avgPct===null ? '—' : t.avgPct+'%')+'</td>'+
+    '</tr>';
+  }).join('');
+
+  var cohort = computeCohortAnalysis(rows);
+  var maxGradeCount = Math.max.apply(null, Object.keys(cohort.gradeDist).map(function(g){ return cohort.gradeDist[g]; }).concat([1]));
+  var gradeDistHtml = ['Exceptional','Green','Amber','Red','U'].map(function(g){
+    var count = cohort.gradeDist[g]||0;
+    var pct = rows.length ? Math.round((count/rows.length)*100) : 0;
+    var widthPct = Math.round((count/maxGradeCount)*100);
+    var cls = gradeClass(g);
+    var color = cls==='g-high' ? 'var(--green)' : cls==='g-mid' ? 'var(--amber)' : 'var(--red)';
+    return '<div class="topic-card">'+
+      '<div class="topic-info" style="flex:0 0 64px;"><div class="tname">'+g+'</div></div>'+
+      '<div class="topic-bar-track" style="width:auto;flex:1;"><div class="topic-bar-fill" style="width:'+widthPct+'%;background:'+color+'"></div></div>'+
+      '<div style="font-size:12.5px;color:var(--ink-soft);min-width:90px;text-align:right;flex-shrink:0;">'+count+' student'+(count===1?'':'s')+' ('+pct+'%)</div>'+
+    '</div>';
+  }).join('');
+
+  // Class placement counts — directly answers "how many students in each
+  // RAG band" at cohort level, not just per-student. Counts by the actual
+  // Estimated Grade column (Green/Amber/Red), not by string-matching the
+  // Placement Suggestion text — Y7/8 Science doesn't split into named
+  // ability classes the way Maths' Higher/Lower does, so RAG bands are
+  // the meaningful grouping here.
+  var placementCounts = {Exceptional:0, Green:0, Amber:0, Red:0};
+  rows.forEach(function(r){
+    var g = String(r['Estimated Grade']||'');
+    if(placementCounts.hasOwnProperty(g)) placementCounts[g]++;
+  });
+  var maxPlacementCount = Math.max(placementCounts.Exceptional, placementCounts.Green, placementCounts.Amber, placementCounts.Red, 1);
+  var placementDistHtml = [
+    {label:'Exceptional', count:placementCounts.Exceptional, color:'var(--gold)'},
+    {label:'Green', count:placementCounts.Green, color:'var(--green)'},
+    {label:'Amber', count:placementCounts.Amber, color:'var(--amber)'},
+    {label:'Red', count:placementCounts.Red, color:'var(--red)'},
+  ]
+  .map(function(p){
+    var pct = rows.length ? Math.round((p.count/rows.length)*100) : 0;
+    var widthPct = Math.round((p.count/maxPlacementCount)*100);
+    return '<div class="topic-card">'+
+      '<div class="topic-info" style="flex:0 0 130px;"><div class="tname">'+p.label+'</div></div>'+
+      '<div class="topic-bar-track" style="width:auto;flex:1;"><div class="topic-bar-fill" style="width:'+widthPct+'%;background:'+p.color+'"></div></div>'+
+      '<div style="font-size:12.5px;color:var(--ink-soft);min-width:90px;text-align:right;flex-shrink:0;">'+p.count+' student'+(p.count===1?'':'s')+' ('+pct+'%)</div>'+
+    '</div>';
+  }).join('');
+
+  var cohortTopicHtml = Object.keys(TOPICS).map(function(k){
+    var v = cohort.topicAverages[k];
+    var pct = v===null ? 0 : v;
+    var rag = ragForPct(pct);
+    var color = rag==='green' ? 'var(--green)' : rag==='amber' ? 'var(--amber)' : 'var(--red)';
+    return '<div class="topic-card">'+
+      '<div class="rag-dot rag-'+rag+'"></div>'+
+      '<div class="topic-info"><div class="tname">'+TOPICS[k]+'</div><div class="tscore">'+(v===null ? 'No data yet' : v+'% average across shown students')+'</div></div>'+
+      '<div class="topic-bar-track"><div class="topic-bar-fill" style="width:'+pct+'%;background:'+color+'"></div></div>'+
+    '</div>';
+  }).join('');
+
+  var tableRowsHtml = rows.map(function(r, idx){
+    var g = r['Estimated Grade'];
+    var ts = r['Timestamp'] ? new Date(r['Timestamp']) : null;
+    var dateStr = ts ? ts.toLocaleDateString('en-GB') : '';
+    return '<tr>'+
+      '<td>'+dateStr+'</td>'+
+      '<td><span class="student-name-link" onclick="openStudentDetail('+idx+')">'+(r['Student Name']||'')+'</span></td>'+
+      '<td>'+(r['Year Group']||'')+'</td>'+
+      '<td>'+(r['Class']||'')+'</td>'+
+      '<td>'+(r['School']||'')+'</td>'+
+      '<td>'+(r['Tutor']||'')+'</td>'+
+      '<td>'+(r['Student Status']||'')+'</td>'+
+      '<td>'+(r['Academic Year']||'')+'</td>'+
+      '<td>'+(r['Term']||'')+'</td>'+
+      '<td>'+(r['Raw Score']||0)+'/'+(r['Total Marks']||'')+'</td>'+
+      '<td>'+(r['Percentage']||0)+'%</td>'+
+      '<td><span class="grade-pill '+gradeClass(g)+'">'+g+'</span></td>'+
+      '<td>'+(r['Placement Suggestion']||'')+'</td>'+
+      '<td><button class="btn-secondary" style="padding:4px 12px;font-size:11.5px;flex:none;" onclick="openStudentDetail('+idx+')">View</button></td>'+
+    '</tr>';
+  }).join('');
+  currentDashboardRows = rows;
+
+  document.getElementById('dashboardContent').innerHTML =
+    '<h2 class="display">Teacher Dashboard — Paper 1</h2>'+
+    '<div class="dash-reset-row">'+
+      '<span class="dash-count">'+rows.length+' result'+(rows.length===1?'':'s')+' shown</span>'+
+      '<div style="display:flex;gap:8px;">'+
+        '<button class="btn-secondary" style="flex:none;padding:8px 16px;" onclick="openWalkthrough()">📖 Question Walkthrough</button>'+
+        '<button class="btn-secondary" style="flex:none;padding:8px 16px;" onclick="openLiveMonitor()">🔴 Live Monitor</button>'+
+        '<button class="btn-secondary" style="flex:none;padding:8px 16px;" onclick="resetDashboardFilters()">Reset to default view</button>'+
+      '</div>'+
+    '</div>'+
+    '<div class="dash-filter-bar">'+
+      '<div class="field"><label>Academic Year</label><select id="dashYear" onchange="onDashFilterChange()">'+yearOptionsHtml+'</select></div>'+
+      '<div class="field"><label>Term</label><select id="dashTerm" onchange="onDashFilterChange()">'+termOptionsHtml+'</select></div>'+
+      '<div class="field"><label>Student Status</label><select id="dashStatus" onchange="onDashFilterChange()">'+statusOptionsHtml+'</select></div>'+
+      '<div class="field"><label>Grade</label><select id="dashGrade" onchange="onDashFilterChange()">'+gradeOptionsHtml+'</select></div>'+
+      '<div class="field"><label>Tutor</label><select id="dashTutor" onchange="onDashFilterChange()">'+tutorOptionsHtml+'</select></div>'+
+      '<div class="field"><label>Class</label><select id="dashClass" onchange="onDashFilterChange()">'+classOptionsHtml+'</select></div>'+
+    '</div>'+
+    (rows.length ? (
+      '<div class="section-title">RAG Distribution</div>'+gradeDistHtml+
+      '<div class="section-title">Class Placement Suggestion <span style="font-weight:400;text-transform:none;font-size:11.5px;">(which class to put each student in, at a glance)</span></div>'+placementDistHtml+
+      '<div class="section-title">Cohort Topic Heatmap</div>'+cohortTopicHtml+
+      '<div class="section-title">Question Analysis <span style="font-weight:400;text-transform:none;font-size:11.5px;">(respects filters above)</span></div>'+
+      '<div style="display:flex;gap:8px;margin-bottom:10px;">'+
+        '<button class="btn-secondary" style="flex:none;padding:6px 14px;font-size:12px;'+(qaSortMode==='paper'?'border-color:var(--ink);':'')+'" onclick="setQaSortMode(\'paper\')">Paper Order</button>'+
+        '<button class="btn-secondary" style="flex:none;padding:6px 14px;font-size:12px;'+(qaSortMode==='best'?'border-color:var(--ink);':'')+'" onclick="setQaSortMode(\'best\')">Best First</button>'+
+        '<button class="btn-secondary" style="flex:none;padding:6px 14px;font-size:12px;'+(qaSortMode==='worst'?'border-color:var(--ink);':'')+'" onclick="setQaSortMode(\'worst\')">Worst First</button>'+
+      '</div>'+
+      questionAnalysisHtml(rows)
+    ) : '')+
+    (tutorComparison.length > 1 ? (
+      '<div class="section-title">By Tutor'+(dashFilters.tutor!=='All' ? ' <span style="font-weight:400;text-transform:none;font-size:11.5px;">(shows all tutors regardless of the Tutor filter above)</span>' : '')+'</div>'+
+      '<div class="table-scroll"><table class="results-table"><thead><tr><th>Tutor</th><th>Students</th><th>Avg Grade</th><th>Avg %</th></tr></thead><tbody>'+tutorTableHtml+'</tbody></table></div>'
+    ) : '')+
+    '<div class="section-title">Individual Results</div>'+
+    '<div class="table-scroll"><table class="results-table"><thead><tr>'+
+      '<th>Date</th><th>Student</th><th>Year</th><th>Class</th><th>School</th><th>Tutor</th><th>Status</th><th>Academic Yr</th><th>Term</th><th>Score</th><th>%</th><th>Grade</th><th>Suggestion</th><th></th>'+
+    '</tr></thead><tbody>'+(tableRowsHtml || '<tr><td colspan="14" style="text-align:center;padding:24px;color:var(--ink-soft);">No results match these filters.</td></tr>')+'</tbody></table></div>'+
+    (lastMarkData ? '<button class="btn-secondary" style="margin-top:16px;" onclick="closeDashboardPanel();renderQla();document.getElementById(\'qlaPanel\').style.display=\'block\';">View This Session\'s QLA →</button>' : '');
+}
+
+/* ---------------- Individual student detail (question-by-question + report) ----------------
+   Drill-down from the dashboard's results table. Pulls the exact per-
+   question answers for one past sitting via getStudentQla, then renders
+   TWO things in one panel:
+   1. A polished, parent-shareable summary — reuses the same result-hero
+      / score-strip / topic-card / feedback-card components as the
+      student's own post-exam screen, so it's already report-ready.
+   2. A raw question-by-question table (marked .no-print) for the
+      tutor's own reference, showing exactly what the student typed for
+      every question, correct or not.
+------------------------------------------------------------------------- */
+function openStudentDetail(idx){
+  var row = currentDashboardRows[idx];
+  if(!row) return;
+  document.getElementById('studentDetailPanel').style.display = 'block';
+  document.getElementById('studentDetailContent').innerHTML = '<p style="text-align:center;padding:60px 20px;color:var(--ink-soft);">Loading…</p>';
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0){
+    document.getElementById('studentDetailContent').innerHTML = '<p style="text-align:center;padding:60px 20px;color:var(--crimson);">Apps Script isn\'t configured yet.</p>';
+    return;
+  }
+  var ts = new Date(row['Timestamp']).toISOString();
+  var qlaUrl = APPS_SCRIPT_URL + '?action=getStudentQla&student=' + encodeURIComponent(row['Student Name']) + '&timestamp=' + encodeURIComponent(ts);
+  var historyUrl = APPS_SCRIPT_URL + '?action=getStudentHistory&student=' + encodeURIComponent(row['Student Name']) + '&year=' + encodeURIComponent(row['Year Group']) + '&school=' + encodeURIComponent(row['School']);
+  Promise.all([
+    fetch(qlaUrl).then(function(res){ return res.json(); }),
+    fetch(historyUrl).then(function(res){ return res.json(); })
+  ])
+    .then(function(results){ renderStudentDetail(row, results[0], results[1]); })
+    .catch(function(){
+      document.getElementById('studentDetailContent').innerHTML = '<p style="text-align:center;padding:60px 20px;color:var(--crimson);">Could not load this student\'s answers. Check your connection and try again.</p>';
+    });
+}
+function closeStudentDetailPanel(){ document.getElementById('studentDetailPanel').style.display = 'none'; }
+
+function progressOverTimeHtml(history, currentTimestampISO){
+  if(!history || history.length<2) return '';
+  var currentTime = new Date(currentTimestampISO).getTime();
+  var rowsHtml = history.map(function(h,i){
+    var prev = i>0 ? history[i-1] : null;
+    var deltaHtml = '—';
+    if(prev){
+      var delta = Math.round((h.percentage - prev.percentage)*10)/10;
+      var arrow = delta>0 ? '▲' : delta<0 ? '▼' : '—';
+      var color = delta>0 ? 'var(--green)' : delta<0 ? 'var(--crimson)' : 'var(--ink-soft)';
+      deltaHtml = '<span style="color:'+color+';font-weight:700;">'+arrow+' '+(delta>0?'+':'')+delta+'%</span>';
+    }
+    var isCurrent = Math.abs(new Date(h.timestamp).getTime() - currentTime) < 5000;
+    var dateStr = new Date(h.timestamp).toLocaleDateString('en-GB');
+    return '<tr style="'+(isCurrent?'background:var(--paper);font-weight:700;':'')+'">'+
+      '<td>'+dateStr+(isCurrent?' (this report)':'')+'</td><td>'+(h.term||'')+'</td><td>'+h.grade+'</td>'+
+      '<td>'+h.rawScore+'/'+h.totalMarks+'</td><td>'+h.percentage+'%</td><td>'+deltaHtml+'</td></tr>';
+  }).join('');
+  return '<div class="section-title">Progress Over Time <span style="font-weight:400;text-transform:none;font-size:11.5px;">('+history.length+' sittings on record)</span></div>'+
+    '<div class="table-scroll"><table class="results-table"><thead><tr><th>Date</th><th>Term</th><th>Grade</th><th>Score</th><th>%</th><th>Change</th></tr></thead><tbody>'+rowsHtml+'</tbody></table></div>';
+}
+
+function renderStudentDetail(row, qlaRows, history){
+  // Rebuild topicTotals from the actual QLA rows (precise), rather than
+  // trusting the pre-rounded % columns already sitting in the Results row.
+  var topicTotals = {};
+  Object.keys(TOPICS).forEach(function(k){ topicTotals[k] = {scored:0, possible:0}; });
+  qlaRows.forEach(function(q){
+    if(!topicTotals[q.topic]) topicTotals[q.topic] = {scored:0, possible:0};
+    topicTotals[q.topic].scored += Number(q.scored)||0;
+    topicTotals[q.topic].possible += Number(q.marks)||0;
+  });
+
+  var totalScore = Number(row['Raw Score'])||0;
+  var totalMarks = Number(row['Total Marks'])||TOTAL_MARKS;
+  var pct = row['Percentage'];
+  var grade = row['Estimated Grade'];
+  var sw = topicStrengthsWeaknesses(topicTotals);
+  var nb = nextBoundary(totalScore);
+  var dateStr = row['Timestamp'] ? new Date(row['Timestamp']).toLocaleDateString('en-GB') : '';
+
+  var topicCardsHtml = sw.rows.map(function(r){
+    var rag = ragForPct(r.pct);
+    var color = rag==='green' ? 'var(--green)' : rag==='amber' ? 'var(--amber)' : 'var(--red)';
+    return '<div class="topic-card">'+
+      '<div class="rag-dot rag-'+rag+'"></div>'+
+      '<div class="topic-info"><div class="tname">'+r.topic+'</div><div class="tscore">'+r.scored+' / '+r.possible+' marks</div></div>'+
+      '<div class="topic-bar-track"><div class="topic-bar-fill" style="width:'+Math.round(r.pct)+'%;background:'+color+'"></div></div>'+
+    '</div>';
+  }).join('');
+  var strengthsHtml = sw.strengths.map(function(r){ return '<li><strong>'+r.topic+'</strong> — '+Math.round(r.pct)+'% ('+r.scored+'/'+r.possible+')</li>'; }).join('');
+  var weaknessesHtml = sw.weaknesses.map(function(r){ return '<li><strong>'+r.topic+'</strong> — '+Math.round(r.pct)+'% ('+r.scored+'/'+r.possible+'). Recommended focus for next session.</li>'; }).join('');
+
+  var reviewCardsHtml = buildQuestionReviewCards(qlaRows);
+
+  document.getElementById('studentDetailContent').innerHTML =
+    '<div class="no-print" style="margin-bottom:16px;"><button class="btn-secondary" onclick="window.print()">Print / Save Report</button></div>'+
+    reportLetterheadHtml(dateStr)+
+
+    '<div class="result-hero">'+
+      '<div class="grade-badge display" style="background:'+ragColor(grade)+';color:white;">'+ragLetter(grade)+'</div>'+
+      '<h2>'+row['Student Name']+' — Paper 1 Report</h2>'+
+      '<p>'+row['Year Group']+(row['Class'] ? ' ('+row['Class']+')' : '')+' · '+(row['School']||'')+' · Sat '+dateStr+' · Tutor: '+(row['Tutor']||'—')+'</p>'+
+    '</div>'+
+
+    '<div class="score-strip">'+
+      '<div class="score-box"><div class="num">'+totalScore+'/'+totalMarks+'</div><div class="lbl">Raw Score</div></div>'+
+      '<div class="score-box"><div class="num">'+pct+'%</div><div class="lbl">Percentage</div></div>'+
+      '<div class="score-box"><div class="num">'+grade+'</div><div class="lbl">Est. Grade</div></div>'+
+      '<div class="score-box"><div class="num">'+(row['Placement Suggestion']||'—')+'</div><div class="lbl" style="white-space:normal;">Placement</div></div>'+
+    '</div>'+
+
+    (nb ? '<div class="instructions" style="margin-bottom:22px;">Just <strong>'+(nb.mark-totalScore)+' more mark'+((nb.mark-totalScore)===1?'':'s')+'</strong> would move this into Grade <strong>'+nb.grade+'</strong> territory.</div>' : '')+
+
+    '<div class="section-title">Topic Breakdown</div>'+topicCardsHtml+
+
+    '<div class="section-title">Strengths &amp; Areas to Focus</div>'+
+    '<div class="feedback-card strength"><h4>✅ Strengths</h4><ul>'+(strengthsHtml||'<li>—</li>')+'</ul></div>'+
+    '<div class="feedback-card weakness"><h4>🎯 Focus for next session</h4><ul>'+(weaknessesHtml||'<li>—</li>')+'</ul></div>'+
+    leadNurtureCtaHtml(row['Student Status'], row['Student Name'])+
+    progressOverTimeHtml(history, row['Timestamp'])+
+
+    '<div class="section-title no-print">Question-by-Question Review <span style="font-weight:400;text-transform:none;font-size:11.5px;">(tutor view — same layout as the exam, with the student\'s answer and result added; excluded from print)</span></div>'+
+    '<div class="no-print">'+reviewCardsHtml+'</div>';
+}
+
+/* Builds the same .qcard question layout used in the live exam, but with
+   the student's actual answer and correct/incorrect/partial result
+   overlaid — so a tutor can move through the paper exactly as the
+   student saw it, question by question, marking included. */
+var questionById = {};
+QUESTIONS.forEach(function(q){ questionById[q.id] = q; });
+var questionOrder = {};
+QUESTIONS.forEach(function(q,i){ questionOrder[q.id] = i; });
+
+function buildQuestionReviewCards(qlaRows){
+  var sorted = qlaRows.slice().sort(function(a,b){ return (questionOrder[a.id]||0) - (questionOrder[b.id]||0); });
+  return sorted.map(function(qr, idx){
+    var qDef = questionById[qr.id];
+    if(!qDef) return '';
+    var answerParts = Object.keys(qr.studentAnswer||{}).map(function(k){ return qr.studentAnswer[k]; }).filter(function(v){ return v!==''; });
+    var ansStr = answerParts.length ? answerParts.join(', ') : '(no answer given)';
+    var isCorrect = (qr.correct===true || qr.correct==='true');
+    var isPartial = !isCorrect && Number(qr.scored) > 0;
+    var resultLabel = isCorrect ? 'Correct' : (isPartial ? 'Partial credit' : 'Incorrect');
+    var resultColor = isCorrect ? 'var(--green)' : (isPartial ? 'var(--amber)' : 'var(--crimson)');
+    var diagramHtml = qDef.diagram ? '<div class="qdiagram">'+qDef.diagram+'</div>' : '';
+    var correctAns = answerKeyMap[qr.id];
+    var correctAnsHtml = correctAns ? '<div style="margin-top:6px;"><span style="font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;">Correct Answer: </span><span style="font-family:\'SF Mono\',Consolas,monospace;font-size:14px;color:var(--green);font-weight:700;">'+correctAns+'</span></div>' : '';
+    return '<div class="qcard" style="border-left:4px solid '+resultColor+';">'+
+      '<div class="qcard-head"><span class="qnum">Question '+(idx+1)+'</span><span class="qmarks">'+qr.scored+'/'+qr.marks+' mark'+(qr.marks>1?'s':'')+'</span></div>'+
+      '<div class="qbody">'+
+        '<div class="qtext">'+qDef.text+'</div>'+
+        diagramHtml+
+        '<div style="background:var(--paper);border-radius:4px;padding:10px 12px;margin-top:12px;">'+
+          '<div style="font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">Student\'s Answer</div>'+
+          '<div style="font-family:\'SF Mono\',Consolas,monospace;font-size:15px;color:var(--ink);">'+ansStr+'</div>'+
+          correctAnsHtml+
+        '</div>'+
+        '<div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">'+
+          '<span style="font-weight:700;font-size:13.5px;color:'+resultColor+';">'+resultLabel+'</span>'+
+          (qr.timeSpent!=='' ? '<span style="font-size:12px;color:var(--ink-soft);">Time on this question: '+qr.timeSpent+'s</span>' : '')+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function onDashFilterChange(){
+  var newYear = document.getElementById('dashYear').value;
+  dashFilters.term = document.getElementById('dashTerm').value;
+  dashFilters.status = document.getElementById('dashStatus').value;
+  dashFilters.grade = document.getElementById('dashGrade').value;
+  dashFilters.tutor = document.getElementById('dashTutor').value;
+  dashFilters.className = document.getElementById('dashClass').value;
+
+  var resolvedYear = newYear==='current' ? currentAcademicYearLabel() : (newYear==='All' ? '' : newYear);
+  dashFilters.academicYear = newYear;
+  if(resolvedYear !== currentlyLoadedYear){
+    fetchYearAndRender(resolvedYear, newYear);
+  } else {
+    renderDashboard();
+  }
+}
+function resetDashboardFilters(){
+  dashFilters = { academicYear:'current', term:'All', status:'Enrolled Student', grade:'All', tutor:'All', className:'All' };
+  var currentLabel = currentAcademicYearLabel();
+  if(currentlyLoadedYear !== currentLabel){
+    fetchYearAndRender(currentLabel, 'current');
+  } else {
+    renderDashboard();
+  }
+}
+</script>
+</body>
+</html>
