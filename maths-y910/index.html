@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aim High Tuition — Year 9/10 Combined Baseline</title>
+<title>Aim High Tuition — KS3/4 Bridge Maths Baseline</title>
 <style>
   :root{
     --ink:#1a2332; --ink-soft:#2c3a52; --crimson:#137a6f; --crimson-dark:#0d5a52;
@@ -157,10 +157,10 @@
 
 <div id="coverScreen">
   <div class="cover-card">
-    <div class="cover-band"><span class="brand">Aim High Tuition</span><span class="code">Y9/10-COMB</span></div>
+    <div class="cover-band"><span class="brand">Aim High Tuition</span><span class="code">KS3-4B-COMB</span></div>
     <div class="cover-body">
-      <h1 class="cover-title display">Year 9/10 Combined Baseline</h1>
-      <p class="cover-sub">Non-calculator diagnostic assessment</p>
+      <h1 class="cover-title display">KS3/4 Bridge Maths</h1>
+      <p class="cover-sub">Combined Assessment (Non-Calculator) &middot; Baseline Assessment</p>
       <div class="cover-meta">
         <div><span>Questions</span><span id="metaQ">—</span></div>
         <div><span>Total marks</span><span id="metaMarks">—</span></div>
@@ -168,8 +168,11 @@
         <div><span>Calculator</span><span>Not permitted</span></div>
       </div>
       <div class="instructions"><strong>Before you start:</strong> answer every question as best you can. If you're unsure, give your best attempt — it's fine not to have covered everything yet.</div>
+      <div class="instructions" style="border-left:4px solid var(--crimson); background:#fdf1f1; margin-top:12px;">
+        <strong>Important — read before you begin.</strong> This is a diagnostic baseline, not a graded exam. Its only purpose is to find out exactly what you already know and where you need support, so we can help you properly. Complete it entirely on your own — do not use notes, textbooks, the internet, AI tools, or ask anyone for help. If you use any of these, the result won't reflect your real starting point, and we won't be able to give you the right support going forward. You should only attempt this paper once. Your first attempt is the one that counts, regardless of circumstances — so please take your time and try your best.
+      </div>
       <div id="resumeBanner" style="display:none;background:#fff3cd;border:1px solid #d68910;border-radius:4px;padding:12px 16px;margin-bottom:16px;font-size:13.5px;"></div>
-      <div class="field"><label>Student Name</label><input type="text" id="in-name"></div>
+      <div class="field-row"><div class="field"><label>First name</label><input type="text" id="in-firstname" placeholder="e.g. Lila" autocomplete="given-name"></div><div class="field"><label>Last name</label><input type="text" id="in-surname" placeholder="e.g. Ahmed" autocomplete="family-name"></div></div>
       <div class="field-row">
         <div class="field"><label>Year Group</label><select id="in-year"><option value="">Select...</option><option>Y9</option><option>Y10</option><option>Other</option></select></div>
         <div class="field"><label>School</label><input type="text" id="in-school"></div>
@@ -190,7 +193,7 @@
 
 <div id="examScreen">
   <div class="exam-header">
-    <div class="paper-name">Aim High Tuition — <b>Y9/10 Combined Baseline</b></div>
+    <div class="paper-name">Aim High Tuition — <b>KS3/4 Bridge Maths Baseline</b></div>
     <div id="timerBox">50:00</div>
   </div>
   <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
@@ -269,7 +272,7 @@
 
 <script>
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzPybA63sBr9VwSuDJhgls_woog0-6MrbDlU44VSzU7etOevAM79qRaeRFUGy26-CYi/exec';
-var TIME_LIMIT_SECONDS = 50 * 60;
+var TIME_LIMIT_SECONDS = 40 * 60;
 
 function svgWrap(inner, w, h){ return '<div class="qdiagram"><svg viewBox="0 0 '+w+' '+h+'" width="'+Math.min(w,320)+'" height="'+Math.min(h,240)+'" xmlns="http://www.w3.org/2000/svg" style="font-family:inherit">'+inner+'</svg></div>'; }
 
@@ -410,9 +413,15 @@ function resolveSelectedClass(){
 }
 loadClasses();
 
+function getFullStudentName(){
+  var fn = document.getElementById('in-firstname').value.trim();
+  var sn = document.getElementById('in-surname').value.trim();
+  return fn + (sn ? ' ' + sn : '');
+}
+
 function startTest(){
-  var name = document.getElementById('in-name').value.trim();
-  if(!name){ showAlert('Please enter the student name.'); return; }
+  var name = getFullStudentName();
+  if(!document.getElementById('in-firstname').value.trim()){ showAlert('Please enter the student first name.'); return; }
   startTime = new Date();
   document.getElementById('coverScreen').style.display = 'none';
   document.getElementById('examScreen').style.display = 'block';
@@ -497,7 +506,7 @@ function confirmSubmit(){
   }).length;
   var msg = answeredCount < QUESTIONS.length
     ? 'You have answered ' + answeredCount + ' of ' + QUESTIONS.length + ' questions. Submit anyway?'
-    : 'Submit the Y9/10 Combined Baseline for marking?';
+    : 'Submit the KS3/4 Bridge Maths Baseline for marking?';
   showConfirm(msg, function(){ submitTest(); });
 }
 
@@ -508,7 +517,7 @@ function submitTest(){
   var payload = {
     action: 'markPaper',
     student: {
-      name: document.getElementById('in-name').value.trim(),
+      name: getFullStudentName(),
       yearGroup: document.getElementById('in-year').value,
       school: document.getElementById('in-school').value.trim(),
       tutor: document.getElementById('in-tutor').value,
@@ -558,7 +567,7 @@ function renderResults(student, result){
   wrap.innerHTML =
     '<div class="result-hero">'+
       '<div class="grade-badge display">'+badgeLabel+'</div>'+
-      '<h2>'+student.name+' — Y9/10 Baseline Complete</h2>'+
+      '<h2>'+student.name+' — KS3/4 Bridge Baseline Complete</h2>'+
       '<p>Placement suggestion is based on performance across both core and differentiator content.</p>'+
     '</div>'+
     '<div class="score-strip">'+
@@ -835,7 +844,7 @@ function renderDashboard(){
   currentDashboardRows = rows;
 
   document.getElementById('dashboardContent').innerHTML =
-    '<h2 class="display">Teacher Dashboard — Y9/10 Combined Baseline</h2>'+
+    '<h2 class="display">Teacher Dashboard — KS3/4 Bridge Maths Baseline</h2>'+
     '<div class="dash-reset-row">'+
       '<span class="dash-count">'+rows.length+' result'+(rows.length===1?'':'s')+' shown</span>'+
       '<button class="ans-input" style="cursor:pointer;" onclick="resetDashboardFilters()">Reset to default view</button>'+
@@ -930,7 +939,7 @@ var DRAFT_AUTOSAVE_MS = 20000;
 var currentStudentInfo = null;
 
 function checkForResumableDraft(){
-  var name = document.getElementById('in-name').value.trim();
+  var name = getFullStudentName();
   var year = document.getElementById('in-year').value;
   var school = document.getElementById('in-school').value.trim();
   if(!name || !year || !school) return;
@@ -948,7 +957,8 @@ function checkForResumableDraft(){
     })
     .catch(function(){});
 }
-document.getElementById('in-name').addEventListener('blur', checkForResumableDraft);
+document.getElementById('in-firstname').addEventListener('blur', checkForResumableDraft);
+document.getElementById('in-surname').addEventListener('blur', checkForResumableDraft);
 document.getElementById('in-year').addEventListener('change', checkForResumableDraft);
 document.getElementById('in-school').addEventListener('blur', checkForResumableDraft);
 
@@ -996,7 +1006,7 @@ function startDraftAutoSave(){
     fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({
       action:'saveDraft',
       student:{
-        name: document.getElementById('in-name').value.trim(),
+        name: getFullStudentName(),
         yearGroup: document.getElementById('in-year').value,
         school: document.getElementById('in-school').value.trim(),
         tutor: document.getElementById('in-tutor').value,
