@@ -1,507 +1,497 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aim High Tuition — Admin Console</title>
-<style>
-  :root{
-    --ink:#1a2332;
-    --ink-soft:#5a6478;
-    --accent:#1e4d8f;
-    --accent-dark:#153966;
-    --paper:#f4f6f9;
-    --paper-line:#dde3ec;
-    --white:#ffffff;
-    --green:#2f8a5c;
-    --amber:#b8801f;
-    --red:#c23b3b;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--paper);color:var(--ink);}
-  .topbar{background:var(--accent-dark);color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-  .topbar .brand{font-size:19px;font-weight:800;letter-spacing:.02em;}
-  .topbar .subtitle{font-size:12.5px;opacity:.75;margin-top:2px;}
-  .tabs{display:flex;gap:4px;background:var(--white);border-bottom:1px solid var(--paper-line);padding:0 20px;overflow-x:auto;}
-  .tab-btn{padding:14px 18px;border:none;background:none;font-size:14px;font-weight:600;color:var(--ink-soft);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;}
-  .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
-  .view{display:none;padding:24px;max-width:1200px;margin:0 auto;}
-  .view.active{display:block;}
-  .card{background:var(--white);border:1px solid var(--paper-line);border-radius:8px;padding:20px;margin-bottom:16px;}
-  .card h2{margin:0 0 4px;font-size:17px;}
-  .card .desc{font-size:13px;color:var(--ink-soft);margin:0 0 16px;}
-  .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px;}
-  .stat-box{background:var(--white);border:1px solid var(--paper-line);border-radius:8px;padding:16px;text-align:center;}
-  .stat-box .num{font-size:26px;font-weight:800;color:var(--accent);}
-  .stat-box .lbl{font-size:11.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
-  .subject-group{margin-bottom:22px;}
-  .subject-group h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:0 0 10px;}
-  .paper-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--paper-line);border-radius:6px;margin-bottom:8px;background:var(--white);flex-wrap:wrap;gap:8px;}
-  .paper-row .pname{font-weight:700;font-size:14.5px;}
-  .paper-row .pyear{font-size:12px;color:var(--ink-soft);}
-  .btn{background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;}
-  .btn:hover{background:var(--accent-dark);}
-  .btn-outline{background:none;border:1.5px solid var(--paper-line);color:var(--ink);padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;}
-  .search-box{width:100%;padding:12px 14px;font-size:15px;border:1.5px solid var(--paper-line);border-radius:6px;margin-bottom:16px;}
-  table{width:100%;border-collapse:collapse;font-size:13.5px;}
-  th{text-align:left;padding:8px 10px;background:var(--paper);font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-soft);border-bottom:2px solid var(--paper-line);}
-  td{padding:9px 10px;border-bottom:1px solid var(--paper-line);}
-  .clickable-row{cursor:pointer;}
-  .clickable-row:hover{background:var(--paper);}
-  .grade-pill{display:inline-block;padding:2px 9px;border-radius:10px;font-size:11.5px;font-weight:700;background:var(--paper);}
-  .empty-state{text-align:center;padding:40px 20px;color:var(--ink-soft);font-size:13.5px;}
-  .field-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px;}
-  .field{flex:1;min-width:160px;}
-  .field label{display:block;font-size:11.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px;}
-  .field select, .field input{width:100%;padding:9px 10px;border:1.5px solid var(--paper-line);border-radius:6px;font-size:14px;}
-  .status-msg{font-size:12.5px;margin-top:8px;}
-  .status-msg.ok{color:var(--green);}
-  .status-msg.error{color:var(--red);}
-  .list-chip{display:inline-flex;align-items:center;gap:6px;background:var(--paper);border:1px solid var(--paper-line);border-radius:14px;padding:5px 8px 5px 12px;font-size:12.5px;margin:0 6px 6px 0;}
-  .chip-remove{background:none;border:none;color:var(--ink-soft);cursor:pointer;font-size:15px;line-height:1;padding:0 2px;font-weight:700;}
-  .chip-remove:hover{color:var(--red);}
-  .chip-remove-link{background:none;border:none;color:var(--red);cursor:pointer;font-size:11.5px;font-weight:600;text-decoration:underline;padding:0;margin-left:2px;}
-  .confirm-panel{background:#fdf1f1;border:1.5px solid var(--red);border-radius:6px;padding:14px;margin:10px 0;}
-  .confirm-panel p{margin:0 0 10px;font-size:13px;}
-  .loading{color:var(--ink-soft);font-size:13px;padding:20px;text-align:center;}
-</style>
-</head>
-<body>
+/* ============================================================
+   AIM HIGH — ADMIN CONSOLE
+   Apps Script backend — standalone project, separate from every
+   individual paper. Reads and writes directly to every paper's own
+   spreadsheet via SpreadsheetApp.openById(), the same way any Apps
+   Script project can open any sheet it has permission to — it does
+   NOT go through each paper's own web app deployment. This project
+   has no spreadsheet of its own; REGISTRY below is the single source
+   of truth for every paper this console knows about.
 
-<div class="topbar">
-  <div>
-    <div class="brand">Aim High Tuition</div>
-    <div class="subtitle">Admin Console</div>
-  </div>
-</div>
+   ADDING A NEW PAPER: append one object to REGISTRY. Nothing else in
+   this file needs to change — every endpoint below iterates REGISTRY
+   generically rather than naming individual papers.
+------------------------------------------------------------------------- */
 
-<div class="tabs">
-  <button class="tab-btn active" data-view="dashboard" onclick="switchView('dashboard')">Dashboard</button>
-  <button class="tab-btn" data-view="catalog" onclick="switchView('catalog')">Paper Catalog</button>
-  <button class="tab-btn" data-view="search" onclick="switchView('search')">Student Search</button>
-  <button class="tab-btn" data-view="manage" onclick="switchView('manage')">Tutors &amp; Classes</button>
-</div>
+var REGISTRY = [
+  { id:'ascend_maths', name:'Ascend Maths (Y1/2)', subject:'Maths', yearGroup:'Y1/2',
+    sheetId:'1cG43Yow2INUAxTREXda84BV0m_KQJXSwRg3LGsryRcI', resultsTab:'Results',
+    columnMap:{ studentName:'Name', rawScore:'Total', grade:'RAG', yearGroup:'Year', tutor:'Teacher' } },
+  { id:'ignite_maths', name:'Ignite Maths (Y3/4)', subject:'Maths', yearGroup:'Y3/4',
+    sheetId:'130a2Vvdz4X70KyT0s26UHzkE4ryGnYf60y83DenoS88', resultsTab:'Results',
+    columnMap:{ studentName:'Name', rawScore:'Total', grade:'RAG', yearGroup:'Year', tutor:'Teacher' } },
+  { id:'master_maths', name:'Master Maths (Y5/6)', subject:'Maths', yearGroup:'Y5/6',
+    sheetId:'1ttj6tDzazSCD-a5PnRCJF_BT0g4ezwDEJ-axKV8TxB0', resultsTab:'Results',
+    columnMap:{ studentName:'Name', rawScore:'Total', grade:'RAG', yearGroup:'Year', tutor:'Teacher' } },
+  { id:'ascend_english', name:'Ascend English (Y1/2)', subject:'English', yearGroup:'Y1/2',
+    sheetId:'1IGSKgghZArvTL-uF6Zv8vpABwSrdbGqaBzA2D0L6Tuo', resultsTab:'Results',
+    columnMap:{ studentName:'Name', rawScore:'Total', grade:'RAG', yearGroup:'Year', tutor:'Teacher' } },
+  { id:'ignite_english', name:'Ignite English (Y3/4)', subject:'English', yearGroup:'Y3/4',
+    sheetId:'1dOjh0aeEU84K4nqX5RbJNVAbDjkt2cAezPMb9YLZFAw', resultsTab:'Results',
+    columnMap:{ studentName:'Name', rawScore:'Total', grade:'RAG', yearGroup:'Year', tutor:'Teacher' } },
+  { id:'master_english', name:'Master English (Y5/6)', subject:'English', yearGroup:'Y5/6',
+    sheetId:'1Um3zz786MYw_VjLRlM6zQ60waHbEfS6cXfs3sVyzK6M', resultsTab:'Results',
+    columnMap:{ studentName:'Name', rawScore:'Total', grade:'RAG', yearGroup:'Year', tutor:'Teacher' } }
+  // All 6 Primary papers confirmed present. columnMap reflects Primary's
+  // older sheet schema (Name/Total/RAG/Year/Teacher) rather than the
+  // Secondary convention (Student Name/Percentage/etc.) — see
+  // getColumnMap() for how this merges with the defaults. totalMarks
+  // and percentage aren't mapped since Primary sheets don't record them
+  // directly; those fields will come through blank, which is expected.
+];
 
-<div id="view-dashboard" class="view active">
-  <div id="dashboardContent" class="loading">Loading dashboard…</div>
-</div>
+var TEACHER_PIN = '2468'; // same PIN used across every individual paper's Teacher Mode
 
-<div id="view-catalog" class="view">
-  <div id="catalogContent" class="loading">Loading paper catalog…</div>
-</div>
+// Every paper's QLA tab is named identically to its Results tab with
+// "_Results" swapped for "_QLA" — deriving this rather than hardcoding
+// a second field on every REGISTRY entry avoids the two ever drifting
+// out of sync with each other.
+REGISTRY.forEach(function(p){ p.qlaTab = 'QLA'; }); // Primary papers don't use the _Results/_QLA naming convention the same way
+// This is the Primary department console — all 6 Primary papers.
+// Give this deployment's URL only to Primary tutors.
 
-<div id="view-search" class="view">
-  <div class="card">
-    <h2>Student Search</h2>
-    <p class="desc">Search across every paper at once — find every result a student has, regardless of which subject or year group they sat.</p>
-    <input type="text" class="search-box" id="searchInput" placeholder="Type a student name…" oninput="onSearchInput()">
-    <div id="searchResults"></div>
-  </div>
-</div>
-
-<div id="view-manage" class="view">
-  <div class="card">
-    <h2>Tutors &amp; Classes</h2>
-    <p class="desc">Select a paper to view and update its tutor and class lists.</p>
-    <div class="field-row">
-      <div class="field">
-        <label>Paper</label>
-        <select id="managePaperSelect" onchange="onManagePaperChange()">
-          <option value="">Select a paper…</option>
-        </select>
-      </div>
-    </div>
-    <div id="manageContent"></div>
-  </div>
-</div>
-
-<script>
-// ============================================================
-// PASTE YOUR DEPLOYED ADMIN CONSOLE APPS SCRIPT URL HERE
-// ============================================================
-var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3hWsx491drsxVLGTBuOyUeSrDFYmguSI4kT-L_Un_iwYl8Esy2dqaEpt1zc4O70pF/exec";
-
-var TEACHER_PIN_CACHE = null; // asked once per session, not stored beyond that
-
-function switchView(viewName){
-  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
-  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
-  document.getElementById('view-' + viewName).classList.add('active');
-  document.querySelector('.tab-btn[data-view="' + viewName + '"]').classList.add('active');
-  if(viewName === 'dashboard' && !dashboardLoaded) loadDashboard();
-  if(viewName === 'catalog' && !catalogLoaded) loadCatalog();
-  if(viewName === 'manage' && !manageLoaded) loadManagePaperList();
+function timestampsMatch(a, b){
+  // Sheet cells store Timestamp as a real Date object, but any
+  // timestamp arriving from the client is a JSON-serialized ISO
+  // string — comparing those as strings never reliably matches, since
+  // String(dateObject) produces a different format than an ISO string.
+  // Comparing as milliseconds sidesteps the formatting mismatch
+  // entirely, regardless of which side is which.
+  var ta = new Date(a).getTime();
+  var tb = new Date(b).getTime();
+  return !isNaN(ta) && !isNaN(tb) && ta === tb;
 }
 
-function checkConfigured(){
-  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0){
-    return false;
+function doGet(e) {
+  var action = e.parameter.action;
+  if (action === 'getCatalog') {
+    return jsonOutput({ papers: REGISTRY.map(function(p){
+      return { id:p.id, name:p.name, subject:p.subject, yearGroup:p.yearGroup, hostedUrl:p.hostedUrl };
+    })});
   }
-  return true;
+  if (action === 'searchStudent') {
+    return jsonOutput(searchStudentAcrossAllPapers(e.parameter.name || ''));
+  }
+  if (action === 'getRecentActivity') {
+    return jsonOutput(getRecentActivityAcrossAllPapers(Number(e.parameter.limit) || 30));
+  }
+  if (action === 'getAggregateStats') {
+    return jsonOutput(getAggregateStats());
+  }
+  if (action === 'getTutorsForPaper') {
+    return jsonOutput({ tutors: getListFromPaperTab(e.parameter.paperId, 'Tutors', 'Tutor Name') });
+  }
+  if (action === 'getClassesForPaper') {
+    return jsonOutput({ classes: getListFromPaperTab(e.parameter.paperId, 'Classes', 'Class Name') });
+  }
+  if (action === 'getResultsByClass') {
+    return jsonOutput(getResultsByClass(e.parameter.paperId, e.parameter.className));
+  }
+  if (action === 'getTestDemoCount') {
+    return jsonOutput({ count: countTestDemoRows(e.parameter.paperId) });
+  }
+  return jsonOutput({ status:'error', message:'Unknown action.' });
 }
 
-// ---------------- Dashboard ----------------
-var dashboardLoaded = false;
-function loadDashboard(){
-  if(!checkConfigured()){
-    document.getElementById('dashboardContent').innerHTML = '<div class="card"><p style="color:var(--red);">Admin Console isn\'t connected to its Apps Script backend yet — paste the deployed URL into APPS_SCRIPT_URL.</p></div>';
-    return;
+function doPost(e) {
+  var data;
+  try {
+    data = JSON.parse(e.postData.contents);
+  } catch (err) {
+    return jsonOutput({ status:'error', message:'Malformed request.' });
   }
-  dashboardLoaded = true;
-  Promise.all([
-    fetch(APPS_SCRIPT_URL + '?action=getAggregateStats').then(function(r){ return r.json(); }),
-    fetch(APPS_SCRIPT_URL + '?action=getRecentActivity&limit=25').then(function(r){ return r.json(); })
-  ]).then(function(results){
-    var stats = results[0] || {}, activity = results[1] || {};
-    if (!stats.bySubject) {
-      document.getElementById('dashboardContent').innerHTML = '<div class="card"><p style="color:var(--red);">Dashboard data came back in an unexpected shape — the deployed Apps Script backend may be an older version than this page, or a paper\'s Sheet ID may be unreachable. Re-check APPS_SCRIPT_URL and that the latest department console .gs has been redeployed as a new version.</p></div>';
-      return;
+  if (data.pin !== TEACHER_PIN) {
+    return jsonOutput({ status:'error', message:'Incorrect PIN.' });
+  }
+  if (data.action === 'addTutor') {
+    return jsonOutput(addRowToPaperTab(data.paperId, 'Tutors', [data.tutorName]));
+  }
+  if (data.action === 'addClass') {
+    return jsonOutput(addRowToPaperTab(data.paperId, 'Classes', [data.className, '']));
+  }
+  if (data.action === 'removeTutor') {
+    return jsonOutput(removeRowFromPaperTab(data.paperId, 'Tutors', data.tutorName));
+  }
+  if (data.action === 'removeClass') {
+    return jsonOutput(removeRowFromPaperTab(data.paperId, 'Classes', data.className));
+  }
+  if (data.action === 'deleteResultRow') {
+    return jsonOutput(deleteResultRow(data.paperId, data.timestamp));
+  }
+  if (data.action === 'clearTestDemoRows') {
+    return jsonOutput(clearTestDemoRows(data.paperId));
+  }
+  return jsonOutput({ status:'error', message:'Unknown action.' });
+}
+
+function jsonOutput(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function findPaper(paperId) {
+  for (var i = 0; i < REGISTRY.length; i++) {
+    if (REGISTRY[i].id === paperId) return REGISTRY[i];
+  }
+  return null;
+}
+
+/* ---------------- Cross-paper student search ----------------
+   Opens every registered spreadsheet in turn and scans its Results tab
+   for a case-insensitive substring match on Student Name. Deliberately
+   sequential rather than parallel — Apps Script has no built-in
+   concurrency, and eleven small sheet reads comfortably finish well
+   inside the execution time limit.
+------------------------------------------------------------------------- */
+// Default column names, matching every Secondary paper's Results tab
+// schema. Papers with a different underlying sheet structure (currently
+// just the Primary papers, which predate this naming convention) can
+// override any subset via their own columnMap in the registry entry —
+// getColumnMap() below merges a paper's overrides on top of these
+// defaults, so a paper only needs to specify what's genuinely different.
+var DEFAULT_COLUMN_MAP = {
+  studentName: 'Student Name',
+  timestamp: 'Timestamp',
+  rawScore: 'Raw Score',
+  totalMarks: 'Total Marks',
+  percentage: 'Percentage',
+  grade: 'Estimated Grade',
+  yearGroup: 'Year Group',
+  school: 'School',
+  tutor: 'Tutor',
+  className: 'Class'
+};
+function getColumnMap(paper) {
+  var map = {};
+  for (var key in DEFAULT_COLUMN_MAP) { map[key] = DEFAULT_COLUMN_MAP[key]; }
+  if (paper.columnMap) {
+    for (var k in paper.columnMap) { map[k] = paper.columnMap[k]; }
+  }
+  return map;
+}
+
+function searchStudentAcrossAllPapers(query) {
+  query = String(query).trim().toLowerCase();
+  if (!query) return { results: [] };
+  var results = [];
+  REGISTRY.forEach(function(paper) {
+    try {
+      var cols = getColumnMap(paper);
+      var ss = SpreadsheetApp.openById(paper.sheetId);
+      var sh = ss.getSheetByName(paper.resultsTab);
+      if (!sh) return;
+      var values = sh.getDataRange().getValues();
+      if (values.length < 2) return;
+      var headers = values[0];
+      var nameCol = headers.indexOf(cols.studentName);
+      if (nameCol === -1) return;
+      for (var i = 1; i < values.length; i++) {
+        var row = values[i];
+        var name = String(row[nameCol] || '');
+        if (name.toLowerCase().indexOf(query) === -1) continue;
+        var rowObj = {};
+        headers.forEach(function(h, idx){ rowObj[h] = row[idx]; });
+        results.push({
+          paperId: paper.id,
+          paperName: paper.name,
+          subject: paper.subject,
+          hostedUrl: paper.hostedUrl,
+          studentName: name,
+          timestamp: rowObj[cols.timestamp],
+          rawScore: rowObj[cols.rawScore],
+          totalMarks: rowObj[cols.totalMarks],
+          percentage: rowObj[cols.percentage],
+          grade: rowObj[cols.grade],
+          yearGroup: rowObj[cols.yearGroup],
+          school: rowObj[cols.school],
+          tutor: rowObj[cols.tutor]
+        });
+      }
+    } catch (err) {
+      // One inaccessible/misconfigured sheet shouldn't take down the
+      // whole search — skip it and keep going.
+      Logger.log('searchStudentAcrossAllPapers: could not read ' + paper.name + ' — ' + err);
     }
-    var statHtml = '<div class="stat-row">'+
-      '<div class="stat-box"><div class="num">'+(stats.totalSubmissions||0)+'</div><div class="lbl">Total Submissions</div></div>'+
-      '<div class="stat-box"><div class="num">'+(stats.totalPapers||0)+'</div><div class="lbl">Papers Live</div></div>'+
-      Object.keys(stats.bySubject).map(function(subj){
-        return '<div class="stat-box"><div class="num">'+stats.bySubject[subj]+'</div><div class="lbl">'+subj+'</div></div>';
-      }).join('')+
-    '</div>';
-
-    var activityRows = (activity.activity || []).map(function(a){
-      var d = a.timestamp ? new Date(a.timestamp).toLocaleString('en-GB') : '';
-      return '<tr><td>'+d+'</td><td>'+(a.studentName||'')+'</td><td>'+a.paperName+'</td><td>'+(a.percentage!==undefined?a.percentage+'%':'')+'</td><td><span class="grade-pill">'+(a.grade||'')+'</span></td></tr>';
-    }).join('');
-
-    document.getElementById('dashboardContent').innerHTML =
-      statHtml +
-      '<div class="card"><h2>Recent Activity</h2><p class="desc">Most recent submissions across every paper, newest first.</p>'+
-      '<table><thead><tr><th>Date</th><th>Student</th><th>Paper</th><th>%</th><th>Grade</th></tr></thead><tbody>'+
-      (activityRows || '<tr><td colspan="5" class="empty-state">No submissions yet.</td></tr>')+
-      '</tbody></table></div>';
-  }).catch(function(err){
-    document.getElementById('dashboardContent').innerHTML = '<div class="card"><p style="color:var(--red);">Could not load dashboard data: '+String(err)+'</p></div>';
   });
+  results.sort(function(a,b){ return new Date(b.timestamp) - new Date(a.timestamp); });
+  return { results: results };
 }
 
-// ---------------- Catalog ----------------
-var catalogLoaded = false;
-function loadCatalog(){
-  if(!checkConfigured()){
-    document.getElementById('catalogContent').innerHTML = '<div class="card"><p style="color:var(--red);">Admin Console isn\'t connected to its Apps Script backend yet.</p></div>';
-    return;
-  }
-  catalogLoaded = true;
-  fetch(APPS_SCRIPT_URL + '?action=getCatalog').then(function(r){ return r.json(); }).then(function(data){
-    if (!data || !data.papers) {
-      document.getElementById('catalogContent').innerHTML = '<div class="card"><p style="color:var(--red);">Catalog data came back in an unexpected shape — check the deployed Apps Script backend matches this page\'s version.</p></div>';
-      return;
+/* ---------------- Recent activity feed across every paper ---------------- */
+function getRecentActivityAcrossAllPapers(limit) {
+  var all = [];
+  REGISTRY.forEach(function(paper) {
+    try {
+      var cols = getColumnMap(paper);
+      var ss = SpreadsheetApp.openById(paper.sheetId);
+      var sh = ss.getSheetByName(paper.resultsTab);
+      if (!sh) return;
+      var values = sh.getDataRange().getValues();
+      if (values.length < 2) return;
+      var headers = values[0];
+      var rowObjs = {};
+      [cols.timestamp, cols.studentName, cols.percentage, cols.grade].forEach(function(h){ rowObjs[h] = headers.indexOf(h); });
+      for (var i = 1; i < values.length; i++) {
+        var row = values[i];
+        all.push({
+          paperName: paper.name,
+          subject: paper.subject,
+          studentName: row[rowObjs[cols.studentName]],
+          timestamp: row[rowObjs[cols.timestamp]],
+          percentage: row[rowObjs[cols.percentage]],
+          grade: row[rowObjs[cols.grade]]
+        });
+      }
+    } catch (err) {
+      Logger.log('getRecentActivityAcrossAllPapers: could not read ' + paper.name + ' — ' + err);
     }
-    var bySubject = {};
-    data.papers.forEach(function(p){
-      if(!bySubject[p.subject]) bySubject[p.subject] = [];
-      bySubject[p.subject].push(p);
-    });
-    var html = '<div class="card"><h2>Year Group Key</h2>'+
-      '<p class="desc">Papers are named by content level, not year group, so students never see which year they map to. This key is for tutor/admin reference only.</p>'+
-      '<table><thead><tr><th>Paper name</th><th>Typical year group</th></tr></thead><tbody>'+
-      '<tr><td>Ascend (Maths / English)</td><td>Year 1&ndash;2</td></tr>'+
-      '<tr><td>Ignite (Maths / English)</td><td>Year 3&ndash;4</td></tr>'+
-      '<tr><td>Master (Maths / English)</td><td>Year 5&ndash;6</td></tr>'+
-      '<tr><td>KS3 (Maths / English / Science Stage 1)</td><td>Year 7&ndash;8</td></tr>'+
-      '<tr><td>KS3 Stage 2 Science</td><td>Year 9</td></tr>'+
-      '<tr><td>KS3/4 Bridge (Maths / English)</td><td>Year 9&ndash;10</td></tr>'+
-      '<tr><td>KS4 Stage 1 Science</td><td>Year 10</td></tr>'+
-      '<tr><td>KS4 (English / Science Stage 2)</td><td>Year 11</td></tr>'+
-      '<tr><td>GCSE Higher / Foundation Mathematics</td><td>Year 10&ndash;11</td></tr>'+
-      '</tbody></table>'+
-      '<p class="desc" style="margin-top:10px;">A student\'s actual ability level doesn\'t always match their year — e.g. a Year 10 student may sit a KS3/4 Bridge or even a KS3 paper if that better reflects where they are. The paper name itself never signals this to the student either way.</p>'+
-      '</div><div class="card"><h2>Paper Catalog</h2><p class="desc">Every live paper, with its student-facing link ready to copy and send.</p>';
-    Object.keys(bySubject).forEach(function(subj){
-      html += '<div class="subject-group"><h3>'+subj+'</h3>';
-      bySubject[subj].forEach(function(p){
-        html += '<div class="paper-row"><div><div class="pname">'+p.name+'</div><div class="pyear">'+p.yearGroup+'</div></div>'+
-          '<div style="display:flex;gap:8px;"><button class="btn-outline" onclick="copyLink(\''+p.hostedUrl+'\', this)">Copy Link</button>'+
-          '<a href="'+p.hostedUrl+'" target="_blank" class="btn" style="text-decoration:none;display:inline-block;">Open</a></div></div>';
+  });
+  all.sort(function(a,b){ return new Date(b.timestamp) - new Date(a.timestamp); });
+  return { activity: all.slice(0, limit) };
+}
+
+/* ---------------- Aggregate stats for the dashboard ---------------- */
+function getAggregateStats() {
+  var bySubject = {};
+  var totalSubmissions = 0;
+  REGISTRY.forEach(function(paper) {
+    try {
+      var ss = SpreadsheetApp.openById(paper.sheetId);
+      var sh = ss.getSheetByName(paper.resultsTab);
+      if (!sh) return;
+      var lastRow = sh.getLastRow();
+      var count = Math.max(0, lastRow - 1); // minus header row
+      totalSubmissions += count;
+      bySubject[paper.subject] = (bySubject[paper.subject] || 0) + count;
+    } catch (err) {
+      Logger.log('getAggregateStats: could not read ' + paper.name + ' — ' + err);
+    }
+  });
+  return { totalSubmissions: totalSubmissions, bySubject: bySubject, totalPapers: REGISTRY.length };
+}
+
+/* ---------------- Generic Tutors/Classes read + write ----------------
+   Reused for both getTutorsForPaper/getClassesForPaper (doGet) and
+   addTutor/addClass (doPost) — one tab-agnostic pair of functions
+   rather than four near-duplicate ones.
+------------------------------------------------------------------------- */
+function getListFromPaperTab(paperId, tabName, firstColumnHeader) {
+  var paper = findPaper(paperId);
+  if (!paper) return [];
+  try {
+    var ss = SpreadsheetApp.openById(paper.sheetId);
+    var sh = ss.getSheetByName(tabName);
+    if (!sh) return [];
+    var values = sh.getDataRange().getValues();
+    var list = [];
+    for (var i = 1; i < values.length; i++) {
+      if (values[i][0]) list.push(values[i][0]);
+    }
+    return list;
+  } catch (err) {
+    Logger.log('getListFromPaperTab: could not read ' + paperId + '/' + tabName + ' — ' + err);
+    return [];
+  }
+}
+
+function addRowToPaperTab(paperId, tabName, rowValues) {
+  var paper = findPaper(paperId);
+  if (!paper) return { status:'error', message:'Unknown paper.' };
+  try {
+    var ss = SpreadsheetApp.openById(paper.sheetId);
+    var sh = ss.getSheetByName(tabName);
+    if (!sh) return { status:'error', message:'Tab "' + tabName + '" not found on that paper\'s sheet.' };
+    sh.appendRow(rowValues);
+    return { status:'ok' };
+  } catch (err) {
+    return { status:'error', message:String(err) };
+  }
+}
+
+/* ---------------- Removing a tutor or class ----------------
+   Deletes the matching row entirely, rather than blanking it, so the
+   dropdown a student sees genuinely no longer offers it. This does NOT
+   touch any past submission that already recorded that tutor/class
+   name — those are stored as plain text on each Results row, not a
+   reference back to this tab, so historical data is unaffected by a
+   name being removed here.
+------------------------------------------------------------------------- */
+function removeRowFromPaperTab(paperId, tabName, matchValue) {
+  var paper = findPaper(paperId);
+  if (!paper) return { status:'error', message:'Unknown paper.' };
+  try {
+    var ss = SpreadsheetApp.openById(paper.sheetId);
+    var sh = ss.getSheetByName(tabName);
+    if (!sh) return { status:'error', message:'Tab "' + tabName + '" not found on that paper\'s sheet.' };
+    var values = sh.getDataRange().getValues();
+    for (var i = 1; i < values.length; i++) { // start at 1 to skip the header row
+      if (String(values[i][0]) === String(matchValue)) {
+        sh.deleteRow(i + 1); // +1 because sheet rows are 1-indexed
+        return { status:'ok' };
+      }
+    }
+    return { status:'error', message:'"' + matchValue + '" was not found — it may have already been removed.' };
+  } catch (err) {
+    return { status:'error', message:String(err) };
+  }
+}
+
+/* ---------------- Deleting one student's sitting entirely ----------------
+   Removes both the Results row and every matching QLA row for that
+   specific sitting (identified by its exact Timestamp) — deleting only
+   the Results row would leave orphaned QLA rows behind with nothing to
+   tie them to. Deletes from the bottom up within each sheet so that
+   removing one row doesn't shift the index of rows still to be checked.
+------------------------------------------------------------------------- */
+function deleteResultRow(paperId, timestamp) {
+  var paper = findPaper(paperId);
+  if (!paper) return { status:'error', message:'Unknown paper.' };
+  try {
+    var ss = SpreadsheetApp.openById(paper.sheetId);
+    var resultsSh = ss.getSheetByName(paper.resultsTab);
+    if (!resultsSh) return { status:'error', message:'Results tab not found.' };
+    var resultsValues = resultsSh.getDataRange().getValues();
+    var tsCol = resultsValues[0].indexOf('Timestamp');
+    var deletedResultRow = false;
+    for (var i = resultsValues.length - 1; i >= 1; i--) {
+      if (timestampsMatch(resultsValues[i][tsCol], timestamp)) {
+        resultsSh.deleteRow(i + 1);
+        deletedResultRow = true;
+        break; // Timestamp should be unique to one sitting; stop once found
+      }
+    }
+    if (!deletedResultRow) {
+      return { status:'error', message:'No matching sitting found — it may have already been removed.' };
+    }
+    var qlaSh = ss.getSheetByName(paper.qlaTab);
+    var qlaRowsDeleted = 0;
+    if (qlaSh) {
+      var qlaValues = qlaSh.getDataRange().getValues();
+      var qlaTsCol = qlaValues[0].indexOf('Timestamp');
+      for (var j = qlaValues.length - 1; j >= 1; j--) {
+        if (timestampsMatch(qlaValues[j][qlaTsCol], timestamp)) {
+          qlaSh.deleteRow(j + 1);
+          qlaRowsDeleted++;
+        }
+      }
+    }
+    return { status:'ok', qlaRowsDeleted: qlaRowsDeleted };
+  } catch (err) {
+    return { status:'error', message:String(err) };
+  }
+}
+
+/* ---------------- Bulk-clearing every Test-Demo sitting on one paper ----------------
+   Only ever removes rows where Student Status is exactly "Test-Demo" —
+   the same status every paper's own cover page already offers as an
+   explicit, deliberate choice at submission time. Never touches
+   "Enrolled Student" or "Trial Student" rows, however test-like a name
+   might look, since guessing from a name is exactly the kind of
+   mistake that could delete a real student's genuine result.
+------------------------------------------------------------------------- */
+function clearTestDemoRows(paperId) {
+  var paper = findPaper(paperId);
+  if (!paper) return { status:'error', message:'Unknown paper.' };
+  try {
+    var ss = SpreadsheetApp.openById(paper.sheetId);
+    var resultsSh = ss.getSheetByName(paper.resultsTab);
+    if (!resultsSh) return { status:'error', message:'Results tab not found.' };
+    var resultsValues = resultsSh.getDataRange().getValues();
+    var headers = resultsValues[0];
+    var statusCol = headers.indexOf('Student Status');
+    var tsCol = headers.indexOf('Timestamp');
+    if (statusCol === -1) return { status:'error', message:'"Student Status" column not found.' };
+    var timestampsToRemove = [];
+    for (var i = resultsValues.length - 1; i >= 1; i--) {
+      if (resultsValues[i][statusCol] === 'Test-Demo') {
+        timestampsToRemove.push(resultsValues[i][tsCol]);
+        resultsSh.deleteRow(i + 1);
+      }
+    }
+    var qlaSh = ss.getSheetByName(paper.qlaTab);
+    var qlaRowsDeleted = 0;
+    if (qlaSh && timestampsToRemove.length) {
+      var qlaValues = qlaSh.getDataRange().getValues();
+      var qlaTsCol = qlaValues[0].indexOf('Timestamp');
+      for (var j = qlaValues.length - 1; j >= 1; j--) {
+        for (var k = 0; k < timestampsToRemove.length; k++) {
+          if (timestampsMatch(qlaValues[j][qlaTsCol], timestampsToRemove[k])) {
+            qlaSh.deleteRow(j + 1);
+            qlaRowsDeleted++;
+            break;
+          }
+        }
+      }
+    }
+    return { status:'ok', resultsRowsDeleted: timestampsToRemove.length, qlaRowsDeleted: qlaRowsDeleted };
+  } catch (err) {
+    return { status:'error', message:String(err) };
+  }
+}
+
+/* ---------------- Counting Test-Demo rows without deleting them ----------------
+   Lets the frontend show "This will delete 14 submissions" before the
+   admin commits to anything, rather than the count only being known
+   after the irreversible part has already happened.
+------------------------------------------------------------------------- */
+/* ---------------- Class results — filter within one paper ----------------
+   Deliberately per-paper, not cross-subject: a class name (e.g. "8A") on
+   one paper isn't guaranteed to be the same group of students on
+   another, so this only ever looks at the single paper the tutor has
+   selected, using the exact Results-tab data for that paper alone.
+------------------------------------------------------------------------- */
+function getResultsByClass(paperId, className) {
+  var paper = findPaper(paperId);
+  if (!paper) return { results: [] };
+  var cols = getColumnMap(paper);
+  var results = [];
+  try {
+    var ss = SpreadsheetApp.openById(paper.sheetId);
+    var sh = ss.getSheetByName(paper.resultsTab);
+    if (!sh) return { results: [] };
+    var values = sh.getDataRange().getValues();
+    if (values.length < 2) return { results: [] };
+    var headers = values[0];
+    var classCol = headers.indexOf(cols.className);
+    var nameCol = headers.indexOf(cols.studentName);
+    if (classCol === -1 || nameCol === -1) return { results: [] };
+    for (var i = 1; i < values.length; i++) {
+      var row = values[i];
+      if (String(row[classCol] || '') !== className) continue;
+      var rowObj = {};
+      headers.forEach(function(h, idx){ rowObj[h] = row[idx]; });
+      results.push({
+        studentName: row[nameCol],
+        timestamp: rowObj[cols.timestamp],
+        rawScore: rowObj[cols.rawScore],
+        totalMarks: rowObj[cols.totalMarks],
+        percentage: rowObj[cols.percentage],
+        grade: rowObj[cols.grade],
+        tutor: rowObj[cols.tutor]
       });
-      html += '</div>';
-    });
-    html += '</div>';
-    document.getElementById('catalogContent').innerHTML = html;
-  }).catch(function(err){
-    document.getElementById('catalogContent').innerHTML = '<div class="card"><p style="color:var(--red);">Could not load catalog: '+String(err)+'</p></div>';
-  });
-}
-function copyLink(url, btn){
-  navigator.clipboard.writeText(url).then(function(){
-    var original = btn.textContent;
-    btn.textContent = 'Copied!';
-    setTimeout(function(){ btn.textContent = original; }, 1500);
-  });
-}
-
-// ---------------- Student Search ----------------
-var searchDebounceTimer = null;
-function onSearchInput(){
-  clearTimeout(searchDebounceTimer);
-  var query = document.getElementById('searchInput').value.trim();
-  if(query.length < 2){
-    document.getElementById('searchResults').innerHTML = '';
-    return;
-  }
-  searchDebounceTimer = setTimeout(function(){ runStudentSearch(query); }, 400);
-}
-function runStudentSearch(query){
-  if(!checkConfigured()){
-    document.getElementById('searchResults').innerHTML = '<p style="color:var(--red);">Admin Console isn\'t connected to its Apps Script backend yet.</p>';
-    return;
-  }
-  pendingResultDeletion = null;
-  document.getElementById('searchResults').innerHTML = '<div class="loading">Searching every paper…</div>';
-  fetch(APPS_SCRIPT_URL + '?action=searchStudent&name=' + encodeURIComponent(query))
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      window.__lastSearchResults = data.results; // cached so row actions can look up the full object by index, rather than serializing student data (which may contain apostrophes/quotes) into an onclick attribute
-      renderSearchResults();
-    }).catch(function(err){
-      document.getElementById('searchResults').innerHTML = '<p style="color:var(--red);">Search failed: '+String(err)+'</p>';
-    });
-}
-var pendingResultDeletion = null; // index into window.__lastSearchResults
-function renderSearchResults(){
-  var data = window.__lastSearchResults || [];
-  if(!data.length){
-    document.getElementById('searchResults').innerHTML = '<div class="empty-state">No matches found.</div>';
-    return;
-  }
-  var rowsHtml = data.map(function(r, idx){
-    var d = r.timestamp ? new Date(r.timestamp).toLocaleString('en-GB') : '';
-    var row = '<tr><td class="clickable-row" onclick="openStudentDetailFromSearch('+idx+')">'+r.studentName+'</td><td>'+r.paperName+'</td><td>'+d+'</td><td>'+(r.rawScore!==undefined?r.rawScore+'/'+r.totalMarks:'')+'</td><td>'+(r.percentage!==undefined?r.percentage+'%':'')+'</td><td><span class="grade-pill">'+(r.grade||'')+'</span></td><td>'+(r.tutor||'')+'</td>'+
-      '<td><button class="chip-remove-link" onclick="startResultDeletion('+idx+')">Delete</button></td></tr>';
-    if(pendingResultDeletion === idx){
-      row += '<tr><td colspan="8"><div class="confirm-panel">'+
-        '<p><strong>Delete this sitting for '+r.studentName+' ('+r.paperName+')?</strong> This permanently removes it from the spreadsheet — it can\'t be undone.</p>'+
-        '<div class="field-row"><div class="field"><input type="password" id="resultDeletePin" placeholder="Teacher PIN"></div>'+
-        '<button class="btn" style="background:var(--red);" onclick="confirmResultDeletion('+idx+')">Confirm Delete</button>'+
-        '<button class="btn-outline" onclick="pendingResultDeletion=null; renderSearchResults();">Cancel</button></div>'+
-        '<p id="resultDeleteStatus" class="status-msg"></p></div></td></tr>';
     }
-    return row;
-  }).join('');
-  document.getElementById('searchResults').innerHTML =
-    '<p style="font-size:12px;color:var(--ink-soft);margin:0 0 8px;">Click a student\'s name to open their full breakdown on the paper itself.</p>'+
-    '<table><thead><tr><th>Student</th><th>Paper</th><th>Date</th><th>Score</th><th>%</th><th>Grade</th><th>Tutor</th><th></th></tr></thead><tbody>'+rowsHtml+'</tbody></table>';
-}
-function startResultDeletion(idx){
-  pendingResultDeletion = idx;
-  renderSearchResults();
-}
-function confirmResultDeletion(idx){
-  var pin = document.getElementById('resultDeletePin').value;
-  var statusEl = document.getElementById('resultDeleteStatus');
-  if(!pin){ statusEl.textContent = 'Enter the Teacher PIN.'; statusEl.className='status-msg error'; return; }
-  var r = window.__lastSearchResults[idx];
-  statusEl.textContent = 'Deleting…'; statusEl.className='status-msg';
-  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
-    body: JSON.stringify({ action:'deleteResultRow', pin:pin, paperId:r.paperId, timestamp:r.timestamp }) })
-    .then(function(res){ return res.json(); })
-    .then(function(res){
-      if(res.status === 'ok'){
-        window.__lastSearchResults.splice(idx, 1);
-        pendingResultDeletion = null;
-        renderSearchResults();
-      } else {
-        statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error';
-      }
-    });
-}
-function openStudentDetailFromSearch(idx){
-  // Deliberately doesn't rebuild a breakdown view inside the console —
-  // every individual paper already has a fully-built, tested Student
-  // Detail report, reached via this exact "?view=student&..." deep
-  // link (the same one the email notifications already use). Reusing
-  // it here means every subject's own topic breakdown, question-level
-  // detail, and RAG/grade logic is used as-is, rather than an admin
-  // console re-implementation risking drifting out of sync with it.
-  var r = window.__lastSearchResults[idx];
-  if(!r || !r.hostedUrl) return;
-  var base = r.hostedUrl.replace(/\/?$/, '/');
-  var timestampISO = r.timestamp ? new Date(r.timestamp).toISOString() : '';
-  var url = base +
-    '?view=student' +
-    '&name=' + encodeURIComponent(r.studentName || '') +
-    '&yearGroup=' + encodeURIComponent(r.yearGroup || '') +
-    '&school=' + encodeURIComponent(r.school || '') +
-    '&tutor=' + encodeURIComponent(r.tutor || '') +
-    '&timestamp=' + encodeURIComponent(timestampISO);
-  window.open(url, '_blank');
-}
-
-// ---------------- Tutors & Classes management ----------------
-var manageLoaded = false;
-function loadManagePaperList(){
-  if(!checkConfigured()) return;
-  manageLoaded = true;
-  fetch(APPS_SCRIPT_URL + '?action=getCatalog').then(function(r){ return r.json(); }).then(function(data){
-    var select = document.getElementById('managePaperSelect');
-    data.papers.forEach(function(p){
-      var opt = document.createElement('option');
-      opt.value = p.id; opt.textContent = p.name + ' (' + p.yearGroup + ')';
-      select.appendChild(opt);
-    });
-  });
-}
-var manageRemovalMode = false; // OFF by default — remove controls are never visible during normal browsing, only after this is deliberately switched on
-var pendingRemoval = null; // {type:'tutor'|'class', idx, paperId} — only one confirmation panel open at a time
-function toggleRemovalMode(){
-  manageRemovalMode = !manageRemovalMode;
-  pendingRemoval = null;
-  clearTestDataArmed = false;
-  renderManageContent();
-}
-function onManagePaperChange(){
-  var paperId = document.getElementById('managePaperSelect').value;
-  pendingRemoval = null;
-  clearTestDataArmed = false;
-  if(!paperId){ document.getElementById('manageContent').innerHTML = ''; return; }
-  document.getElementById('manageContent').innerHTML = '<div class="loading">Loading…</div>';
-  Promise.all([
-    fetch(APPS_SCRIPT_URL + '?action=getTutorsForPaper&paperId=' + paperId).then(function(r){ return r.json(); }),
-    fetch(APPS_SCRIPT_URL + '?action=getClassesForPaper&paperId=' + paperId).then(function(r){ return r.json(); }),
-    fetch(APPS_SCRIPT_URL + '?action=getTestDemoCount&paperId=' + paperId).then(function(r){ return r.json(); })
-  ]).then(function(results){
-    window.__currentTutors = results[0].tutors; // cached so remove actions can look up the exact name by index, rather than embedding it (possibly containing an apostrophe) into an onclick attribute
-    window.__currentClasses = results[1].classes;
-    window.__testDemoCount = results[2].count;
-    renderManageContent();
-  });
-}
-function renderManageContent(){
-  var paperId = document.getElementById('managePaperSelect').value;
-  if(!paperId || !window.__currentTutors) return;
-  var tutors = window.__currentTutors, classes = window.__currentClasses;
-  var toggleLabel = manageRemovalMode ? 'Done removing' : 'Manage removals';
-  var toggleClass = manageRemovalMode ? 'btn' : 'btn-outline';
-
-  function renderPill(name, idx, type){
-    var removeLink = manageRemovalMode ? ' <button class="chip-remove-link" onclick="startRemoval(\''+type+'\','+idx+',\''+paperId+'\')">Remove</button>' : '';
-    return '<span class="list-chip">'+name+removeLink+'</span>';
+  } catch (err) {
+    Logger.log('getResultsByClass: could not read ' + paper.name + ' — ' + err);
   }
-  function renderConfirmPanel(){
-    if(!pendingRemoval) return '';
-    var name = pendingRemoval.type === 'tutor' ? window.__currentTutors[pendingRemoval.idx] : window.__currentClasses[pendingRemoval.idx];
-    return '<div class="confirm-panel">'+
-      '<p><strong>Remove "'+name+'"?</strong> This can\'t be undone — past results already recorded under this name are not affected.</p>'+
-      '<div class="field-row"><div class="field"><input type="password" id="removalPin" placeholder="Teacher PIN"></div>'+
-      '<button class="btn" style="background:var(--red);" onclick="confirmRemoval()">Confirm Remove</button>'+
-      '<button class="btn-outline" onclick="pendingRemoval=null; renderManageContent();">Cancel</button></div>'+
-      '<p id="removalStatus" class="status-msg"></p></div>';
+  return { results: results };
+}
+
+function countTestDemoRows(paperId) {
+  var paper = findPaper(paperId);
+  if (!paper) return 0;
+  try {
+    var ss = SpreadsheetApp.openById(paper.sheetId);
+    var sh = ss.getSheetByName(paper.resultsTab);
+    if (!sh) return 0;
+    var values = sh.getDataRange().getValues();
+    var statusCol = values[0].indexOf('Student Status');
+    if (statusCol === -1) return 0;
+    var count = 0;
+    for (var i = 1; i < values.length; i++) {
+      if (values[i][statusCol] === 'Test-Demo') count++;
+    }
+    return count;
+  } catch (err) {
+    Logger.log('countTestDemoRows: could not read ' + paperId + ' — ' + err);
+    return 0;
   }
-
-  document.getElementById('manageContent').innerHTML =
-    '<div style="margin-bottom:14px;"><button class="'+toggleClass+'" onclick="toggleRemovalMode()">'+toggleLabel+'</button></div>'+
-    '<div style="margin-top:10px;"><strong>Tutors</strong><div style="margin:8px 0;">'+
-    tutors.map(function(t, idx){ return renderPill(t, idx, 'tutor'); }).join('')+
-    '</div>'+
-    (pendingRemoval && pendingRemoval.type === 'tutor' ? renderConfirmPanel() : '')+
-    '<div class="field-row"><div class="field"><input type="text" id="newTutorName" placeholder="New tutor name"></div>'+
-    '<div class="field"><input type="password" id="tutorPin" placeholder="Teacher PIN"></div>'+
-    '<button class="btn" onclick="addTutor(\''+paperId+'\')">Add Tutor</button></div>'+
-    '<p id="tutorStatus" class="status-msg"></p></div>'+
-
-    '<div style="margin-top:20px;"><strong>Classes</strong><div style="margin:8px 0;">'+
-    classes.map(function(c, idx){ return renderPill(c, idx, 'class'); }).join('')+
-    '</div>'+
-    (pendingRemoval && pendingRemoval.type === 'class' ? renderConfirmPanel() : '')+
-    '<div class="field-row"><div class="field"><input type="text" id="newClassName" placeholder="New class name"></div>'+
-    '<div class="field"><input type="password" id="classPin" placeholder="Teacher PIN"></div>'+
-    '<button class="btn" onclick="addClass(\''+paperId+'\')">Add Class</button></div>'+
-    '<p id="classStatus" class="status-msg"></p></div>'+
-
-    '<div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--paper-line);">'+
-    '<strong>Clear test data</strong>'+
-    '<p style="font-size:12.5px;color:var(--ink-soft);margin:4px 0 10px;">Removes every submission on this paper explicitly marked "Test-Demo" status at the cover page — never touches "Enrolled Student" or "Trial Student" results, however test-like a name might look.</p>'+
-    '<p style="font-size:13px;">Currently on this paper: <strong>'+window.__testDemoCount+'</strong> Test-Demo submission'+(window.__testDemoCount===1?'':'s')+'.</p>'+
-    (window.__testDemoCount > 0 ? renderClearTestDataControl(paperId) : '')+
-    '</div>';
 }
-function renderClearTestDataControl(paperId){
-  if(clearTestDataArmed){
-    return '<div class="confirm-panel">'+
-      '<p><strong>Delete all '+window.__testDemoCount+' Test-Demo submissions from this paper?</strong> This can\'t be undone.</p>'+
-      '<div class="field-row"><div class="field"><input type="password" id="clearTestDataPin" placeholder="Teacher PIN"></div>'+
-      '<button class="btn" style="background:var(--red);" onclick="confirmClearTestData(\''+paperId+'\')">Confirm Clear</button>'+
-      '<button class="btn-outline" onclick="clearTestDataArmed=false; renderManageContent();">Cancel</button></div>'+
-      '<p id="clearTestDataStatus" class="status-msg"></p></div>';
-  }
-  return '<button class="btn-outline" style="border-color:var(--red);color:var(--red);" onclick="clearTestDataArmed=true; renderManageContent();">Clear Test-Demo Data…</button>';
-}
-var clearTestDataArmed = false;
-function confirmClearTestData(paperId){
-  var pin = document.getElementById('clearTestDataPin').value;
-  var statusEl = document.getElementById('clearTestDataStatus');
-  if(!pin){ statusEl.textContent = 'Enter the Teacher PIN.'; statusEl.className='status-msg error'; return; }
-  statusEl.textContent = 'Clearing…'; statusEl.className='status-msg';
-  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
-    body: JSON.stringify({ action:'clearTestDemoRows', pin:pin, paperId:paperId }) })
-    .then(function(r){ return r.json(); })
-    .then(function(res){
-      if(res.status === 'ok'){
-        clearTestDataArmed = false;
-        onManagePaperChange();
-      } else {
-        statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error';
-      }
-    });
-}
-function startRemoval(type, idx, paperId){
-  pendingRemoval = { type:type, idx:idx, paperId:paperId };
-  renderManageContent();
-}
-function confirmRemoval(){
-  var pin = document.getElementById('removalPin').value;
-  var statusEl = document.getElementById('removalStatus');
-  if(!pin){ statusEl.textContent = 'Enter the Teacher PIN.'; statusEl.className='status-msg error'; return; }
-  var type = pendingRemoval.type, paperId = pendingRemoval.paperId;
-  var name = type === 'tutor' ? window.__currentTutors[pendingRemoval.idx] : window.__currentClasses[pendingRemoval.idx];
-  var action = type === 'tutor' ? 'removeTutor' : 'removeClass';
-  var payload = { action:action, pin:pin, paperId:paperId };
-  if(type === 'tutor') payload.tutorName = name; else payload.className = name;
-  statusEl.textContent = 'Removing…'; statusEl.className='status-msg';
-  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload) })
-    .then(function(r){ return r.json(); })
-    .then(function(res){
-      if(res.status === 'ok'){ pendingRemoval = null; onManagePaperChange(); }
-      else { statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error'; }
-    });
-}
-function addTutor(paperId){
-  var name = document.getElementById('newTutorName').value.trim();
-  var pin = document.getElementById('tutorPin').value;
-  var statusEl = document.getElementById('tutorStatus');
-  if(!name){ statusEl.textContent = 'Enter a tutor name first.'; statusEl.className='status-msg error'; return; }
-  statusEl.textContent = 'Saving…'; statusEl.className='status-msg';
-  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
-    body: JSON.stringify({ action:'addTutor', pin:pin, paperId:paperId, tutorName:name }) })
-    .then(function(r){ return r.json(); })
-    .then(function(res){
-      if(res.status === 'ok'){ statusEl.textContent = '✓ Added'; statusEl.className='status-msg ok'; onManagePaperChange(); }
-      else { statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error'; }
-    });
-}
-function addClass(paperId){
-  var name = document.getElementById('newClassName').value.trim();
-  var pin = document.getElementById('classPin').value;
-  var statusEl = document.getElementById('classStatus');
-  if(!name){ statusEl.textContent = 'Enter a class name first.'; statusEl.className='status-msg error'; return; }
-  statusEl.textContent = 'Saving…'; statusEl.className='status-msg';
-  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
-    body: JSON.stringify({ action:'addClass', pin:pin, paperId:paperId, className:name }) })
-    .then(function(r){ return r.json(); })
-    .then(function(res){
-      if(res.status === 'ok'){ statusEl.textContent = '✓ Added'; statusEl.className='status-msg ok'; onManagePaperChange(); }
-      else { statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error'; }
-    });
-}
-
-loadDashboard();
-</script>
-</body>
-</html>
