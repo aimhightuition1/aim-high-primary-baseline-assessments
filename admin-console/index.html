@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aim High Tuition — Admin Console</title>
+<style>
+  :root{
+    --ink:#1a2332;
+    --ink-soft:#5a6478;
+    --accent:#1e4d8f;
+    --accent-dark:#153966;
+    --paper:#f4f6f9;
+    --paper-line:#dde3ec;
+    --white:#ffffff;
+    --green:#2f8a5c;
+    --amber:#b8801f;
+    --red:#c23b3b;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--paper);color:var(--ink);}
+  .topbar{background:var(--accent-dark);color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  .topbar .brand{font-size:19px;font-weight:800;letter-spacing:.02em;}
+  .topbar .subtitle{font-size:12.5px;opacity:.75;margin-top:2px;}
+  .tabs{display:flex;gap:4px;background:var(--white);border-bottom:1px solid var(--paper-line);padding:0 20px;overflow-x:auto;}
+  .tab-btn{padding:14px 18px;border:none;background:none;font-size:14px;font-weight:600;color:var(--ink-soft);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;}
+  .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .view{display:none;padding:24px;max-width:1200px;margin:0 auto;}
+  .view.active{display:block;}
+  .card{background:var(--white);border:1px solid var(--paper-line);border-radius:8px;padding:20px;margin-bottom:16px;}
+  .card h2{margin:0 0 4px;font-size:17px;}
+  .card .desc{font-size:13px;color:var(--ink-soft);margin:0 0 16px;}
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px;}
+  .stat-box{background:var(--white);border:1px solid var(--paper-line);border-radius:8px;padding:16px;text-align:center;}
+  .stat-box .num{font-size:26px;font-weight:800;color:var(--accent);}
+  .stat-box .lbl{font-size:11.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
+  .subject-group{margin-bottom:22px;}
+  .subject-group h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:0 0 10px;}
+  .paper-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--paper-line);border-radius:6px;margin-bottom:8px;background:var(--white);flex-wrap:wrap;gap:8px;}
+  .paper-row .pname{font-weight:700;font-size:14.5px;}
+  .paper-row .pyear{font-size:12px;color:var(--ink-soft);}
+  .btn{background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;}
+  .btn:hover{background:var(--accent-dark);}
+  .btn-outline{background:none;border:1.5px solid var(--paper-line);color:var(--ink);padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;}
+  .search-box{width:100%;padding:12px 14px;font-size:15px;border:1.5px solid var(--paper-line);border-radius:6px;margin-bottom:16px;}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th{text-align:left;padding:8px 10px;background:var(--paper);font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-soft);border-bottom:2px solid var(--paper-line);}
+  td{padding:9px 10px;border-bottom:1px solid var(--paper-line);}
+  .clickable-row{cursor:pointer;}
+  .clickable-row:hover{background:var(--paper);}
+  .grade-pill{display:inline-block;padding:2px 9px;border-radius:10px;font-size:11.5px;font-weight:700;background:var(--paper);}
+  .empty-state{text-align:center;padding:40px 20px;color:var(--ink-soft);font-size:13.5px;}
+  .field-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px;}
+  .field{flex:1;min-width:160px;}
+  .field label{display:block;font-size:11.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px;}
+  .field select, .field input{width:100%;padding:9px 10px;border:1.5px solid var(--paper-line);border-radius:6px;font-size:14px;}
+  .status-msg{font-size:12.5px;margin-top:8px;}
+  .status-msg.ok{color:var(--green);}
+  .status-msg.error{color:var(--red);}
+  .list-chip{display:inline-flex;align-items:center;gap:6px;background:var(--paper);border:1px solid var(--paper-line);border-radius:14px;padding:5px 8px 5px 12px;font-size:12.5px;margin:0 6px 6px 0;}
+  .chip-remove{background:none;border:none;color:var(--ink-soft);cursor:pointer;font-size:15px;line-height:1;padding:0 2px;font-weight:700;}
+  .chip-remove:hover{color:var(--red);}
+  .chip-remove-link{background:none;border:none;color:var(--red);cursor:pointer;font-size:11.5px;font-weight:600;text-decoration:underline;padding:0;margin-left:2px;}
+  .confirm-panel{background:#fdf1f1;border:1.5px solid var(--red);border-radius:6px;padding:14px;margin:10px 0;}
+  .confirm-panel p{margin:0 0 10px;font-size:13px;}
+  .loading{color:var(--ink-soft);font-size:13px;padding:20px;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="brand">Aim High Tuition</div>
+    <div class="subtitle">Admin Console</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" data-view="dashboard" onclick="switchView('dashboard')">Dashboard</button>
+  <button class="tab-btn" data-view="catalog" onclick="switchView('catalog')">Paper Catalog</button>
+  <button class="tab-btn" data-view="search" onclick="switchView('search')">Student Search</button>
+  <button class="tab-btn" data-view="manage" onclick="switchView('manage')">Tutors &amp; Classes</button>
+</div>
+
+<div id="view-dashboard" class="view active">
+  <div id="dashboardContent" class="loading">Loading dashboard…</div>
+</div>
+
+<div id="view-catalog" class="view">
+  <div id="catalogContent" class="loading">Loading paper catalog…</div>
+</div>
+
+<div id="view-search" class="view">
+  <div class="card">
+    <h2>Student Search</h2>
+    <p class="desc">Search across every paper at once — find every result a student has, regardless of which subject or year group they sat.</p>
+    <input type="text" class="search-box" id="searchInput" placeholder="Type a student name…" oninput="onSearchInput()">
+    <div id="searchResults"></div>
+  </div>
+</div>
+
+<div id="view-manage" class="view">
+  <div class="card">
+    <h2>Tutors &amp; Classes</h2>
+    <p class="desc">Select a paper to view and update its tutor and class lists.</p>
+    <div class="field-row">
+      <div class="field">
+        <label>Paper</label>
+        <select id="managePaperSelect" onchange="onManagePaperChange()">
+          <option value="">Select a paper…</option>
+        </select>
+      </div>
+    </div>
+    <div id="manageContent"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// PASTE YOUR DEPLOYED ADMIN CONSOLE APPS SCRIPT URL HERE
+// ============================================================
+var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbygwC5Ay7VVGSnzDc2zEMPAJgvkQaf_tGPQoRHYxkyzlUPHrdUc-amzIL0mCdBjFdxp/exec";
+
+var TEACHER_PIN_CACHE = null; // asked once per session, not stored beyond that
+
+function switchView(viewName){
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('view-' + viewName).classList.add('active');
+  document.querySelector('.tab-btn[data-view="' + viewName + '"]').classList.add('active');
+  if(viewName === 'dashboard' && !dashboardLoaded) loadDashboard();
+  if(viewName === 'catalog' && !catalogLoaded) loadCatalog();
+  if(viewName === 'manage' && !manageLoaded) loadManagePaperList();
+}
+
+function checkConfigured(){
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0){
+    return false;
+  }
+  return true;
+}
+
+// ---------------- Dashboard ----------------
+var dashboardLoaded = false;
+function loadDashboard(){
+  if(!checkConfigured()){
+    document.getElementById('dashboardContent').innerHTML = '<div class="card"><p style="color:var(--red);">Admin Console isn\'t connected to its Apps Script backend yet — paste the deployed URL into APPS_SCRIPT_URL.</p></div>';
+    return;
+  }
+  dashboardLoaded = true;
+  Promise.all([
+    fetch(APPS_SCRIPT_URL + '?action=getAggregateStats').then(function(r){ return r.json(); }),
+    fetch(APPS_SCRIPT_URL + '?action=getRecentActivity&limit=25').then(function(r){ return r.json(); })
+  ]).then(function(results){
+    var stats = results[0] || {}, activity = results[1] || {};
+    if (!stats.bySubject) {
+      // Genuinely missing rather than just empty — the backend always
+      // returns an object here, even {} with nothing in it, so this
+      // means the getAggregateStats call itself failed or the deployed
+      // .gs doesn't match this frontend. Surface that plainly instead
+      // of letting Object.keys throw a confusing low-level error.
+      document.getElementById('dashboardContent').innerHTML = '<div class="card"><p style="color:var(--red);">Dashboard data came back in an unexpected shape — the deployed Apps Script backend may be an older version than this page, or a paper\'s Sheet ID may be unreachable. Re-check APPS_SCRIPT_URL and that the latest Admin_Console_Code.gs has been redeployed as a new version.</p></div>';
+      return;
+    }
+    var statHtml = '<div class="stat-row">'+
+      '<div class="stat-box"><div class="num">'+(stats.totalSubmissions||0)+'</div><div class="lbl">Total Submissions</div></div>'+
+      '<div class="stat-box"><div class="num">'+(stats.totalPapers||0)+'</div><div class="lbl">Papers Live</div></div>'+
+      Object.keys(stats.bySubject).map(function(subj){
+        return '<div class="stat-box"><div class="num">'+stats.bySubject[subj]+'</div><div class="lbl">'+subj+'</div></div>';
+      }).join('')+
+    '</div>';
+
+    var activityRows = (activity.activity || []).map(function(a){
+      var d = a.timestamp ? new Date(a.timestamp).toLocaleString('en-GB') : '';
+      return '<tr><td>'+d+'</td><td>'+(a.studentName||'')+'</td><td>'+a.paperName+'</td><td>'+(a.percentage!==undefined?a.percentage+'%':'')+'</td><td><span class="grade-pill">'+(a.grade||'')+'</span></td></tr>';
+    }).join('');
+
+    document.getElementById('dashboardContent').innerHTML =
+      statHtml +
+      '<div class="card"><h2>Recent Activity</h2><p class="desc">Most recent submissions across every paper, newest first.</p>'+
+      '<table><thead><tr><th>Date</th><th>Student</th><th>Paper</th><th>%</th><th>Grade</th></tr></thead><tbody>'+
+      (activityRows || '<tr><td colspan="5" class="empty-state">No submissions yet.</td></tr>')+
+      '</tbody></table></div>'+
+      renderWipeAllDataSection();
+  }).catch(function(err){
+    document.getElementById('dashboardContent').innerHTML = '<div class="card"><p style="color:var(--red);">Could not load dashboard data: '+String(err)+'</p></div>';
+  });
+}
+
+// ---------------- Data Cleanup — three graduated tiers ----------------
+// Tier 1 and 2 are global versions of the existing per-paper "Clear
+// Test-Demo Data": they only ever remove rows matching one specific
+// status (Test-Demo, then Trial Student), and inherit PIN protection
+// from doPost the same way every other write action here does — no
+// extra friction, since they can never touch a real Enrolled Student
+// row regardless of what's typed. Tier 3 is the original, unchanged
+// nuclear option — same PIN-plus-typed-phrase gate as before, kept
+// visually separate below the two safer tiers rather than beside them.
+var statusClearArmed = { 'Test-Demo': false, 'Trial Student': false };
+var wipeAllArmed = false;
+
+function renderWipeAllDataSection(){
+  return '<div class="card"><h2>Data Cleanup</h2>'+
+    '<p class="desc">Three levels of clearing, from safest to most destructive. All three act across every paper in this console at once.</p>'+
+    renderStatusTier('Test-Demo', 'Clear ALL Test-Demo Data', 'Removes every submission on every paper explicitly marked "Test-Demo" status. Never touches Trial Student or Enrolled Student rows.')+
+    '<div style="height:14px;"></div>'+
+    renderStatusTier('Trial Student', 'Clear ALL Trial Student Data', 'Removes every submission on every paper marked "Trial Student" status. Never touches Enrolled Student rows.')+
+    '<div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--paper-line);">'+
+    (wipeAllArmed ? renderWipeAllArmedPanel() : renderWipeAllCollapsed())+
+    '</div></div>';
+}
+
+function renderStatusTier(status, title, desc){
+  var key = status;
+  if(statusClearArmed[key]){
+    return renderStatusArmedPanel(status);
+  }
+  return '<div><strong>'+title+'</strong>'+
+    '<p style="font-size:12.5px;color:var(--ink-soft);margin:4px 0 10px;">'+desc+'</p>'+
+    '<button class="btn-outline" style="border-color:var(--amber);color:#8a6100;" onclick="armStatusClear(\''+status+'\')">'+title+'…</button></div>';
+}
+
+function armStatusClear(status){
+  statusClearArmed[status] = true;
+  fetch(APPS_SCRIPT_URL + '?action=getStatusCount&status=' + encodeURIComponent(status)).then(function(r){ return r.json(); }).then(function(data){
+    window.__statusCount = window.__statusCount || {};
+    window.__statusCount[status] = data;
+    dashboardLoaded = false; loadDashboard();
+  });
+}
+
+function renderStatusArmedPanel(status){
+  var data = window.__statusCount && window.__statusCount[status];
+  var total = data ? data.total : '…';
+  var byPaperRows = (data && data.byPaper) ? Object.keys(data.byPaper).filter(function(n){ return data.byPaper[n] > 0; }).map(function(name){
+    return '<li>'+name+': <strong>'+data.byPaper[name]+'</strong></li>';
+  }).join('') : '';
+  var fieldId = 'statusClearPin_' + status.replace(/\s+/g,'');
+  var statusId = 'statusClearStatus_' + status.replace(/\s+/g,'');
+  return '<div class="confirm-panel">'+
+    '<p><strong>Delete '+total+' "'+status+'" submissions across every paper?</strong> This can\'t be undone.</p>'+
+    (byPaperRows ? '<ul style="font-size:12.5px;color:var(--ink-soft);margin:6px 0 10px;">'+byPaperRows+'</ul>' : '')+
+    '<div class="field-row"><div class="field"><input type="password" id="'+fieldId+'" placeholder="Teacher PIN"></div>'+
+    '<button class="btn" style="background:var(--amber);color:var(--ink);" onclick="confirmStatusClear(\''+status+'\')">Confirm Clear</button>'+
+    '<button class="btn-outline" onclick="statusClearArmed[\''+status+'\']=false; dashboardLoaded=false; loadDashboard();">Cancel</button></div>'+
+    '<p id="'+statusId+'" class="status-msg"></p></div>';
+}
+
+function confirmStatusClear(status){
+  var fieldId = 'statusClearPin_' + status.replace(/\s+/g,'');
+  var statusId = 'statusClearStatus_' + status.replace(/\s+/g,'');
+  var pin = document.getElementById(fieldId).value;
+  var statusEl = document.getElementById(statusId);
+  if(!pin){ statusEl.textContent = 'Enter the Teacher PIN.'; statusEl.className='status-msg error'; return; }
+  statusEl.textContent = 'Clearing…'; statusEl.className='status-msg';
+  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify({ action:'clearStatusAllPapers', pin:pin, status:status }) })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res.status === 'ok'){
+        statusClearArmed[status] = false;
+        dashboardLoaded = false;
+        loadDashboard();
+      } else {
+        statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error';
+      }
+    });
+}
+
+function renderWipeAllCollapsed(){
+  return '<p style="color:var(--red);font-weight:700;margin-bottom:4px;">Wipe All Data — Fresh Start</p>'+
+    '<p class="desc">Deletes every submission on every paper — Results, QLA, and saved Drafts — including rows marked Enrolled Student, not just Test-Demo or Trial Student. For clearing out testing/pilot data before going fully live. There is no undo.</p>'+
+    '<button class="btn-outline" style="border-color:var(--red);color:var(--red);" onclick="armWipeAll()">Wipe All Data…</button>';
+}
+
+function armWipeAll(){
+  wipeAllArmed = true;
+  fetch(APPS_SCRIPT_URL + '?action=getAllDataCount').then(function(r){ return r.json(); }).then(function(data){
+    window.__wipeAllCount = data;
+    dashboardLoaded = false; loadDashboard();
+  });
+}
+function renderWipeAllArmedPanel(){
+  var byPaperRows = (window.__wipeAllCount && window.__wipeAllCount.byPaper) ? Object.keys(window.__wipeAllCount.byPaper).map(function(name){
+    return '<li>'+name+': <strong>'+window.__wipeAllCount.byPaper[name]+'</strong></li>';
+  }).join('') : '';
+  var total = window.__wipeAllCount ? window.__wipeAllCount.total : '…';
+  return '<p style="color:var(--red);font-weight:700;margin-bottom:4px;">Wipe All Data — Fresh Start</p>'+
+    '<p><strong>This will permanently delete '+total+' submissions across every paper:</strong></p>'+
+    '<ul style="font-size:12.5px;color:var(--ink-soft);margin:6px 0 14px;">'+byPaperRows+'</ul>'+
+    '<p style="font-size:13px;">Type <strong>DELETE ALL DATA</strong> below to confirm, and enter the Teacher PIN.</p>'+
+    '<div class="field-row">'+
+    '<div class="field"><input type="text" id="wipeAllPhrase" placeholder="Type DELETE ALL DATA"></div>'+
+    '<div class="field"><input type="password" id="wipeAllPin" placeholder="Teacher PIN"></div>'+
+    '<button class="btn" style="background:var(--red);" onclick="confirmWipeAll()">Confirm Wipe</button>'+
+    '<button class="btn-outline" onclick="wipeAllArmed=false; dashboardLoaded=false; loadDashboard();">Cancel</button>'+
+    '</div><p id="wipeAllStatus" class="status-msg"></p>';
+}
+function confirmWipeAll(){
+  var phrase = document.getElementById('wipeAllPhrase').value;
+  var pin = document.getElementById('wipeAllPin').value;
+  var statusEl = document.getElementById('wipeAllStatus');
+  if(phrase !== 'DELETE ALL DATA'){ statusEl.textContent = 'Type the confirmation phrase exactly: DELETE ALL DATA'; statusEl.className='status-msg error'; return; }
+  if(!pin){ statusEl.textContent = 'Enter the Teacher PIN.'; statusEl.className='status-msg error'; return; }
+  statusEl.textContent = 'Wiping — this may take a moment…'; statusEl.className='status-msg';
+  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify({ action:'wipeAllData', pin:pin, confirmPhrase:phrase }) })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res.status === 'ok'){
+        wipeAllArmed = false;
+        dashboardLoaded = false;
+        loadDashboard();
+      } else {
+        statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error';
+      }
+    });
+}
+
+// ---------------- Catalog ----------------
+var catalogLoaded = false;
+function loadCatalog(){
+  if(!checkConfigured()){
+    document.getElementById('catalogContent').innerHTML = '<div class="card"><p style="color:var(--red);">Admin Console isn\'t connected to its Apps Script backend yet.</p></div>';
+    return;
+  }
+  catalogLoaded = true;
+  fetch(APPS_SCRIPT_URL + '?action=getCatalog').then(function(r){ return r.json(); }).then(function(data){
+    if (!data || !data.papers) {
+      document.getElementById('catalogContent').innerHTML = '<div class="card"><p style="color:var(--red);">Catalog data came back in an unexpected shape — check the deployed Apps Script backend matches this page\'s version.</p></div>';
+      return;
+    }
+    var bySubject = {};
+    data.papers.forEach(function(p){
+      if(!bySubject[p.subject]) bySubject[p.subject] = [];
+      bySubject[p.subject].push(p);
+    });
+    var html = '<div class="card"><h2>Year Group Key</h2>'+
+      '<p class="desc">Papers are named by content level, not year group, so students never see which year they map to. This key is for tutor/admin reference only.</p>'+
+      '<table><thead><tr><th>Paper name</th><th>Typical year group</th></tr></thead><tbody>'+
+      '<tr><td>Ascend (Maths / English)</td><td>Year 1&ndash;2</td></tr>'+
+      '<tr><td>Ignite (Maths / English)</td><td>Year 3&ndash;4</td></tr>'+
+      '<tr><td>Master (Maths / English)</td><td>Year 5&ndash;6</td></tr>'+
+      '<tr><td>KS3 (Maths / English / Science Stage 1)</td><td>Year 7&ndash;8</td></tr>'+
+      '<tr><td>KS3 Stage 2 Science</td><td>Year 9</td></tr>'+
+      '<tr><td>KS3/4 Bridge (Maths / English)</td><td>Year 9&ndash;10</td></tr>'+
+      '<tr><td>KS4 Stage 1 Science</td><td>Year 10</td></tr>'+
+      '<tr><td>KS4 (English / Science Stage 2)</td><td>Year 11</td></tr>'+
+      '<tr><td>GCSE Higher / Foundation Mathematics</td><td>Year 10&ndash;11</td></tr>'+
+      '</tbody></table>'+
+      '<p class="desc" style="margin-top:10px;">A student\'s actual ability level doesn\'t always match their year — e.g. a Year 10 student may sit a KS3/4 Bridge or even a KS3 paper if that better reflects where they are. The paper name itself never signals this to the student either way.</p>'+
+      '</div><div class="card"><h2>Paper Catalog</h2><p class="desc">Every live paper, with its student-facing link ready to copy and send.</p>';
+    Object.keys(bySubject).forEach(function(subj){
+      html += '<div class="subject-group"><h3>'+subj+'</h3>';
+      bySubject[subj].forEach(function(p){
+        html += '<div class="paper-row"><div><div class="pname">'+p.name+'</div><div class="pyear">'+p.yearGroup+'</div></div>'+
+          '<div style="display:flex;gap:8px;"><button class="btn-outline" onclick="copyLink(\''+p.hostedUrl+'\', this)">Copy Link</button>'+
+          '<a href="'+p.hostedUrl+'" target="_blank" class="btn" style="text-decoration:none;display:inline-block;">Open</a></div></div>';
+      });
+      html += '</div>';
+    });
+    html += '</div>';
+    document.getElementById('catalogContent').innerHTML = html;
+  }).catch(function(err){
+    document.getElementById('catalogContent').innerHTML = '<div class="card"><p style="color:var(--red);">Could not load catalog: '+String(err)+'</p></div>';
+  });
+}
+function copyLink(url, btn){
+  navigator.clipboard.writeText(url).then(function(){
+    var original = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(function(){ btn.textContent = original; }, 1500);
+  });
+}
+
+// ---------------- Student Search ----------------
+var searchDebounceTimer = null;
+function onSearchInput(){
+  clearTimeout(searchDebounceTimer);
+  var query = document.getElementById('searchInput').value.trim();
+  if(query.length < 2){
+    document.getElementById('searchResults').innerHTML = '';
+    return;
+  }
+  searchDebounceTimer = setTimeout(function(){ runStudentSearch(query); }, 400);
+}
+function runStudentSearch(query){
+  if(!checkConfigured()){
+    document.getElementById('searchResults').innerHTML = '<p style="color:var(--red);">Admin Console isn\'t connected to its Apps Script backend yet.</p>';
+    return;
+  }
+  pendingResultDeletion = null;
+  document.getElementById('searchResults').innerHTML = '<div class="loading">Searching every paper…</div>';
+  fetch(APPS_SCRIPT_URL + '?action=searchStudent&name=' + encodeURIComponent(query))
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      window.__lastSearchResults = data.results; // cached so row actions can look up the full object by index, rather than serializing student data (which may contain apostrophes/quotes) into an onclick attribute
+      renderSearchResults();
+    }).catch(function(err){
+      document.getElementById('searchResults').innerHTML = '<p style="color:var(--red);">Search failed: '+String(err)+'</p>';
+    });
+}
+var pendingResultDeletion = null; // index into window.__lastSearchResults
+function renderSearchResults(){
+  var data = window.__lastSearchResults || [];
+  if(!data.length){
+    document.getElementById('searchResults').innerHTML = '<div class="empty-state">No matches found.</div>';
+    return;
+  }
+  var rowsHtml = data.map(function(r, idx){
+    var d = r.timestamp ? new Date(r.timestamp).toLocaleString('en-GB') : '';
+    var row = '<tr><td class="clickable-row" onclick="openStudentDetailFromSearch('+idx+')">'+r.studentName+'</td><td>'+r.paperName+'</td><td>'+d+'</td><td>'+(r.rawScore!==undefined?r.rawScore+'/'+r.totalMarks:'')+'</td><td>'+(r.percentage!==undefined?r.percentage+'%':'')+'</td><td><span class="grade-pill">'+(r.grade||'')+'</span></td><td>'+(r.tutor||'')+'</td>'+
+      '<td><button class="chip-remove-link" onclick="startResultDeletion('+idx+')">Delete</button></td></tr>';
+    if(pendingResultDeletion === idx){
+      row += '<tr><td colspan="8"><div class="confirm-panel">'+
+        '<p><strong>Delete this sitting for '+r.studentName+' ('+r.paperName+')?</strong> This permanently removes it from the spreadsheet — it can\'t be undone.</p>'+
+        '<div class="field-row"><div class="field"><input type="password" id="resultDeletePin" placeholder="Teacher PIN"></div>'+
+        '<button class="btn" style="background:var(--red);" onclick="confirmResultDeletion('+idx+')">Confirm Delete</button>'+
+        '<button class="btn-outline" onclick="pendingResultDeletion=null; renderSearchResults();">Cancel</button></div>'+
+        '<p id="resultDeleteStatus" class="status-msg"></p></div></td></tr>';
+    }
+    return row;
+  }).join('');
+  document.getElementById('searchResults').innerHTML =
+    '<p style="font-size:12px;color:var(--ink-soft);margin:0 0 8px;">Click a student\'s name to open their full breakdown on the paper itself.</p>'+
+    '<table><thead><tr><th>Student</th><th>Paper</th><th>Date</th><th>Score</th><th>%</th><th>Grade</th><th>Tutor</th><th></th></tr></thead><tbody>'+rowsHtml+'</tbody></table>';
+}
+function startResultDeletion(idx){
+  pendingResultDeletion = idx;
+  renderSearchResults();
+}
+function confirmResultDeletion(idx){
+  var pin = document.getElementById('resultDeletePin').value;
+  var statusEl = document.getElementById('resultDeleteStatus');
+  if(!pin){ statusEl.textContent = 'Enter the Teacher PIN.'; statusEl.className='status-msg error'; return; }
+  var r = window.__lastSearchResults[idx];
+  statusEl.textContent = 'Deleting…'; statusEl.className='status-msg';
+  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify({ action:'deleteResultRow', pin:pin, paperId:r.paperId, timestamp:r.timestamp }) })
+    .then(function(res){ return res.json(); })
+    .then(function(res){
+      if(res.status === 'ok'){
+        window.__lastSearchResults.splice(idx, 1);
+        pendingResultDeletion = null;
+        renderSearchResults();
+      } else {
+        statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error';
+      }
+    });
+}
+function openStudentDetailFromSearch(idx){
+  // Deliberately doesn't rebuild a breakdown view inside the console —
+  // every individual paper already has a fully-built, tested Student
+  // Detail report, reached via this exact "?view=student&..." deep
+  // link (the same one the email notifications already use). Reusing
+  // it here means every subject's own topic breakdown, question-level
+  // detail, and RAG/grade logic is used as-is, rather than an admin
+  // console re-implementation risking drifting out of sync with it.
+  var r = window.__lastSearchResults[idx];
+  if(!r || !r.hostedUrl) return;
+  var base = r.hostedUrl.replace(/\/?$/, '/');
+  var timestampISO = r.timestamp ? new Date(r.timestamp).toISOString() : '';
+  var url = base +
+    '?view=student' +
+    '&name=' + encodeURIComponent(r.studentName || '') +
+    '&yearGroup=' + encodeURIComponent(r.yearGroup || '') +
+    '&school=' + encodeURIComponent(r.school || '') +
+    '&tutor=' + encodeURIComponent(r.tutor || '') +
+    '&timestamp=' + encodeURIComponent(timestampISO);
+  window.open(url, '_blank');
+}
+
+// ---------------- Tutors & Classes management ----------------
+var manageLoaded = false;
+function loadManagePaperList(){
+  if(!checkConfigured()) return;
+  manageLoaded = true;
+  fetch(APPS_SCRIPT_URL + '?action=getCatalog').then(function(r){ return r.json(); }).then(function(data){
+    var select = document.getElementById('managePaperSelect');
+    data.papers.forEach(function(p){
+      var opt = document.createElement('option');
+      opt.value = p.id; opt.textContent = p.name + ' (' + p.yearGroup + ')';
+      select.appendChild(opt);
+    });
+  });
+}
+var manageRemovalMode = false; // OFF by default — remove controls are never visible during normal browsing, only after this is deliberately switched on
+var pendingRemoval = null; // {type:'tutor'|'class', idx, paperId} — only one confirmation panel open at a time
+function toggleRemovalMode(){
+  manageRemovalMode = !manageRemovalMode;
+  pendingRemoval = null;
+  clearTestDataArmed = false;
+  renderManageContent();
+}
+function onManagePaperChange(){
+  var paperId = document.getElementById('managePaperSelect').value;
+  pendingRemoval = null;
+  clearTestDataArmed = false;
+  if(!paperId){ document.getElementById('manageContent').innerHTML = ''; return; }
+  document.getElementById('manageContent').innerHTML = '<div class="loading">Loading…</div>';
+  Promise.all([
+    fetch(APPS_SCRIPT_URL + '?action=getTutorsForPaper&paperId=' + paperId).then(function(r){ return r.json(); }),
+    fetch(APPS_SCRIPT_URL + '?action=getClassesForPaper&paperId=' + paperId).then(function(r){ return r.json(); }),
+    fetch(APPS_SCRIPT_URL + '?action=getTestDemoCount&paperId=' + paperId).then(function(r){ return r.json(); })
+  ]).then(function(results){
+    window.__currentTutors = results[0].tutors; // cached so remove actions can look up the exact name by index, rather than embedding it (possibly containing an apostrophe) into an onclick attribute
+    window.__currentClasses = results[1].classes;
+    window.__testDemoCount = results[2].count;
+    renderManageContent();
+  });
+}
+function renderManageContent(){
+  var paperId = document.getElementById('managePaperSelect').value;
+  if(!paperId || !window.__currentTutors) return;
+  var tutors = window.__currentTutors, classes = window.__currentClasses;
+  var toggleLabel = manageRemovalMode ? 'Done removing' : 'Manage removals';
+  var toggleClass = manageRemovalMode ? 'btn' : 'btn-outline';
+
+  function renderPill(name, idx, type){
+    var removeLink = manageRemovalMode ? ' <button class="chip-remove-link" onclick="startRemoval(\''+type+'\','+idx+',\''+paperId+'\')">Remove</button>' : '';
+    return '<span class="list-chip">'+name+removeLink+'</span>';
+  }
+  function renderConfirmPanel(){
+    if(!pendingRemoval) return '';
+    var name = pendingRemoval.type === 'tutor' ? window.__currentTutors[pendingRemoval.idx] : window.__currentClasses[pendingRemoval.idx];
+    return '<div class="confirm-panel">'+
+      '<p><strong>Remove "'+name+'"?</strong> This can\'t be undone — past results already recorded under this name are not affected.</p>'+
+      '<div class="field-row"><div class="field"><input type="password" id="removalPin" placeholder="Teacher PIN"></div>'+
+      '<button class="btn" style="background:var(--red);" onclick="confirmRemoval()">Confirm Remove</button>'+
+      '<button class="btn-outline" onclick="pendingRemoval=null; renderManageContent();">Cancel</button></div>'+
+      '<p id="removalStatus" class="status-msg"></p></div>';
+  }
+
+  document.getElementById('manageContent').innerHTML =
+    '<div style="margin-bottom:14px;"><button class="'+toggleClass+'" onclick="toggleRemovalMode()">'+toggleLabel+'</button></div>'+
+    '<div style="margin-top:10px;"><strong>Tutors</strong><div style="margin:8px 0;">'+
+    tutors.map(function(t, idx){ return renderPill(t, idx, 'tutor'); }).join('')+
+    '</div>'+
+    (pendingRemoval && pendingRemoval.type === 'tutor' ? renderConfirmPanel() : '')+
+    '<div class="field-row"><div class="field"><input type="text" id="newTutorName" placeholder="New tutor name"></div>'+
+    '<div class="field"><input type="password" id="tutorPin" placeholder="Teacher PIN"></div>'+
+    '<button class="btn" onclick="addTutor(\''+paperId+'\')">Add Tutor</button></div>'+
+    '<p id="tutorStatus" class="status-msg"></p></div>'+
+
+    '<div style="margin-top:20px;"><strong>Classes</strong><div style="margin:8px 0;">'+
+    classes.map(function(c, idx){ return renderPill(c, idx, 'class'); }).join('')+
+    '</div>'+
+    (pendingRemoval && pendingRemoval.type === 'class' ? renderConfirmPanel() : '')+
+    '<div class="field-row"><div class="field"><input type="text" id="newClassName" placeholder="New class name"></div>'+
+    '<div class="field"><input type="password" id="classPin" placeholder="Teacher PIN"></div>'+
+    '<button class="btn" onclick="addClass(\''+paperId+'\')">Add Class</button></div>'+
+    '<p id="classStatus" class="status-msg"></p></div>'+
+
+    '<div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--paper-line);">'+
+    '<strong>Clear test data</strong>'+
+    '<p style="font-size:12.5px;color:var(--ink-soft);margin:4px 0 10px;">Removes every submission on this paper explicitly marked "Test-Demo" status at the cover page — never touches "Enrolled Student" or "Trial Student" results, however test-like a name might look.</p>'+
+    '<p style="font-size:13px;">Currently on this paper: <strong>'+window.__testDemoCount+'</strong> Test-Demo submission'+(window.__testDemoCount===1?'':'s')+'.</p>'+
+    (window.__testDemoCount > 0 ? renderClearTestDataControl(paperId) : '')+
+    '</div>';
+}
+function renderClearTestDataControl(paperId){
+  if(clearTestDataArmed){
+    return '<div class="confirm-panel">'+
+      '<p><strong>Delete all '+window.__testDemoCount+' Test-Demo submissions from this paper?</strong> This can\'t be undone.</p>'+
+      '<div class="field-row"><div class="field"><input type="password" id="clearTestDataPin" placeholder="Teacher PIN"></div>'+
+      '<button class="btn" style="background:var(--red);" onclick="confirmClearTestData(\''+paperId+'\')">Confirm Clear</button>'+
+      '<button class="btn-outline" onclick="clearTestDataArmed=false; renderManageContent();">Cancel</button></div>'+
+      '<p id="clearTestDataStatus" class="status-msg"></p></div>';
+  }
+  return '<button class="btn-outline" style="border-color:var(--red);color:var(--red);" onclick="clearTestDataArmed=true; renderManageContent();">Clear Test-Demo Data…</button>';
+}
+var clearTestDataArmed = false;
+function confirmClearTestData(paperId){
+  var pin = document.getElementById('clearTestDataPin').value;
+  var statusEl = document.getElementById('clearTestDataStatus');
+  if(!pin){ statusEl.textContent = 'Enter the Teacher PIN.'; statusEl.className='status-msg error'; return; }
+  statusEl.textContent = 'Clearing…'; statusEl.className='status-msg';
+  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify({ action:'clearTestDemoRows', pin:pin, paperId:paperId }) })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res.status === 'ok'){
+        clearTestDataArmed = false;
+        onManagePaperChange();
+      } else {
+        statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error';
+      }
+    });
+}
+function startRemoval(type, idx, paperId){
+  pendingRemoval = { type:type, idx:idx, paperId:paperId };
+  renderManageContent();
+}
+function confirmRemoval(){
+  var pin = document.getElementById('removalPin').value;
+  var statusEl = document.getElementById('removalStatus');
+  if(!pin){ statusEl.textContent = 'Enter the Teacher PIN.'; statusEl.className='status-msg error'; return; }
+  var type = pendingRemoval.type, paperId = pendingRemoval.paperId;
+  var name = type === 'tutor' ? window.__currentTutors[pendingRemoval.idx] : window.__currentClasses[pendingRemoval.idx];
+  var action = type === 'tutor' ? 'removeTutor' : 'removeClass';
+  var payload = { action:action, pin:pin, paperId:paperId };
+  if(type === 'tutor') payload.tutorName = name; else payload.className = name;
+  statusEl.textContent = 'Removing…'; statusEl.className='status-msg';
+  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload) })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res.status === 'ok'){ pendingRemoval = null; onManagePaperChange(); }
+      else { statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error'; }
+    });
+}
+function addTutor(paperId){
+  var name = document.getElementById('newTutorName').value.trim();
+  var pin = document.getElementById('tutorPin').value;
+  var statusEl = document.getElementById('tutorStatus');
+  if(!name){ statusEl.textContent = 'Enter a tutor name first.'; statusEl.className='status-msg error'; return; }
+  statusEl.textContent = 'Saving…'; statusEl.className='status-msg';
+  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify({ action:'addTutor', pin:pin, paperId:paperId, tutorName:name }) })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res.status === 'ok'){ statusEl.textContent = '✓ Added'; statusEl.className='status-msg ok'; onManagePaperChange(); }
+      else { statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error'; }
+    });
+}
+function addClass(paperId){
+  var name = document.getElementById('newClassName').value.trim();
+  var pin = document.getElementById('classPin').value;
+  var statusEl = document.getElementById('classStatus');
+  if(!name){ statusEl.textContent = 'Enter a class name first.'; statusEl.className='status-msg error'; return; }
+  statusEl.textContent = 'Saving…'; statusEl.className='status-msg';
+  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify({ action:'addClass', pin:pin, paperId:paperId, className:name }) })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res.status === 'ok'){ statusEl.textContent = '✓ Added'; statusEl.className='status-msg ok'; onManagePaperChange(); }
+      else { statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error'; }
+    });
+}
+
+loadDashboard();
+</script>
+</body>
+</html>
