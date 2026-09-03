@@ -526,109 +526,109 @@ const PASSAGE_HTML_MASTER = `
 const QUESTIONS = [
   // A — Spelling & Vocabulary (Q1-6) — gating section, no read-aloud
   { id:1, sec:"A", text:"Which spelling is correct?",
-    opts:["neccessary","necessery","necessary","neccesary"], ans:"C" },
+    opts:["neccessary","necessery","necessary","neccesary"] },
   { id:2, sec:"A", text:"Which spelling is correct?",
-    opts:["embarass","embarrass","imbarrass","embarras"], ans:"B" },
+    opts:["embarass","embarrass","imbarrass","embarras"] },
   { id:3, sec:"A", text:"Which word means \"happening by chance\"?",
-    opts:["deliberate","planned","intentional","accidental"], ans:"D" },
+    opts:["deliberate","planned","intentional","accidental"] },
   { id:4, sec:"A", text:"Add the correct prefix to make this word mean \"not responsible\".", display:"responsible → ?",
-    opts:["unresponsible","irresponsible","disresponsible","nonresponsible"], ans:"B" },
+    opts:["unresponsible","irresponsible","disresponsible","nonresponsible"] },
   { id:5, sec:"A", text:"Which word means the SAME as \"enormous\"?",
-    opts:["minute","average","colossal","modest"], ans:"C" },
+    opts:["minute","average","colossal","modest"] },
   { id:6, sec:"A", text:"Which spelling is correct?",
-    opts:["goverment","governement","govermment","government"], ans:"D",
+    opts:["goverment","governement","govermment","government"],
     checkpoint:"Great start! Keep going! 🌟" },
 
   // B — Grammar: Word Classes, Clauses & Elements (Q7-13)
   { id:7, sec:"B", text:"Which word is the MAIN VERB in this sentence?", display:"Although it was raining, the children played outside.",
-    opts:["played","raining","was","outside"], ans:"A" },
+    opts:["played","raining","was","outside"] },
   { id:8, sec:"B", text:"Which of these is a COMPLETE sentence?",
-    opts:["Although it was raining","Because she was tired","The children played outside.","When the bell rang"], ans:"C" },
+    opts:["Although it was raining","Because she was tired","The children played outside.","When the bell rang"] },
   { id:9, sec:"B", text:"Which sentence uses a MODAL VERB correctly?",
-    opts:["She mighted finish her homework.","She has might finish.","She will can finish.","She might have finished her homework."], ans:"D" },
+    opts:["She mighted finish her homework.","She has might finish.","She will can finish.","She might have finished her homework."] },
   { id:10, sec:"B", text:"Which sentence is written in the PASSIVE voice?",
-    opts:["The dog ate the cake.","The cake was eaten by the dog.","The dog is eating the cake.","The dog will eat the cake."], ans:"B" },
+    opts:["The dog ate the cake.","The cake was eaten by the dog.","The dog is eating the cake.","The dog will eat the cake."] },
   { id:11, sec:"B", text:"Which word is the RELATIVE PRONOUN in this sentence?", display:"The book, which I borrowed from the library, was excellent.",
-    opts:["borrowed","library","excellent","which"], ans:"D" },
+    opts:["borrowed","library","excellent","which"] },
   { id:12, sec:"B", text:"Which word is the ADVERB OF POSSIBILITY in this sentence?", display:"The team will probably win the match.",
-    opts:["team","probably","win","match"], ans:"B" },
+    opts:["team","probably","win","match"] },
   { id:13, sec:"B", text:"Which word class is \"quickly\" in this sentence?", display:"She quickly finished her homework.",
-    opts:["Adjective","Adverb","Noun","Preposition"], ans:"B" },
+    opts:["Adjective","Adverb","Noun","Preposition"] },
 
   // C — Punctuation (Q14-19)
   { id:14, sec:"C", text:"Which sentence uses a COLON correctly to introduce a list?",
-    opts:["I need three things, a pencil, a ruler and an eraser.","I need three things: a pencil a ruler and an eraser.","I need three things a pencil, a ruler and an eraser.","I need three things: a pencil, a ruler and an eraser."], ans:"D" },
+    opts:["I need three things, a pencil, a ruler and an eraser.","I need three things: a pencil a ruler and an eraser.","I need three things a pencil, a ruler and an eraser.","I need three things: a pencil, a ruler and an eraser."] },
   { id:15, sec:"C", text:"Which sentence uses a SEMICOLON correctly?",
-    opts:["I like tea; my brother likes coffee.","I like tea, my brother likes coffee.","I like tea; and my brother likes coffee.","I like tea: my brother likes coffee."], ans:"A" },
+    opts:["I like tea; my brother likes coffee.","I like tea, my brother likes coffee.","I like tea; and my brother likes coffee.","I like tea: my brother likes coffee."] },
   { id:16, sec:"C", text:"Which sentence uses BRACKETS correctly to add extra information?",
-    opts:["The trip which was cancelled upset everyone.","The trip (which was cancelled) upset everyone.","The trip, (which was cancelled), upset everyone.","The trip (which was cancelled, upset everyone)."], ans:"B" },
+    opts:["The trip which was cancelled upset everyone.","The trip (which was cancelled) upset everyone.","The trip, (which was cancelled), upset everyone.","The trip (which was cancelled, upset everyone)."] },
   { id:17, sec:"C", text:"Which sentence uses a HYPHEN correctly?",
-    opts:["It was a well known fact.","It was a well-known-fact.","It was a well-known fact.","It was a well, known fact."], ans:"C" },
+    opts:["It was a well known fact.","It was a well-known-fact.","It was a well-known fact.","It was a well, known fact."] },
   { id:18, sec:"C", text:"Which sentence uses an APOSTROPHE correctly for a plural possessive?",
-    opts:["The dog's bowls were empty.","The dogs's bowls were empty.","The dogs bowls' were empty.","The dogs' bowls were empty."], ans:"D" },
+    opts:["The dog's bowls were empty.","The dogs's bowls were empty.","The dogs bowls' were empty.","The dogs' bowls were empty."] },
   { id:19, sec:"C", text:"Which sentence uses a comma correctly to make the meaning clear?",
-    opts:["Let's eat Grandma!","Let's, eat Grandma!","Let's eat, Grandma!","Let's eat Grandma, please!"], ans:"C" },
+    opts:["Let's eat Grandma!","Let's, eat Grandma!","Let's eat, Grandma!","Let's eat Grandma, please!"] },
 
   // D — Sentence Construction & Cohesion (Q20-26)
   { id:20, sec:"D", text:"Which sentence contains an EXPANDED NOUN PHRASE?",
-    opts:["The dog ran.","The dog is happy.","A dog ran away.","The terrified, muddy dog ran through the field."], ans:"D" },
+    opts:["The dog ran.","The dog is happy.","A dog ran away.","The terrified, muddy dog ran through the field."] },
   { id:21, sec:"D", text:"Which word best joins these two sentences?", display:"It was raining. We decided to stay indoors.",
-    opts:["But","Or","Therefore","Meanwhile"], ans:"C" },
+    opts:["But","Or","Therefore","Meanwhile"] },
   { id:22, sec:"D", text:"Which sentence is the most FORMAL way to say this?", display:"\"The homework was really hard.\"",
-    opts:["The homework was super hard.","The homework was really really hard.","The homework was hard, like, really hard.","The homework was extremely challenging."], ans:"D" },
+    opts:["The homework was super hard.","The homework was really really hard.","The homework was hard, like, really hard.","The homework was extremely challenging."] },
   { id:23, sec:"D", text:"Which sentence uses ALLITERATION?",
-    opts:["The busy bees buzzed by the blossoms.","The bees flew over the flowers.","The insects moved quickly.","The garden was very colourful."], ans:"A" },
+    opts:["The busy bees buzzed by the blossoms.","The bees flew over the flowers.","The insects moved quickly.","The garden was very colourful."] },
   { id:24, sec:"D", text:"Which sentence avoids repeating the same wording unnecessarily?", display:"The dog ran to the park. The dog played in the park. The dog was happy in the park.",
-    opts:["The dog. The dog. The dog.","The dog ran, the dog played, the dog was happy in the park.","The dog ran to the park, played there, and was happy.","The dog ran to the park. The dog played in the park. The dog was happy in the park."], ans:"C" },
+    opts:["The dog. The dog. The dog.","The dog ran, the dog played, the dog was happy in the park.","The dog ran to the park, played there, and was happy.","The dog ran to the park. The dog played in the park. The dog was happy in the park."] },
   { id:25, sec:"D", text:"Which word is an example of ONOMATOPOEIA?",
-    opts:["happy","sizzle","quickly","beautiful"], ans:"B" },
+    opts:["happy","sizzle","quickly","beautiful"] },
   { id:26, sec:"D", text:"Which sentence contains a METAPHOR?",
-    opts:["The classroom was noisy.","The classroom was like a zoo.","The classroom was a zoo during the fire drill.","The classroom was very big."], ans:"C" },
+    opts:["The classroom was noisy.","The classroom was like a zoo.","The classroom was a zoo during the fire drill.","The classroom was very big."] },
 
   // E — Reading Comprehension: Retrieval (Q27-29) — shared passage
   { id:27, sec:"E", text:"What had always fascinated Maya?", display:PASSAGE_HTML_MASTER,
-    opts:["The stormy weather","Her school","The old lighthouse","A local legend"], ans:"C" },
+    opts:["The stormy weather","Her school","The old lighthouse","A local legend"] },
   { id:28, sec:"E", text:"According to local legend, how long had the lighthouse been abandoned?", display:PASSAGE_HTML_MASTER,
-    opts:["Ten years","Over fifty years","A year","It was never abandoned"], ans:"B" },
+    opts:["Ten years","Over fifty years","A year","It was never abandoned"] },
   { id:29, sec:"E", text:"What did Maya notice one stormy evening?", display:PASSAGE_HTML_MASTER,
-    opts:["A ship at sea","Another person on the cliff","The paint peeling","A flickering light from the top window"], ans:"D" },
+    opts:["A ship at sea","Another person on the cliff","The paint peeling","A flickering light from the top window"] },
 
   // F — Reading Comprehension: Inference & Vocabulary in Context (Q30-32)
   { id:30, sec:"F", text:"Why do you think Maya decided to investigate rather than ignore what she saw?", display:PASSAGE_HTML_MASTER,
-    opts:["She was curious and wanted to find out more","She was scared and wanted to leave","She didn't notice the light at all","She was told to by someone else"], ans:"A" },
+    opts:["She was curious and wanted to find out more","She was scared and wanted to leave","She didn't notice the light at all","She was told to by someone else"] },
   { id:31, sec:"F", text:"In the passage, what does \"fascinated\" most likely mean?", display:PASSAGE_HTML_MASTER,
-    opts:["Frightened","Bored","Deeply interested","Confused"], ans:"C" },
+    opts:["Frightened","Bored","Deeply interested","Confused"] },
   { id:32, sec:"F", text:"What might the flickering light suggest about the lighthouse?", display:PASSAGE_HTML_MASTER,
-    opts:["It was definitely empty","Someone or something might be inside","It had been destroyed","It was still working as a lighthouse"], ans:"B" },
+    opts:["It was definitely empty","Someone or something might be inside","It had been destroyed","It was still working as a lighthouse"] },
 
   // G — Grammar in Context (Q33-35)
   { id:33, sec:"G", text:"Which sentence uses standard English correctly?",
-    opts:["We wasn't going to the shop.","We weren't never going to the shop.","We ain't going to the shop.","We were not going to the shop."], ans:"D" },
+    opts:["We wasn't going to the shop.","We weren't never going to the shop.","We ain't going to the shop.","We were not going to the shop."] },
   { id:34, sec:"G", text:"Which pronoun correctly completes this sentence?", display:"Leo forgot his lunch, so ___ had to borrow some money.",
-    opts:["they","she","he","it"], ans:"C" },
+    opts:["they","she","he","it"] },
   { id:35, sec:"G", text:"Which sentence uses the correct word?",
-    opts:["There were less biscuits left than yesterday.","There were fewer biscuits left than yesterday.","There was fewer biscuit left.","There was less biscuit left."], ans:"B" },
+    opts:["There were less biscuits left than yesterday.","There were fewer biscuits left than yesterday.","There was fewer biscuit left.","There was less biscuit left."] },
 
   // H — Challenge Questions (Q36-38)
   { id:36, sec:"H", text:"\"The relentless rain battered the windows all night.\" What does \"relentless\" suggest about the rain?",
-    opts:["It was light and gentle","It happened only once","It was warm","It didn't stop or ease up"], ans:"D" },
+    opts:["It was light and gentle","It happened only once","It was warm","It didn't stop or ease up"] },
   { id:37, sec:"H", text:"Which sentence contains a SIMILE?",
-    opts:["The moon was a silver coin.","The moon shone brightly.","The moon was like a silver coin in the sky.","The moon rose slowly."], ans:"C" },
+    opts:["The moon was a silver coin.","The moon shone brightly.","The moon was like a silver coin in the sky.","The moon rose slowly."] },
   { id:38, sec:"H", text:"Which sentence best demonstrates PERSUASIVE language?",
-    opts:["This is a recipe.","You simply must try this incredible, life-changing recipe today!","The recipe has five ingredients.","The recipe takes twenty minutes."], ans:"B" },
+    opts:["This is a recipe.","You simply must try this incredible, life-changing recipe today!","The recipe has five ingredients.","The recipe takes twenty minutes."] },
 ];
 
 // Unscored practice question — familiarises pupils with the format
 const PRACTICE_QUESTION_MASTER = {
   text: "Let's try one together first. This one does not count.",
   q2: "Which word means the SAME as \"quick\"?",
-  opts: ["slow","rapid","quiet","heavy"],
-  ans: "B"
+  opts: ["slow","rapid","quiet","heavy"]
 };
 
 // Correct answers map
-const ANSWER_KEY = {};
-QUESTIONS.forEach(q => { ANSWER_KEY[q.id] = q.ans; });
+// The answer key no longer lives in the client — it's fetched from the
+// server (PIN-gated) only when Teacher Mode is unlocked. See
+// loadTeacherAnswerKey() and teacherAnswerKey below.
 
 // Section max scores
 const SEC_MAX = { A:6, B:7, C:6, D:7, E:3, F:3, G:3, H:3 };
@@ -639,62 +639,11 @@ const SEC_MAX = { A:6, B:7, C:6, D:7, E:3, F:3, G:3, H:3 };
 // Used to stop the placement logic recommending a downgrade to a lower
 // baseline purely because a younger pupil hasn't been taught Y5/6-only
 // content yet — that's developmentally expected, not a sign of falling behind.
-function isYearBelowBaselineTarget(year) {
-  if (!year) return false;
-  const targetNums = BASELINE_TARGET_YEARS.map(y => parseInt(y.match(/\d+/)[0]));
-  const minTarget = Math.min(...targetNums);
-  const yearNum = year === "Reception" ? 0 : (year.match(/\d+/) ? parseInt(year.match(/\d+/)[0]) : null);
-  return yearNum !== null && yearNum < minTarget;
-}
-
-function getPlacement(total, secA, year) {
-  if (total >= 29 && secA >= 5) return {
-    rag: "GREEN", cls: "green", emoji: "🏆",
-    group: "Master 2 / SATs Track",
-    detail: "Strong score with secure spelling and vocabulary knowledge.",
-    teacherNote: "Score 29+, Sec A " + secA + "/6. Strong — Master 2 / SATs track. Confirm with Check-In Week 2."
-  };
-  if (total >= 29 && secA <= 4) return {
-    rag: "GREEN", cls: "green", emoji: "🏆",
-    group: "Master 1",
-    detail: "Strong overall score but spelling/vocabulary needs consolidation.",
-    teacherNote: "Score 29+ but Sec A only " + secA + "/6. Place in Master 1 — spelling gaps to address despite strong overall score."
-  };
-  if (total >= 20 && secA >= 4) return {
-    rag: "AMBER", cls: "amber", emoji: "⭐",
-    group: "Master 2",
-    detail: "Developing well. Spelling and vocabulary are secure.",
-    teacherNote: "Score 20-28, Sec A " + secA + "/6. Place in Master 2. Use QLA to target gaps."
-  };
-  if (total >= 20 && secA <= 3) return {
-    rag: "AMBER", cls: "amber", emoji: "⭐",
-    group: "Master 1",
-    detail: "Developing. Spelling and vocabulary need more support.",
-    teacherNote: "Score 20-28, Sec A only " + secA + "/6. Place in Master 1."
-  };
-  // Below this point the score would normally trigger a downgrade
-  // recommendation. If the pupil is younger than this baseline's target
-  // year range, override that recommendation — a low score here reflects
-  // not having been taught Y5/6-only content yet, not a real learning gap.
-  if (isYearBelowBaselineTarget(year)) return {
-    rag: "AMBER", cls: "amber", emoji: "📈",
-    group: "On Track for Age — Retest at Start of Year 5",
-    detail: "Currently below this baseline's Y5/6 target year group. This score reflects unfamiliarity with Y5/6-only content (passive voice, semicolons, Standard English, etc.), not a learning gap.",
-    teacherNote: "Score " + total + "/38, Sec A " + secA + "/6. Pupil is in a year BELOW this baseline's Y5/6 target range. Do NOT administer Ignite English Baseline based on this score alone — a low score here is expected for a rising Y5/6 pupil. Revisit placement once they begin the target year group."
-  };
-  if (secA <= 2 && total <= 10) return {
-    rag: "RED", cls: "red-c", emoji: "💪",
-    group: "Consider Ignite English 2",
-    detail: "Significant gaps. Verbal check recommended immediately.",
-    teacherNote: "Score 0-19, Sec A " + secA + "/6 (≤2). Significant gaps — verbal check recommended immediately. Contact parent."
-  };
-  return {
-    rag: "RED", cls: "red-c", emoji: "💪",
-    group: "Consider Ignite English 2",
-    detail: "Gaps identified across several areas.",
-    teacherNote: "Score 0-19, Sec A " + secA + "/6. Consider Ignite English 2 — gaps identified. Contact parent."
-  };
-}
+// Placement is computed server-side now (see Master_English_Code.gs) —
+// the client no longer computes total/section scores/RAG/placement
+// itself, it only renders whatever the server returns after marking.
+// (BASELINE_TARGET_YEARS and getYearMismatchNote below stay client-side —
+// they're pure display helpers, independent of scoring.)
 
 function getSectionRag(score, max) {
   const pct = score / max;
@@ -741,7 +690,7 @@ function getAcademicYear(dateStr) {
   const d = dateStr ? new Date(dateStr) : new Date();
   if (isNaN(d)) return "";
   const y = d.getFullYear(), m = d.getMonth() + 1; // 1-12
-  return (m >= 9) ? `${y}-${String(y + 1).slice(-2)}` : `${y - 1}-${String(y).slice(-2)}`;
+  return (m >= 9) ? `${y}/${String(y + 1).slice(-2)}` : `${y - 1}/${String(y).slice(-2)}`;
 }
 function getTerm(dateStr) {
   const d = dateStr ? new Date(dateStr) : new Date();
@@ -758,7 +707,7 @@ function fetchTutorList() {
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) return Promise.resolve([]);
   return fetch(APPS_SCRIPT_URL + "?action=getTutors")
     .then(res => res.json())
-    .then(names => Array.isArray(names) ? names : [])
+    .then(data => data.tutors && Array.isArray(data.tutors) ? data.tutors : [])
     .catch(() => []);
 }
 function populateTutorSelect() {
@@ -767,44 +716,65 @@ function populateTutorSelect() {
   fetchTutorList().then(names => {
     tutorListCache = names;
     if (!names.length) return;
+    // Clear any previously-inserted tutor options first — this function can
+    // be called more than once per page load (e.g. once directly, once via
+    // loadTutors()), and without this it silently duplicates every name.
+    sel.querySelectorAll('option[data-tutor-option]').forEach(o => o.remove());
     const otherOpt = sel.querySelector('option[value="__other__"]');
     names.forEach(n => {
       const opt = document.createElement("option");
-      opt.value = n; opt.textContent = n;
+      opt.value = n; opt.textContent = n; opt.setAttribute("data-tutor-option", "1");
       sel.insertBefore(opt, otherOpt);
     });
   });
 }
 
-function buildSummary(student, total, secScores, placement) {
-  const strong = [], weak = [];
-  Object.entries(secScores).forEach(([sec, sc]) => {
-    const pct = sc / SEC_MAX[sec];
-    if (pct >= 0.8) strong.push(SECTIONS[sec].name);
-    else if (pct < 0.5) weak.push(SECTIONS[sec].name);
-  });
-  const secA = secScores["A"];
-
-  let text = `${student.name} scored ${total}/38 on the Master English Baseline (${student.year}, ${student.school}). `;
-  text += `PLACEMENT: ${placement.group}. ${placement.teacherNote} `;
-  if (strong.length) text += `Strong sections: ${strong.join(", ")}. `;
-  if (weak.length)   text += `Weak sections needing support: ${weak.join(", ")}. `;
-  text += `Section A (Spelling & Vocabulary): ${secA}/6. `;
-  if (secA <= 2 && total <= 10) text += `Verbal check strongly recommended before first lesson. `;
-  return text;
-}
+// buildSummary now runs server-side too — see Master_English_Code.gs
 
 // ── TEACHER MODE ─────────────────────────────────────────────────────────────
 const TEACHER_PIN = "2468";
 const RESULTS_STORE_KEY = "aimhigh_master_english_all_results";
 let teacherResultsCache = null; // null = not fetched yet / fetch failed, use local fallback
-let dashboardFilters = { search: "", year: "", rag: "", teacher: "", dateFrom: "", dateTo: "", academicYear: getAcademicYear(), term: "", status: "real" };
+let dashboardFilters = { search: "", year: "", rag: "", teacher: "", className: "", dateFrom: "", dateTo: "", academicYear: getAcademicYear(), term: "", status: "Enrolled Student" };
+
+// Normalizes any academic-year string to the "YYYY/YY" format, so older
+// rows saved with the previous hyphen format ("2025-26", from before this
+// was fixed) are treated as identical to new slash-formatted rows.
+function normalizeAcademicYear(val) {
+  if (!val) return val;
+  const m = String(val).match(/^(\d{4})[\/-](\d{2})$/);
+  return m ? `${m[1]}/${m[2]}` : val;
+}
+
+// Correct answers are PIN-gated and fetched only once Teacher Mode is
+// unlocked — never sitting in the page for an unauthenticated visitor.
+let teacherAnswerKey = {};
+function loadTeacherAnswerKey() {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) return Promise.resolve();
+  return fetch(APPS_SCRIPT_URL + "?action=getAnswerKey&pin=" + encodeURIComponent(TEACHER_PIN))
+    .then(r => r.json())
+    .then(data => { teacherAnswerKey = data.answers || {}; })
+    .catch(() => { teacherAnswerKey = {}; });
+}
 
 function saveResultsToStore(studentData) {
   try {
     const all = getStoredResults();
     all.unshift(studentData); // newest first
     if (all.length > 50) all.splice(50);
+    localStorage.setItem(RESULTS_STORE_KEY, JSON.stringify(all));
+  } catch(e) {}
+}
+
+// Updates an already-cached local entry in place (matched by timestamp) —
+// used to fill in the server-computed score once a pending submission
+// succeeds, without creating a second duplicate entry.
+function updateStoredResult(timestamp, updates) {
+  try {
+    const all = getStoredResults();
+    const idx = all.findIndex(r => String(r.timestamp) === String(timestamp));
+    if (idx === -1) return;
+    Object.assign(all[idx], updates);
     localStorage.setItem(RESULTS_STORE_KEY, JSON.stringify(all));
   } catch(e) {}
 }
@@ -839,25 +809,32 @@ function syncPendingResults() {
   btnEl.disabled = true;
   statusEl.textContent = "Syncing...";
 
-  const sc = r => r.secScores || {};
+  // Resend the RAW ANSWERS, exactly like a normal live submission — the
+  // server scores it fresh via its own answer key, rather than trusting
+  // whatever total/rag/placement happened to be cached locally (which for
+  // a genuinely-never-synced entry won't exist yet anyway).
   const requests = pending.map(r => fetch(APPS_SCRIPT_URL, {
     method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
       name: r.name, year: r.year, school: r.school, teacher: r.teacher,
-      date: r.date, academicYear: r.academicYear, term: r.term, studentStatus: r.studentStatus,
+      date: r.date, status: r.studentStatus, className: r.className,
       timestamp: r.timestamp, assessment: "Master English",
-      timeTaken: r.timeTaken, total: r.total, rag: r.rag, placement: r.placement, teacherNote: r.teacherNote,
-      secA: sc(r).A||0, secB: sc(r).B||0, secC: sc(r).C||0, secD: sc(r).D||0,
-      secE: sc(r).E||0, secF: sc(r).F||0, secG: sc(r).G||0, secH: sc(r).H||0,
-      summary: `${r.name} scored ${r.total}/38 on the Master English Baseline. PLACEMENT: ${r.placement}. ${r.teacherNote} (synced later from local device after a connection issue.)`,
+      timeTaken: r.timeTaken,
       answers: JSON.stringify(r.answers || {}),
       writingSample: r.writingSample || "",
     }),
-  }));
+  }).then(res => res.json()));
 
-  Promise.all(requests).then(() => {
+  Promise.all(requests).then(results => {
+    results.forEach((result, i) => {
+      if (result.status === "ok") {
+        updateStoredResult(pending[i].timestamp, {
+          total: result.total, rag: result.rag, placement: result.group,
+          teacherNote: result.teacherNote, secScores: result.secScores,
+        });
+      }
+    });
     statusEl.textContent = "✅ Synced — refreshing...";
     setTimeout(() => {
       teacherResultsCache = null;
@@ -876,22 +853,45 @@ function syncPendingResults() {
 // the Results sheet, so it can be pasted directly into Google Sheets — this
 // bypasses the network/fetch entirely, as a guaranteed-to-work fallback when
 // a device genuinely can't reach the Apps Script endpoint for any reason.
+// Requires Teacher Mode's PIN-gated teacherAnswerKey to score a pending
+// (never-synced) entry that doesn't have a server-confirmed total yet.
 function buildSpreadsheetRow(r) {
   const sc = r.secScores || {};
+  const answers = r.answers || {};
+
+  // For a genuinely pending entry (never reached the server, so total is
+  // null), compute the real total from the raw answers using the PIN-gated
+  // teacherAnswerKey — but RAG/placement can't be recreated client-side
+  // (that logic lives server-side only now), so it's marked pending rather
+  // than showing a misleading value. Retrying the sync is the reliable path;
+  // this manual-paste route is the last-resort fallback.
+  let total = r.total;
+  let isPending = (total === null || total === undefined);
+  if (isPending) {
+    total = 0;
+    for (let i = 1; i <= 38; i++) {
+      if (answers[i] && answers[i] === teacherAnswerKey[i]) total++;
+    }
+  }
+  const rag = isPending ? "PENDING — retry sync for RAG" : (r.rag || "");
+  const placement = isPending ? "PENDING — retry sync for placement" : (r.placement || "");
+  const teacherNote = isPending ? "Score shown is calculated from raw answers; RAG/placement require a successful sync." : (r.teacherNote || "");
+
   const cols = [
     r.timestamp || "", r.date || "", r.name || "", r.year || "", r.school || "",
     r.teacher || "", "Master English", r.academicYear || "", r.term || "", r.studentStatus || "",
-    r.total || 0, r.rag || "", r.placement || "", r.teacherNote || "",
+    total, rag, placement, teacherNote,
     sc.A||0, sc.B||0, sc.C||0, sc.D||0, sc.E||0, sc.F||0, sc.G||0, sc.H||0,
   ];
-  const answers = r.answers || {};
   for (let i = 1; i <= 38; i++) {
     const q = QUESTIONS.find(qq => qq.id === i);
     const given = answers[i];
-    cols.push((q && given === q.ans) ? 1 : 0);
+    cols.push((q && given === teacherAnswerKey[q.id]) ? 1 : 0);
   }
   cols.push(r.timeTaken || "");
-  cols.push(`${r.name} scored ${r.total}/38 on the Master English Baseline. PLACEMENT: ${r.placement}. ${r.teacherNote} (recovered via manual copy after a sync issue.)`);
+  cols.push(isPending
+    ? `${r.name} — pending sync, score calculated locally from raw answers (${total}/38). RAG/placement require a successful sync to the server.`
+    : `${r.name} scored ${r.total}/38 on the Master English Baseline. PLACEMENT: ${r.placement}. ${r.teacherNote} (recovered via manual copy after a sync issue.)`);
   cols.push(JSON.stringify(answers));
   cols.push(""); // Tutor Comments
   cols.push(r.writingSample || "");
@@ -952,7 +952,7 @@ function normalizeRemoteResult(row) {
     answers = {};
     QUESTIONS.forEach(q => {
       const isCorrect = Number(row["Q" + q.id]) === 1;
-      answers[q.id] = isCorrect ? q.ans : "✗";
+      answers[q.id] = isCorrect ? teacherAnswerKey[q.id] : "✗";
     });
   }
 
@@ -963,9 +963,10 @@ function normalizeRemoteResult(row) {
     school:      row["School"],
     teacher:     row["Teacher"],
     date:        row["Date"],
-    academicYear: row["Academic Year"],
+    academicYear: normalizeAcademicYear(row["Academic Year"]),
     term:         row["Term"],
     studentStatus: row["Student Status"],
+    className:   row["Class"] || "",
     total:       Number(row["Total"]) || 0,
     rag:         row["RAG"],
     placement:   row["Group Placed"],
@@ -992,9 +993,9 @@ function fetchRemoteResults() {
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
     return Promise.resolve(null);
   }
-  return fetch(APPS_SCRIPT_URL)
+  return fetch(APPS_SCRIPT_URL + "?pin=" + encodeURIComponent(TEACHER_PIN))
     .then(res => res.json())
-    .then(rows => rows.map(normalizeRemoteResult))
+    .then(rows => Array.isArray(rows) ? rows.map(normalizeRemoteResult) : null)
     .catch(() => null);
 }
 
@@ -1135,8 +1136,8 @@ function renderTeacherPin() {
     const pin = document.getElementById("pin-input").value;
     if (pin === TEACHER_PIN) {
       renderTeacherLoading();
-      fetchRemoteResults().then(remote => {
-        teacherResultsCache = remote; // null if offline/failed — dashboard falls back to local
+      Promise.all([fetchRemoteResults(), loadTeacherAnswerKey()]).then(results => {
+        teacherResultsCache = results[0]; // null if offline/failed — dashboard falls back to local
         renderTeacherDashboard();
       });
     } else {
@@ -1152,13 +1153,10 @@ function passesFilters(r) {
   if (dashboardFilters.year && r.year !== dashboardFilters.year) return false;
   if (dashboardFilters.rag && r.rag !== dashboardFilters.rag) return false;
   if (dashboardFilters.teacher && r.teacher !== dashboardFilters.teacher) return false;
+  if (dashboardFilters.className && r.className !== dashboardFilters.className) return false;
   if (dashboardFilters.academicYear && r.academicYear !== dashboardFilters.academicYear) return false;
   if (dashboardFilters.term && r.term !== dashboardFilters.term) return false;
-  if (dashboardFilters.status === "real") {
-    if (r.studentStatus === "Test-Demo") return false;
-  } else if (dashboardFilters.status) {
-    if (r.studentStatus !== dashboardFilters.status) return false;
-  }
+  if (dashboardFilters.status && r.studentStatus !== dashboardFilters.status) return false;
   if (dashboardFilters.dateFrom) {
     const d = new Date(r.date);
     const from = new Date(dashboardFilters.dateFrom);
@@ -1181,6 +1179,7 @@ function renderTeacherDashboard() {
   const years = [...new Set(all.map(r => r.year).filter(Boolean))].sort();
   const academicYears = [...new Set(all.map(r => r.academicYear).filter(Boolean))].sort().reverse();
   const teachers = [...new Set(all.map(r => r.teacher).filter(Boolean))].sort();
+  const classes = [...new Set(all.map(r => r.className).filter(Boolean))].sort();
 
   // Detect local results that never made it to the Sheet — e.g. a submission
   // made during a wifi dropout. Without this check, once the connection is
@@ -1192,6 +1191,8 @@ function renderTeacherDashboard() {
   let html = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
       <div style="font-size:20px;font-weight:900;color:var(--brand-dark);flex:1">👨‍🏫 Teacher Dashboard</div>
+      <button id="btn-td-walkthrough" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">📖 Walkthrough</button>
+      <button id="btn-td-livemonitor" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">📡 Live</button>
       <button id="btn-td-refresh" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">🔄</button>
       <button id="btn-td-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">✕ Exit</button>
     </div>
@@ -1236,6 +1237,12 @@ function renderTeacherDashboard() {
         ${teachers.map(t => `<option value="${t}" ${dashboardFilters.teacher===t?'selected':''}>${t}</option>`).join('')}
       </select>
     </div>
+    <div style="margin-bottom:8px">
+      <select id="td-filter-class" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
+        <option value="">All classes</option>
+        ${classes.map(c => `<option value="${c}" ${dashboardFilters.className===c?'selected':''}>${c}</option>`).join('')}
+      </select>
+    </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
       <select id="td-filter-ay" style="border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
         <option value="">All academic years</option>
@@ -1250,11 +1257,9 @@ function renderTeacherDashboard() {
     </div>
     <div style="margin-bottom:8px">
       <select id="td-filter-status" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 10px;font-size:13px;">
-        <option value="real" ${dashboardFilters.status==='real'?'selected':''}>Real students (hide Test/Demo)</option>
-        <option value="" ${dashboardFilters.status===''?'selected':''}>All students (incl. Test/Demo)</option>
-        <option value="Enrolled Student" ${dashboardFilters.status==='Enrolled Student'?'selected':''}>Enrolled only</option>
-        <option value="Prospective (Lead)" ${dashboardFilters.status==='Prospective (Lead)'?'selected':''}>Leads only</option>
-        <option value="Test-Demo" ${dashboardFilters.status==='Test-Demo'?'selected':''}>Test/Demo only</option>
+        <option value="Enrolled Student" ${dashboardFilters.status==='Enrolled Student'?'selected':''}>Enrolled Students</option>
+        <option value="Trial Student" ${dashboardFilters.status==='Trial Student'?'selected':''}>Trial Students</option>
+        <option value="" ${dashboardFilters.status===''?'selected':''}>All Students</option>
       </select>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
@@ -1267,7 +1272,7 @@ function renderTeacherDashboard() {
         <input id="td-filter-to" type="date" value="${dashboardFilters.dateTo}" style="width:100%;border:2px solid var(--grey-mid);border-radius:8px;padding:7px 10px;font-size:13px;">
       </div>
     </div>
-    ${(dashboardFilters.search||dashboardFilters.year||dashboardFilters.rag||dashboardFilters.teacher||dashboardFilters.dateFrom||dashboardFilters.dateTo||dashboardFilters.term||dashboardFilters.academicYear!==getAcademicYear()||dashboardFilters.status!=="real")
+    ${(dashboardFilters.search||dashboardFilters.year||dashboardFilters.rag||dashboardFilters.teacher||dashboardFilters.className||dashboardFilters.dateFrom||dashboardFilters.dateTo||dashboardFilters.term||dashboardFilters.academicYear!==getAcademicYear()||dashboardFilters.status!=="Enrolled Student")
       ? `<button id="td-clear-filters" style="background:none;border:none;color:var(--brand);font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;margin-bottom:12px;padding:0;">✕ Reset to default view</button>`
       : ''}
     <div style="font-size:12px;color:var(--text-soft);margin-bottom:12px">Showing ${filtered.length} of ${all.length} result${all.length===1?'':'s'}</div>
@@ -1302,6 +1307,8 @@ function renderTeacherDashboard() {
   app.innerHTML = html;
 
   document.getElementById("btn-td-back").addEventListener("click", () => render());
+  document.getElementById("btn-td-walkthrough").addEventListener("click", () => renderWalkthrough(0));
+  document.getElementById("btn-td-livemonitor").addEventListener("click", () => renderLiveMonitor());
   document.getElementById("btn-td-refresh").addEventListener("click", () => {
     renderTeacherLoading();
     fetchRemoteResults().then(remote => {
@@ -1337,6 +1344,10 @@ function renderTeacherDashboard() {
     dashboardFilters.teacher = e.target.value;
     renderTeacherDashboard();
   });
+  document.getElementById("td-filter-class").addEventListener("change", e => {
+    dashboardFilters.className = e.target.value;
+    renderTeacherDashboard();
+  });
   document.getElementById("td-filter-ay").addEventListener("change", e => {
     dashboardFilters.academicYear = e.target.value;
     renderTeacherDashboard();
@@ -1360,7 +1371,7 @@ function renderTeacherDashboard() {
   const clearBtn = document.getElementById("td-clear-filters");
   if (clearBtn) {
     clearBtn.addEventListener("click", () => {
-      dashboardFilters = { search: "", year: "", rag: "", teacher: "", dateFrom: "", dateTo: "", academicYear: getAcademicYear(), term: "", status: "real" };
+      dashboardFilters = { search: "", year: "", rag: "", teacher: "", className: "", dateFrom: "", dateTo: "", academicYear: getAcademicYear(), term: "", status: "Enrolled Student" };
       renderTeacherDashboard();
     });
   }
@@ -1524,7 +1535,7 @@ function renderTeacherStudentView(r) {
 
   QUESTIONS.forEach((q, qi) => {
     const given   = r.answers ? r.answers[q.id] : null;
-    const correct = given && given !== 'IDK' && given === q.ans;
+    const correct = given && given !== 'IDK' && given === teacherAnswerKey[q.id];
     const idk     = given === 'IDK';
     const icon    = correct ? '✅' : idk ? '⬜' : '❌';
     const bg      = correct ? '#f0fdf4' : idk ? '#f8fafc' : '#fef2f2';
@@ -1566,7 +1577,7 @@ function renderTeacherStudentView(r) {
         const qi  = parseInt(card.dataset.qi);
         const q   = QUESTIONS[qi];
         const given = r.answers ? r.answers[q.id] : null;
-        const correct = given && given !== 'IDK' && given === q.ans;
+        const correct = given && given !== 'IDK' && given === teacherAnswerKey[q.id];
         const idk     = given === 'IDK' || !given;
         const show = filter==='all' || (filter==='wrong' && !correct && !idk) || (filter==='skipped' && idk);
         card.style.display = show ? 'flex' : 'none';
@@ -1584,7 +1595,7 @@ function renderTeacherStudentView(r) {
 function renderQuestionDetail(r, qIndex, filter) {
   const q = QUESTIONS[qIndex];
   const given = r.answers ? r.answers[q.id] : null;
-  const correct = given && given !== 'IDK' && given === q.ans;
+  const correct = given && given !== 'IDK' && given === teacherAnswerKey[q.id];
   const idk = given === 'IDK' || !given;
   const letters = ["A","B","C","D"];
 
@@ -1614,7 +1625,7 @@ function renderQuestionDetail(r, qIndex, filter) {
 
   q.opts.forEach((opt, i) => {
     const letter = letters[i];
-    const isCorrectAns = letter === q.ans;
+    const isCorrectAns = letter === teacherAnswerKey[q.id];
     const isSelected = letter === given;
     let cls = '';
     let tag = '';
@@ -1661,7 +1672,7 @@ function renderQuestionDetail(r, qIndex, filter) {
       const matches = (i) => {
         const qq = QUESTIONS[i];
         const gg = r.answers ? r.answers[qq.id] : null;
-        const cc = gg && gg !== 'IDK' && gg === qq.ans;
+        const cc = gg && gg !== 'IDK' && gg === teacherAnswerKey[qq.id];
         const ii = gg === 'IDK' || !gg;
         return f==='all' || (f==='wrong' && !cc && !ii) || (f==='skipped' && ii);
       };
@@ -1752,7 +1763,7 @@ function renderParentReport(r) {
   const letters38 = ['A','B','C','D'];
   QUESTIONS.forEach(q => {
     const given = r.answers ? r.answers[q.id] : null;
-    const correct = given && given !== 'IDK' && given === q.ans;
+    const correct = given && given !== 'IDK' && given === teacherAnswerKey[q.id];
     const idk = given === 'IDK';
     const icon = correct ? '✅' : idk ? '⬜' : '❌';
     const bg = correct ? '#f0fdf4' : idk ? '#f8fafc' : '#fef2f2';
@@ -1760,7 +1771,7 @@ function renderParentReport(r) {
     const givenTxt = given && given !== 'IDK'
       ? `${given} — ${(q.opts[letters38.indexOf(given)]||given).replace(/<[^>]*>/g, '')}`
       : given === 'IDK' ? "I don't know" : '–';
-    const corrTxt = `${q.ans} — ${(q.opts[letters38.indexOf(q.ans)]||q.ans).replace(/<[^>]*>/g, '')}`;
+    const corrTxt = `${teacherAnswerKey[q.id]} — ${(q.opts[letters38.indexOf(teacherAnswerKey[q.id])]||teacherAnswerKey[q.id]).replace(/<[^>]*>/g, '')}`;
     qRows += `
       <tr style="background:${bg}">
         <td style="padding:5px 8px;font-weight:700;text-align:center;border:1px solid #e2e8f0">${q.id}</td>
@@ -1846,15 +1857,17 @@ function stopQuizTimer() {
 }
 function updateQuizTimerDisplay() {
   const el = document.getElementById("quiz-timer");
-  if (!el || !state.startTime) return;
+  const textEl = document.getElementById("quiz-timer-text");
+  if (!el || !textEl || !state.startTime) return;
   const elapsedSec = Math.floor((Date.now() - state.startTime) / 1000);
   const mins = Math.floor(elapsedSec / 60);
   const secs = elapsedSec % 60;
-  el.textContent = "⏱️ " + mins + ":" + String(secs).padStart(2, "0");
-  let color = "#64748b"; // neutral grey — under 25 min
-  if (elapsedSec >= 35 * 60) color = "#DC2626";      // red — past 35 min
-  else if (elapsedSec >= 25 * 60) color = "#F59E0B"; // amber — past 25 min
+  textEl.textContent = mins + ":" + String(secs).padStart(2, "0");
+  let color = "var(--text-soft)", bg = "var(--grey-light)"; // under 25 min
+  if (elapsedSec >= 35 * 60) { color = "var(--red-c)"; bg = "var(--red-light)"; }     // past 35 min
+  else if (elapsedSec >= 25 * 60) { color = "var(--amber)"; bg = "var(--amber-light)"; } // past 25 min
   el.style.color = color;
+  el.style.background = bg;
 }
 
 // ── READ-ALOUD (Web Speech API) ─────────────────────────────────────────────
@@ -1903,12 +1916,26 @@ function speakText(text) {
 // ── RENDER ───────────────────────────────────────────────────────────────────
 function render() {
   const app = document.getElementById("app");
-  if (state.phase === "cover")    app.innerHTML = renderCover();
+  if (state.phase === "cover") {
+    app.innerHTML = renderCover();
+    loadTutors();
+    loadClasses();
+  }
   if (state.phase === "practice") app.innerHTML = renderPractice();
   if (state.phase === "quiz")     app.innerHTML = renderQuiz();
   if (state.phase === "writing")  app.innerHTML = renderWriting();
-  if (state.phase === "results")  app.innerHTML = renderResults();
+  if (state.phase === "results") {
+    app.innerHTML = renderResults();
+    if (!state.submitted) {
+      state.submitted = true;
+      submitResults();
+    }
+  }
   attachEvents();
+  if (state.phase === "quiz") {
+    updateQuizTimerDisplay(); // sync immediately — the freshly-recreated element
+                              // would otherwise show "0:00" until the next tick
+  }
 }
 
 function renderPractice() {
@@ -1953,8 +1980,8 @@ function renderWriting() {
 
 function renderCover() {
   return `
-    <div class="cover-title">Master English<br>Baseline Assessment</div>
-    <div class="cover-sub">Multiple Choice · 38 questions · 38 marks</div>
+    <div class="cover-title">Master English</div>
+    <div class="cover-sub">Multiple Choice · 38 questions · 38 marks &middot; Baseline Assessment</div>
     <div style="text-align:center;font-size:13px;font-weight:700;color:#4C1D95;background:#F3E8FF;border-radius:8px;padding:8px 12px;margin:10px 0 16px 0;">
       ⏱️ Most pupils finish in around 25-30 minutes — try not to take longer than 35 minutes.
     </div>
@@ -1967,6 +1994,11 @@ function renderCover() {
         <li>Ask your teacher to read a question aloud, or press 🔊 next to it, any time.</li>
         <li>Try every question — have a go, even the challenge ones!</li>
       </ul>
+    </div>
+
+    <div class="instr-box" style="background:var(--red-light); border-color:var(--red-c);">
+      <h3>👋 A note for parents and students</h3>
+      <p style="font-size:14px;color:var(--text);margin:0;">This is a diagnostic quiz, not a test to prepare for — its purpose is to see exactly where your child is starting from, so we can support them effectively. Please let them answer independently, without help, hints, or looking anything up, and only attempt it once, so the results are a true reflection of where to begin.</p>
     </div>
 
     <div class="form-row">
@@ -2014,15 +2046,22 @@ function renderCover() {
       </div>
     </div>
     <div class="form-row">
-      <div class="form-group" style="flex:1">
+      <div class="form-group">
+        <label>Class</label>
+        <select id="f-class" onchange="onClassSelectChange()"><option value="">Loading...</option></select>
+        <input id="f-class-other" type="text" placeholder="Type the class name" style="display:none;margin-top:6px;">
+      </div>
+      <div class="form-group">
         <label>Student status</label>
         <select id="f-status">
           <option value="Enrolled Student">Enrolled Student</option>
-          <option value="Prospective (Lead)">Prospective (Lead)</option>
+          <option value="Trial Student">Trial Student</option>
           <option value="Test-Demo">Test / Demo (not a real student)</option>
         </select>
       </div>
     </div>
+
+    <div id="server-resume-banner" style="display:none;background:#fffbeb;border:2px solid #f59e0b;border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:14px;color:#92400e;"></div>
 
     <button class="btn-next" id="btn-start">Let's go! ⭐</button>
     <div style="text-align:center;margin-top:14px">
@@ -2046,7 +2085,9 @@ function renderQuiz() {
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div class="progress-label">Question ${state.qIndex + 1} of ${total}</div>
-      <div id="quiz-timer" style="font-size:12px;font-weight:700;color:#64748b">⏱️ 0:00</div>
+      <div id="quiz-timer" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--text-soft);background:var(--grey-light);border-radius:999px;padding:4px 12px;transition:background 0.3s,color 0.3s;">
+        <span style="font-size:13px;">⏱️</span><span id="quiz-timer-text">0:00</span>
+      </div>
     </div>
   `;
 
@@ -2106,29 +2147,32 @@ function renderQuiz() {
   }
 
   html += `<button class="btn-next" id="btn-next" ${!state.selected ? "disabled" : ""}>${btnLabel}</button>`;
+  html += `<div style="text-align:center;margin-top:14px">
+    <button id="btn-teacher-mode-quiz" style="background:none;border:none;color:var(--text-soft);font-size:11px;cursor:pointer;text-decoration:underline;padding:4px 8px;">🔒 Teacher Mode</button>
+  </div>`;
   return html;
 }
 
 function renderResults() {
-  // Calculate scores
-  let correctCount = 0;
-  const secScores = { A:0, B:0, C:0, D:0, E:0, F:0, G:0, H:0 };
-  QUESTIONS.forEach(q => {
-    if (state.answers[q.id] === q.ans) {
-      correctCount++;
-      secScores[q.sec]++;
-    }
-  });
+  // Score is no longer computed here — the client doesn't have the answer
+  // key anymore. Show a loading state, then submit and render using
+  // whatever the server (the actual source of truth) sends back.
+  return `
+    <div style="text-align:center;padding:60px 20px">
+      <div style="font-size:48px;margin-bottom:16px">⏳</div>
+      <div style="font-size:20px;font-weight:700;color:var(--brand-dark)">Marking your answers...</div>
+      <div id="submit-status" class="submit-status sending" style="margin-top:16px">Just a moment</div>
+    </div>
+  `;
+}
 
-  const secA = secScores["A"];
-  const placement = getPlacement(correctCount, secA, state.student.year);
-  const summary = buildSummary(state.student, correctCount, secScores, placement);
-
-  // Student sees celebration only — no group or RAG shown
-  const stars = correctCount >= 29 ? "🌟🌟🌟" : correctCount >= 20 ? "⭐⭐" : "⭐";
-  const msg = correctCount >= 29
+function renderResultsScreen(result, timeTaken) {
+  const total = result.total;
+  const secScores = result.secScores;
+  const stars = total >= 29 ? "🌟🌟🌟" : total >= 20 ? "⭐⭐" : "⭐";
+  const msg = total >= 29
     ? "Fantastic work! You should be really proud of yourself!"
-    : correctCount >= 20
+    : total >= 20
     ? "Great effort! You worked really hard today!"
     : "Well done for trying every question — that takes courage!";
 
@@ -2140,7 +2184,7 @@ function renderResults() {
       </div>
       <div style="font-size:18px;color:var(--text-soft);margin-bottom:20px">${msg}</div>
       <div style="font-size:48px;font-weight:900;color:var(--brand-dark)">
-        ${correctCount}<span style="font-size:22px;font-weight:400;color:var(--text-soft)"> out of 38</span>
+        ${total}<span style="font-size:22px;font-weight:400;color:var(--text-soft)"> out of 38</span>
       </div>
     </div>
 
@@ -2176,16 +2220,15 @@ function renderResults() {
   });
 
   html += `</div>
-    <div id="submit-status" class="submit-status sending">⏳ Sending results to your teacher...</div>
+    <div id="submit-status" class="submit-status sent">✅ Results sent to your teacher!</div>
     <div style="text-align:center;margin-top:16px">
       <button id="btn-teacher-mode-results" style="background:none;border:none;color:var(--text-soft);font-size:12px;cursor:pointer;text-decoration:underline;padding:4px 8px;">🔒 Teacher Mode</button>
     </div>
   `;
 
-  // Auto-submit with full placement data — teacher sees everything
-  setTimeout(() => submitResults(correctCount, secScores, summary, placement), 800);
-
-  return html;
+  const container = document.getElementById("app") || document.querySelector(".card") || document.body;
+  container.innerHTML = html;
+  attachEvents();
 }
 
 // ── EVENTS ───────────────────────────────────────────────────────────────────
@@ -2210,9 +2253,11 @@ function attachEvents() {
       }
       state.student = {
         name: name + (surname ? " " + surname : ""), year, school, teacher, date,
-        academicYear: getAcademicYear(date), term: getTerm(date), studentStatus: status
+        academicYear: getAcademicYear(date), term: getTerm(date), status: status,
+        className: resolveSelectedClass()
       };
       state.startTime = Date.now();
+      state.startTimestamp = new Date().toISOString();
       state.phase = "practice";
       state.qIndex = 0;
       render();
@@ -2230,9 +2275,11 @@ function attachEvents() {
   if (btnPracticeNext) {
     btnPracticeNext.addEventListener("click", () => {
       state.startTime = Date.now(); // real timing starts now, not during practice
+      state.startTimestamp = new Date().toISOString();
       state.phase = "quiz";
       render();
       startQuizTimer();
+      startDraftAutoSave();
     });
   }
 
@@ -2274,6 +2321,17 @@ function attachEvents() {
       otherBox.style.display = selTeacher.value === "__other__" ? "block" : "none";
     });
   }
+
+  // Class dropdown — same pattern as every other paper
+  if (document.getElementById("f-class")) {
+    loadClasses();
+  }
+
+  // Check for a resumable in-progress draft whenever the identifying fields change
+  ["f-name", "f-surname", "f-year", "f-school"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener(el.tagName === "SELECT" ? "change" : "blur", checkForResumableDraft);
+  });
 
   // I don't know button
   const btnIdk = document.getElementById("btn-idk");
@@ -2327,14 +2385,22 @@ function attachEvents() {
       renderTeacherPin();
     });
   }
+  const btnTeacherQuiz = document.getElementById("btn-teacher-mode-quiz");
+  if (btnTeacherQuiz) {
+    btnTeacherQuiz.addEventListener("click", () => {
+      renderTeacherPin();
+    });
+  }
 }
 
 // ── SUBMIT TO GOOGLE SHEETS ──────────────────────────────────────────────────
-function submitResults(total, secScores, summary, placement) {
+function submitResults() {
+  stopDraftAutoSave();
   const elapsedMs  = Date.now() - (state.startTime || Date.now());
   const mins       = Math.floor(elapsedMs / 60000);
   const secs       = Math.floor((elapsedMs % 60000) / 1000);
   const timeTaken  = `${mins}m ${secs}s`;
+  const timestamp  = new Date().toISOString();
 
   const payload = {
     name:        state.student.name,
@@ -2342,81 +2408,278 @@ function submitResults(total, secScores, summary, placement) {
     school:      state.student.school,
     teacher:     state.student.teacher,
     date:        state.student.date,
-    academicYear: state.student.academicYear,
-    term:         state.student.term,
-    studentStatus: state.student.studentStatus,
-    timestamp:   new Date().toISOString(),
+    status:      state.student.status,
+    className:   state.student.className,
+    timestamp:   timestamp,
     assessment:  "Master English",
     timeTaken:   timeTaken,
-    total:       total,
-    rag:         placement.rag,
-    placement:   placement.group,
-    teacherNote: placement.teacherNote,
-    secA:        secScores.A,
-    secB:        secScores.B,
-    secC:        secScores.C,
-    secD:        secScores.D,
-    secE:        secScores.E,
-    secF:        secScores.F,
-    secG:        secScores.G,
-    secH:        secScores.H,
-    summary:     summary,
     answers:     JSON.stringify(state.answers),
     writingSample: state.writingText || "",
   };
 
-  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
-    document.getElementById("submit-status").className = "submit-status error";
-    document.getElementById("submit-status").textContent =
-      "⚠️ Results not sent — Apps Script URL not configured yet. Score saved locally.";
-    return;
-  }
-
-  // Cache locally too, so Teacher Mode works even if this device goes offline later
+  // Cache the submission LOCALLY *before* attempting the network request —
+  // total/rag/placement aren't known yet (the server computes those), but
+  // this guarantees the student's raw work is never lost even if the
+  // network fails right here. syncPendingResults() below finds entries
+  // like this (no total yet) and resubmits them for scoring later.
   saveResultsToStore({
-    timestamp: payload.timestamp,
-    name: state.student.name,
-    year: state.student.year,
-    school: state.student.school,
-    teacher: state.student.teacher,
-    date: state.student.date,
-    academicYear: state.student.academicYear,
-    term: state.student.term,
-    studentStatus: state.student.studentStatus,
-    total: total,
-    rag: placement.rag,
-    placement: placement.group,
-    teacherNote: placement.teacherNote,
-    timeTaken: timeTaken,
-    secScores: secScores,
-    answers: state.answers,
-    tutorComment: "",
-    writingSample: state.writingText || "",
-    aiWritingFeedback: "",
+    timestamp: timestamp, name: state.student.name, year: state.student.year,
+    school: state.student.school, teacher: state.student.teacher, date: state.student.date,
+    studentStatus: state.student.status, className: state.student.className,
+    timeTaken: timeTaken, answers: state.answers, tutorComment: "",
+    writingSample: state.writingText || "", aiWritingFeedback: "",
+    total: null, // not yet scored — set once the server responds
   });
 
-  fetch(APPS_SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  }).then(() => {
-    const el = document.getElementById("submit-status");
-    if (el) {
-      el.className = "submit-status sent";
-      el.textContent = "✅ Results sent to your teacher!";
-    }
-  }).catch(() => {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
     const el = document.getElementById("submit-status");
     if (el) {
       el.className = "submit-status error";
-      el.textContent = "⚠️ Could not send results. Please tell your teacher.";
+      el.textContent = "⚠️ Results not sent — Apps Script URL not configured yet. Your answers are saved locally.";
     }
+    return;
+  }
+
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify(payload),
+  })
+    .then(r => r.json())
+    .then(result => {
+      if (result.status !== "ok") throw new Error(result.message || "Server returned an error status");
+      renderResultsScreen(result, timeTaken);
+      // Fill in the real score on the same cached entry, now that we have it
+      updateStoredResult(timestamp, {
+        total: result.total, rag: result.rag, placement: result.group,
+        teacherNote: result.teacherNote, secScores: result.secScores,
+      });
+    })
+    .catch(err => {
+      console.error("Master English submission failed:", err); // visible in browser dev tools for diagnosis
+      const el = document.getElementById("submit-status");
+      if (el) {
+        el.className = "submit-status error";
+        el.innerHTML = "⚠️ Could not send results. Your answers are safely saved — please try again, or your teacher can recover it later from Teacher Mode."
+          + '<br><button id="btn-retry-submit" style="margin-top:8px;background:var(--brand);border:none;border-radius:8px;padding:8px 16px;font-weight:700;cursor:pointer;color:white;">Try Again</button>';
+        const retryBtn = document.getElementById("btn-retry-submit");
+        if (retryBtn) retryBtn.addEventListener("click", () => { state.submitted = false; render(); });
+      }
+    });
+}
+
+// ── CLASS DROPDOWN (self-managed, same pattern as every other paper) ────────
+function loadClasses() {
+  const sel = document.getElementById("f-class");
+  if (!sel) return;
+  const fallback = ["Other"];
+  function populate(names) {
+    sel.innerHTML = "";
+    names.forEach(name => { const opt = document.createElement("option"); opt.value = name; opt.textContent = name; sel.appendChild(opt); });
+    onClassSelectChange();
+  }
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) { populate(fallback); return; }
+  fetch(APPS_SCRIPT_URL + "?action=getClasses")
+    .then(r => r.json())
+    .then(data => populate(data.classes && data.classes.length ? data.classes : fallback))
+    .catch(() => populate(fallback));
+}
+function loadTutors() {
+  populateTutorSelect();
+}
+function onClassSelectChange() {
+  const sel = document.getElementById("f-class");
+  const other = document.getElementById("f-class-other");
+  if (!sel || !other) return;
+  other.style.display = (sel.value === "Other") ? "block" : "none";
+}
+function resolveSelectedClass() {
+  const sel = document.getElementById("f-class");
+  if (!sel) return "";
+  if (sel.value === "Other") {
+    const typed = document.getElementById("f-class-other").value.trim();
+    return typed || "Other";
+  }
+  return sel.value;
+}
+
+// ── SERVER-SIDE DRAFT AUTO-SAVE & RESUME ─────────────────────────────────────
+let draftAutoSaveInterval = null;
+const DRAFT_AUTOSAVE_MS = 20000;
+
+function startDraftAutoSave() {
+  if (draftAutoSaveInterval) clearInterval(draftAutoSaveInterval);
+  draftAutoSaveInterval = setInterval(() => {
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR") || !state.student) return;
+    fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({
+        action: "saveDraft",
+        name: state.student.name, year: state.student.year, school: state.student.school,
+        teacher: state.student.teacher, status: state.student.status, className: state.student.className,
+        startTimestamp: state.startTimestamp,
+        answers: JSON.stringify(state.answers)
+      })
+    }).catch(() => {});
+  }, DRAFT_AUTOSAVE_MS);
+}
+function stopDraftAutoSave() {
+  if (draftAutoSaveInterval) { clearInterval(draftAutoSaveInterval); draftAutoSaveInterval = null; }
+}
+
+function checkForResumableDraft() {
+  const name = document.getElementById("f-name").value.trim();
+  const surname = document.getElementById("f-surname").value.trim();
+  const fullName = name + (surname ? " " + surname : "");
+  const year = document.getElementById("f-year").value;
+  const school = document.getElementById("f-school").value.trim();
+  if (!name || !year || !school || !APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) return;
+  fetch(APPS_SCRIPT_URL + "?action=getDraft&name=" + encodeURIComponent(fullName) + "&year=" + encodeURIComponent(year) + "&school=" + encodeURIComponent(school))
+    .then(r => r.json())
+    .then(draft => {
+      const banner = document.getElementById("server-resume-banner");
+      if (!banner) return;
+      if (draft && draft.name) {
+        banner.style.display = "block";
+        banner.innerHTML = `An in-progress attempt was found (${draft.answeredCount || 0} questions answered, last saved ${new Date(draft.lastSaved).toLocaleString()}).
+          <button id="btn-resume-server-draft" type="button" style="margin-left:8px;">Resume</button>
+          <button id="btn-fresh-start-server" type="button" style="margin-left:4px;">Start Fresh</button>`;
+        document.getElementById("btn-resume-server-draft").addEventListener("click", () => resumeServerDraft(fullName, year, school, draft));
+        document.getElementById("btn-fresh-start-server").addEventListener("click", () => { banner.style.display = "none"; });
+      } else {
+        banner.style.display = "none";
+      }
+    }).catch(() => {});
+}
+
+function resumeServerDraft(fullName, year, school, draft) {
+  state.student = {
+    name: fullName, year, school, teacher: draft.teacher,
+    date: new Date().toISOString().slice(0,10),
+    academicYear: getAcademicYear(new Date().toISOString().slice(0,10)), term: getTerm(new Date()),
+    status: draft.status, className: draft.className
+  };
+  state.startTime = Date.now() - (Date.now() - new Date(draft.startTimestamp).getTime());
+  state.startTimestamp = draft.startTimestamp;
+  try { state.answers = JSON.parse(draft.answers || "{}"); } catch(e) { state.answers = {}; }
+  state.qIndex = Object.keys(state.answers).length;
+  state.phase = "quiz";
+  render();
+  startQuizTimer();
+  startDraftAutoSave();
+}
+
+// ── DEEP LINK from the submission email ──────────────────────────────────────
+function getDeepLinkParams() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("view") !== "student") return null;
+  return {
+    name: params.get("name") || "", year: params.get("year") || "",
+    school: params.get("school") || "", teacher: params.get("teacher") || "",
+    timestamp: params.get("timestamp") || ""
+  };
+}
+const pendingDeepLink = getDeepLinkParams();
+
+// ── LIVE MONITOR — see who's currently mid-test, polling every 12s ─────────
+let liveMonitorInterval = null;
+const LIVE_MONITOR_POLL_MS = 12000;
+
+function renderLiveMonitor() {
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <div style="font-size:20px;font-weight:900;color:var(--brand-dark);flex:1">📡 Live Monitor</div>
+      <button id="btn-lm-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">✕ Close</button>
+    </div>
+    <div id="lm-content"><p style="color:var(--text-soft)">Loading...</p></div>
+  `;
+  document.getElementById("btn-lm-back").addEventListener("click", () => {
+    if (liveMonitorInterval) { clearInterval(liveMonitorInterval); liveMonitorInterval = null; }
+    renderTeacherDashboard();
   });
+  pollLiveMonitor();
+  if (liveMonitorInterval) clearInterval(liveMonitorInterval);
+  liveMonitorInterval = setInterval(pollLiveMonitor, LIVE_MONITOR_POLL_MS);
+}
+
+function pollLiveMonitor() {
+  const el = document.getElementById("lm-content");
+  if (!el) return;
+  fetch(APPS_SCRIPT_URL + "?action=getActiveDrafts&pin=" + encodeURIComponent(TEACHER_PIN))
+    .then(r => r.json())
+    .then(drafts => {
+      const el2 = document.getElementById("lm-content");
+      if (!el2) return;
+      if (drafts.error) { el2.innerHTML = `<p style="color:var(--red-c)">${drafts.error}</p>`; return; }
+      if (!drafts.length) { el2.innerHTML = `<p style="color:var(--text-soft)">No students currently mid-test.</p>`; return; }
+      el2.innerHTML = drafts.map(d => `
+        <div style="background:white;border:2px solid var(--grey-mid);border-radius:10px;padding:12px 14px;margin-bottom:8px">
+          <div style="font-weight:700;color:var(--brand-dark)">${d.name} <span style="font-weight:400;color:var(--text-soft);font-size:12px">(${d.year || ""}${d.className ? " — " + d.className : ""})</span></div>
+          <div style="font-size:12px;color:var(--text-soft);margin-top:2px">
+            Started ${new Date(d.startTimestamp).toLocaleTimeString()} · ${d.answeredCount || 0}/38 answered · last saved ${Math.round((Date.now() - new Date(d.lastSaved).getTime())/1000)}s ago
+          </div>
+        </div>
+      `).join("");
+    })
+    .catch(() => {
+      const el3 = document.getElementById("lm-content");
+      if (el3) el3.innerHTML = `<p style="color:var(--red-c)">Could not load. Check your connection.</p>`;
+    });
+}
+
+// ── QUESTION WALKTHROUGH — go through the blank paper, reveal answers on demand ──
+let walkthroughRevealed = {};
+
+function renderWalkthrough(idx) {
+  const app = document.getElementById("app");
+  if (!teacherAnswerKey || Object.keys(teacherAnswerKey).length === 0) {
+    app.innerHTML = `<p style="color:var(--text-soft)">Loading answer key...</p>`;
+    loadTeacherAnswerKey().then(() => renderWalkthrough(idx));
+    return;
+  }
+
+  const q = QUESTIONS[idx];
+  const letters = ["A", "B", "C", "D"];
+  const revealed = !!walkthroughRevealed[q.id];
+  const correctLetter = teacherAnswerKey[q.id];
+
+  const optsHtml = q.opts.map((opt, i) => {
+    const letter = letters[i];
+    const isCorrect = revealed && letter === correctLetter;
+    return `<div style="padding:10px 14px;border:2px solid ${isCorrect ? "var(--green)" : "var(--grey-mid)"};border-radius:8px;margin-bottom:6px;background:${isCorrect ? "var(--green-light)" : "white"};font-weight:${isCorrect ? "700" : "400"}">${opt}</div>`;
+  }).join("");
+
+  app.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <div style="font-size:20px;font-weight:900;color:var(--brand-dark);flex:1">📖 Walkthrough — Q${idx + 1} of ${QUESTIONS.length}</div>
+      <button id="btn-wt-back" style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-soft);">✕ Close</button>
+    </div>
+    <div style="background:white;border:2px solid var(--grey-mid);border-radius:12px;padding:18px">
+      <div style="font-size:16px;margin-bottom:14px">${q.text}${q.display && typeof q.display === "string" ? "<div class='q-display' style='margin-top:10px'>" + q.display + "</div>" : ""}</div>
+      ${optsHtml}
+      ${revealed ? "" : `<button id="btn-wt-reveal" style="margin-top:10px;background:var(--brand);color:white;border:none;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;">Reveal Answer</button>`}
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:16px">
+      <button id="btn-wt-prev" ${idx === 0 ? "disabled" : ""} style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 16px;font-weight:600;cursor:pointer;">← Previous</button>
+      <button id="btn-wt-next" ${idx === QUESTIONS.length - 1 ? "disabled" : ""} style="background:none;border:2px solid var(--grey-mid);border-radius:8px;padding:8px 16px;font-weight:600;cursor:pointer;">Next →</button>
+    </div>
+  `;
+
+  document.getElementById("btn-wt-back").addEventListener("click", () => renderTeacherDashboard());
+  document.getElementById("btn-wt-prev").addEventListener("click", () => { if (idx > 0) renderWalkthrough(idx - 1); });
+  document.getElementById("btn-wt-next").addEventListener("click", () => { if (idx < QUESTIONS.length - 1) renderWalkthrough(idx + 1); });
+  const revealBtn = document.getElementById("btn-wt-reveal");
+  if (revealBtn) revealBtn.addEventListener("click", () => { walkthroughRevealed[q.id] = true; renderWalkthrough(idx); });
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 render();
+if (pendingDeepLink) {
+  const btnTeacherMode = document.getElementById("btn-teacher-mode");
+  if (btnTeacherMode) btnTeacherMode.click();
+}
 </script>
 </body>
 </html>
