@@ -1151,6 +1151,16 @@ function checkForDraftThenStart(){
   var yearGroup = document.getElementById('yearGroup').value;
   var school = document.getElementById('schoolName').value.trim();
 
+  // Disable immediately once we know we're genuinely proceeding — the
+  // getDraft fetch below creates a real network-delay window during
+  // which an impatient double-click could otherwise fire this whole
+  // function a second time, starting a second, un-trackable timer
+  // interval running alongside the first and draining the clock at
+  // double speed. Every path out of this function leads to the exam
+  // screen replacing this one entirely, so there's no risk of leaving
+  // this stuck disabled with no way forward.
+  document.getElementById('startBtn').disabled = true;
+
   if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0){
     startExam();
     return;
@@ -1217,6 +1227,7 @@ function resumeFromDraft(draft){
     submitExam(true);
     return;
   }
+  clearInterval(timerInterval); // defensive: never start a second tick loop alongside an existing one
   timerInterval = setInterval(tick, 1000);
   startDraftAutosave();
 }
@@ -1371,6 +1382,7 @@ function startExam(){
   startTimestamp = new Date();
   remainingSeconds = TIME_LIMIT_SECONDS;
   document.getElementById('timerBox').textContent = formatTime(remainingSeconds);
+  clearInterval(timerInterval); // defensive: never start a second tick loop alongside an existing one
   timerInterval = setInterval(tick, 1000);
   startDraftAutosave();
 }
