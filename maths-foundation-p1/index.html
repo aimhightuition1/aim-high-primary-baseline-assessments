@@ -1156,6 +1156,8 @@ function checkForDraftThenStart(){
   var yearGroup = document.getElementById('yearGroup').value;
   var school = document.getElementById('schoolName').value.trim();
 
+  document.getElementById('startBtn').disabled = true;
+
   if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_')===0){
     startExam();
     return;
@@ -1223,6 +1225,7 @@ function resumeFromDraft(draft){
     submitExam(true);
     return;
   }
+  clearInterval(timerInterval);
   timerInterval = setInterval(tick, 1000);
   startDraftAutosave();
 }
@@ -1378,6 +1381,7 @@ function startExam(){
   startTimestamp = new Date();
   remainingSeconds = TIME_LIMIT_SECONDS;
   document.getElementById('timerBox').textContent = formatTime(remainingSeconds);
+  clearInterval(timerInterval);
   timerInterval = setInterval(tick, 1000);
   startDraftAutosave();
 }
