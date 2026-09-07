@@ -79,6 +79,7 @@
   <button class="tab-btn active" data-view="dashboard" onclick="switchView('dashboard')">Dashboard</button>
   <button class="tab-btn" data-view="catalog" onclick="switchView('catalog')">Paper Catalog</button>
   <button class="tab-btn" data-view="search" onclick="switchView('search')">Student Search</button>
+  <button class="tab-btn" data-view="overview" onclick="switchView('overview')">Class &amp; Tutor Overview</button>
   <button class="tab-btn" data-view="manage" onclick="switchView('manage')">Tutors &amp; Classes</button>
 </div>
 
@@ -88,6 +89,19 @@
 
 <div id="view-catalog" class="view">
   <div id="catalogContent" class="loading">Loading paper catalog…</div>
+</div>
+
+<div id="view-overview" class="view">
+  <div class="card">
+    <h2>Class &amp; Tutor Overview</h2>
+    <p class="desc">Browse by class or tutor — merged across every subject they touch. Click through to any student for their full history.</p>
+    <div class="field-row" style="margin-bottom:16px;">
+      <button class="tab-btn active" id="overviewModeClass" onclick="setOverviewMode('class')" style="border-radius:20px;padding:6px 16px;">By Class</button>
+      <button class="tab-btn" id="overviewModeTutor" onclick="setOverviewMode('tutor')" style="border-radius:20px;padding:6px 16px;">By Tutor</button>
+    </div>
+    <div id="overviewListContent" class="loading">Loading…</div>
+    <div id="overviewDetailContent"></div>
+  </div>
 </div>
 
 <div id="view-search" class="view">
@@ -125,12 +139,13 @@ var TEACHER_PIN_CACHE = null; // asked once per session, not stored beyond that
 
 function switchView(viewName){
   document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
-  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn[data-view]').forEach(function(b){ b.classList.remove('active'); });
   document.getElementById('view-' + viewName).classList.add('active');
   document.querySelector('.tab-btn[data-view="' + viewName + '"]').classList.add('active');
   if(viewName === 'dashboard' && !dashboardLoaded) loadDashboard();
   if(viewName === 'catalog' && !catalogLoaded) loadCatalog();
   if(viewName === 'manage' && !manageLoaded) loadManagePaperList();
+  if(viewName === 'overview' && !overviewLoaded) loadOverviewList();
 }
 
 function checkConfigured(){
@@ -566,6 +581,73 @@ function renderManageContent(){
     (window.__testDemoCount > 0 ? renderClearTestDataControl(paperId) : '')+
     '</div>';
 }
+// ---------------- Class & Tutor Overview (merged across every subject) ----------------
+var overviewLoaded = false;
+var overviewMode = 'class'; // 'class' or 'tutor'
+
+function setOverviewMode(mode){
+  overviewMode = mode;
+  document.getElementById('overviewModeClass').classList.toggle('active', mode === 'class');
+  document.getElementById('overviewModeTutor').classList.toggle('active', mode === 'tutor');
+  document.getElementById('overviewDetailContent').innerHTML = '';
+  loadOverviewList();
+}
+
+function loadOverviewList(){
+  overviewLoaded = true;
+  if(!checkConfigured()){
+    document.getElementById('overviewListContent').innerHTML = '<p style="color:var(--red);">Admin Console isn\'t connected to its Apps Script backend yet.</p>';
+    return;
+  }
+  var contentEl = document.getElementById('overviewListContent');
+  contentEl.innerHTML = '<div class="loading">Loading…</div>';
+  var action = overviewMode === 'class' ? 'getAllClasses' : 'getAllTutors';
+  fetch(APPS_SCRIPT_URL + '?action=' + action).then(function(r){ return r.json(); }).then(function(data){
+    var names = overviewMode === 'class' ? (data.classes || []) : (data.tutors || []);
+    if(!names.length){ contentEl.innerHTML = '<div class="empty-state">No '+(overviewMode === 'class' ? 'classes' : 'tutors')+' recorded yet.</div>'; return; }
+    contentEl.innerHTML = '<div class="chip-row">' + names.map(function(n){
+      return '<button class="btn-outline" style="border-radius:20px;margin:4px;" onclick="loadOverviewDetail(\''+n.replace(/'/g,"\\'")+'\')">'+n+'</button>';
+    }).join('') + '</div>';
+  }).catch(function(err){
+    contentEl.innerHTML = '<p style="color:var(--red);">Could not load list: '+String(err)+'</p>';
+  });
+}
+
+function loadOverviewDetail(name){
+  var detailEl = document.getElementById('overviewDetailContent');
+  detailEl.innerHTML = '<div class="loading">Loading '+name+'\'s overview…</div>';
+  var action = overviewMode === 'class' ? 'getClassOverview' : 'getTutorOverview';
+  var param = overviewMode === 'class' ? '&className=' : '&tutorName=';
+  fetch(APPS_SCRIPT_URL + '?action=' + action + param + encodeURIComponent(name)).then(function(r){ return r.json(); }).then(function(data){
+    var results = data.results || [];
+    if(!results.length){ detailEl.innerHTML = '<div class="empty-state">No results found for '+name+' yet.</div>'; return; }
+    var avgLabel = data.averagePercentage !== null && data.averagePercentage !== undefined ? data.averagePercentage + '%' : 'n/a';
+    var rows = results.map(function(r){
+      var d = r.timestamp ? new Date(r.timestamp).toLocaleDateString('en-GB') : '';
+      var extra = overviewMode === 'class' ? (r.tutor || '') : (r.className || '');
+      return '<tr><td><a href="javascript:void(0)" onclick="jumpToStudent(\''+String(r.studentName).replace(/'/g,"\\'")+'\')">'+r.studentName+'</a></td>'+
+        '<td>'+r.paperName+'</td><td>'+d+'</td><td>'+(r.percentage!==undefined?r.percentage+'%':'')+'</td>'+
+        '<td><span class="grade-pill">'+(r.grade||'')+'</span></td><td>'+extra+'</td></tr>';
+    }).join('');
+    detailEl.innerHTML = '<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--paper-line);">'+
+      '<h3>'+name+'</h3>'+
+      '<div class="stat-row" style="margin-bottom:14px;">'+
+      '<div class="stat-box"><div class="num">'+results.length+'</div><div class="lbl">Results</div></div>'+
+      '<div class="stat-box"><div class="num">'+avgLabel+'</div><div class="lbl">Average</div></div>'+
+      '</div>'+
+      '<table><thead><tr><th>Student</th><th>Paper</th><th>Date</th><th>%</th><th>Grade</th><th>'+(overviewMode==='class'?'Tutor':'Class')+'</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+      '</div>';
+  }).catch(function(err){
+    detailEl.innerHTML = '<p style="color:var(--red);">Could not load overview: '+String(err)+'</p>';
+  });
+}
+
+function jumpToStudent(name){
+  switchView('search');
+  document.getElementById('searchInput').value = name;
+  runStudentSearch(name);
+}
+
 function loadClassResults(paperId){
   var className = document.getElementById('classResultsSelect').value;
   var contentEl = document.getElementById('classResultsContent');
