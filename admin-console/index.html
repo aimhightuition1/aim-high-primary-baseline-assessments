@@ -416,6 +416,7 @@ function runStudentSearch(query){
     });
 }
 var pendingResultDeletion = null; // index into window.__lastSearchResults
+var pendingResultEdit = null; // index into window.__lastSearchResults
 function renderSearchResults(){
   var data = window.__lastSearchResults || [];
   if(!data.length){
@@ -425,7 +426,18 @@ function renderSearchResults(){
   var rowsHtml = data.map(function(r, idx){
     var d = r.timestamp ? new Date(r.timestamp).toLocaleString('en-GB') : '';
     var row = '<tr><td class="clickable-row" onclick="openStudentDetailFromSearch('+idx+')">'+r.studentName+'</td><td>'+r.paperName+'</td><td>'+d+'</td><td>'+(r.rawScore!==undefined?r.rawScore+'/'+r.totalMarks:'')+'</td><td>'+(r.percentage!==undefined?r.percentage+'%':'')+'</td><td><span class="grade-pill">'+(r.grade||'')+'</span></td><td>'+(r.tutor||'')+'</td>'+
-      '<td><button class="chip-remove-link" onclick="startResultDeletion('+idx+')">Delete</button></td></tr>';
+      '<td><button class="chip-remove-link" style="color:var(--ink);" onclick="startResultEdit('+idx+')">Edit</button> <button class="chip-remove-link" onclick="startResultDeletion('+idx+')">Delete</button></td></tr>';
+    if(pendingResultEdit === idx){
+      row += '<tr><td colspan="8"><div class="confirm-panel">'+
+        '<p><strong>Edit class/tutor for '+r.studentName+' ('+r.paperName+')</strong></p>'+
+        '<div class="field-row">'+
+        '<div class="field"><label>Class</label><input type="text" id="editClassInput" value="'+(r.className||'')+'"></div>'+
+        '<div class="field"><label>Tutor</label><input type="text" id="editTutorInput" value="'+(r.tutor||'')+'"></div>'+
+        '<div class="field"><label>Teacher PIN</label><input type="password" id="editPin"></div>'+
+        '<button class="btn" onclick="confirmResultEdit('+idx+')">Save</button>'+
+        '<button class="btn-outline" onclick="pendingResultEdit=null; renderSearchResults();">Cancel</button></div>'+
+        '<p id="resultEditStatus" class="status-msg"></p></div></td></tr>';
+    }
     if(pendingResultDeletion === idx){
       row += '<tr><td colspan="8"><div class="confirm-panel">'+
         '<p><strong>Delete this sitting for '+r.studentName+' ('+r.paperName+')?</strong> This permanently removes it from the spreadsheet — it can\'t be undone.</p>'+
@@ -440,7 +452,37 @@ function renderSearchResults(){
     '<p style="font-size:12px;color:var(--ink-soft);margin:0 0 8px;">Click a student\'s name to open their full breakdown on the paper itself.</p>'+
     '<table><thead><tr><th>Student</th><th>Paper</th><th>Date</th><th>Score</th><th>%</th><th>Grade</th><th>Tutor</th><th></th></tr></thead><tbody>'+rowsHtml+'</tbody></table>';
 }
+function startResultEdit(idx){
+  pendingResultDeletion = null;
+  pendingResultEdit = idx;
+  renderSearchResults();
+}
+function confirmResultEdit(idx){
+  var pin = document.getElementById('editPin').value;
+  var newClass = document.getElementById('editClassInput').value.trim();
+  var newTutor = document.getElementById('editTutorInput').value.trim();
+  var statusEl = document.getElementById('resultEditStatus');
+  if(!pin){ statusEl.textContent = 'Enter the Teacher PIN.'; statusEl.className='status-msg error'; return; }
+  var r = window.__lastSearchResults[idx];
+  statusEl.textContent = 'Saving…'; statusEl.className='status-msg';
+  fetch(APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify({ action:'updateResultRow', pin:pin, paperId:r.paperId, timestamp:r.timestamp, className:newClass, tutor:newTutor }) })
+    .then(function(res){ return res.json(); })
+    .then(function(res){
+      if(res.status === 'ok'){
+        window.__lastSearchResults[idx].className = newClass;
+        window.__lastSearchResults[idx].tutor = newTutor;
+        pendingResultEdit = null;
+        renderSearchResults();
+      } else {
+        statusEl.textContent = '⚠ ' + (res.message||'Failed'); statusEl.className='status-msg error';
+      }
+    }).catch(function(err){
+      statusEl.textContent = '⚠ ' + String(err); statusEl.className='status-msg error';
+    });
+}
 function startResultDeletion(idx){
+  pendingResultEdit = null;
   pendingResultDeletion = idx;
   renderSearchResults();
 }
