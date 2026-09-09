@@ -2532,6 +2532,44 @@ function toggleQaRow(qid){
   renderDashboard();
 }
 
+// Per-question, per-student breakdown — shown when a teacher expands a
+// row in Question Analysis. Cross-references the currently filtered
+// student list (so it respects whatever Class/Tutor filter is active
+// above) against allQlaData by Timestamp, since that's the only field
+// that reliably links a QLA row back to a specific sitting. Incorrect
+// answers are listed first — the point of this view is spotting who
+// needs help, so that's what should be immediately visible, not buried
+// after everyone who already got it right.
+function studentAnswersForQuestionHtml(questionId, qDef, filteredRows){
+  var filteredTimestamps = {};
+  filteredRows.forEach(function(r){ filteredTimestamps[String(r['Timestamp'])] = r['Student Name']; });
+  var matches = allQlaData.filter(function(q){
+    return q['Question ID'] === questionId && filteredTimestamps[String(q['Timestamp'])] !== undefined;
+  });
+  if(!matches.length) return '<p style="font-size:12px;color:var(--ink-soft);margin-top:12px;">No individual answers found for the current filters.</p>';
+  matches.sort(function(a,b){
+    var aCorrect = (a['Correct']===true || a['Correct']==='TRUE') ? 1 : 0;
+    var bCorrect = (b['Correct']===true || b['Correct']==='TRUE') ? 1 : 0;
+    if(aCorrect !== bCorrect) return aCorrect - bCorrect;
+    return String(a['Student Name']).localeCompare(String(b['Student Name']));
+  });
+  var rows = matches.map(function(q){
+    var isCorrect = (q['Correct']===true || q['Correct']==='TRUE');
+    var rawAns;
+    try {
+      var parsed = JSON.parse(q['Student Answer']);
+      rawAns = Object.keys(parsed).map(function(k){ return parsed[k]; }).filter(function(v){ return v!==''; }).join(', ');
+    } catch(e) { rawAns = String(q['Student Answer']||''); }
+    var ans = expandAnswerDisplay(qDef, rawAns);
+    return '<tr><td>'+q['Student Name']+'</td><td>'+(ans||'(no answer given)')+'</td>'+
+      '<td><span style="font-weight:700;color:'+(isCorrect?'var(--green)':'var(--crimson)')+';">'+(isCorrect?'Correct':'Incorrect')+'</span></td></tr>';
+  }).join('');
+  return '<div style="margin-top:14px;">'+
+    '<div style="font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Every student\'s answer to this question ('+matches.length+', matching the filters above)</div>'+
+    '<div class="table-scroll"><table class="results-table"><thead><tr><th>Student</th><th>Answer given</th><th>Result</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+    '</div>';
+}
+
 function questionAnalysisHtml(filteredRows){
   var qa = computeQuestionAnalysis(filteredRows);
   if(qaSortMode==='worst'){
@@ -2560,6 +2598,7 @@ function questionAnalysisHtml(filteredRows){
       detailRow = '<tr><td colspan="6" style="background:var(--paper);padding:16px 18px;">'+
         '<div style="font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Full question — '+posLabel+' ('+TOPICS[qDef.topic]+', Grade '+qDef.grade+', '+qDef.marks+' mark'+(qDef.marks>1?'s':'')+')</div>'+
         '<div class="qtext">'+qDef.text+'</div>'+diagramHtml+
+        studentAnswersForQuestionHtml(d.id, qDef, filteredRows)+
       '</td></tr>';
     }
     return mainRow + detailRow;
@@ -2909,19 +2948,41 @@ QUESTIONS.forEach(function(q){ questionById[q.id] = q; });
 var questionOrder = {};
 QUESTIONS.forEach(function(q,i){ questionOrder[q.id] = i; });
 
+// Expands a bare answer letter (or comma-separated letters, for
+// multiselect) into "B — Respiration" style text using that question's
+// actual option wording, so a tutor reviewing this can see what was
+// chosen without cross-referencing the original paper. Falls back to
+// the bare letter when there's genuinely nothing to expand to — some
+// questions (e.g. "which letter labels this diagram") use options that
+// are themselves just single letters, where expanding would only
+// produce a redundant "B — B".
+function expandAnswerDisplay(qDef, rawValue){
+  if(!rawValue || rawValue === '(no answer given)') return rawValue;
+  var input = qDef.inputs && qDef.inputs[0];
+  if(!input || (input.type !== 'mcq' && input.type !== 'multiselect')) return rawValue;
+  var options = input.options || [];
+  var letters = String(rawValue).split(',').map(function(s){ return s.trim(); });
+  var expanded = letters.map(function(letter){
+    var idx = 'ABCDEFGHIJ'.indexOf(letter);
+    if(idx === -1 || !options[idx] || options[idx] === letter) return letter;
+    return letter + ' — ' + options[idx];
+  });
+  return expanded.join('; ');
+}
+
 function buildQuestionReviewCards(qlaRows){
   var sorted = qlaRows.slice().sort(function(a,b){ return (questionOrder[a.id]||0) - (questionOrder[b.id]||0); });
   return sorted.map(function(qr, idx){
     var qDef = questionById[qr.id];
     if(!qDef) return '';
     var answerParts = Object.keys(qr.studentAnswer||{}).map(function(k){ return qr.studentAnswer[k]; }).filter(function(v){ return v!==''; });
-    var ansStr = answerParts.length ? answerParts.join(', ') : '(no answer given)';
+    var ansStr = answerParts.length ? expandAnswerDisplay(qDef, answerParts.join(', ')) : '(no answer given)';
     var isCorrect = (qr.correct===true || qr.correct==='true');
     var isPartial = !isCorrect && Number(qr.scored) > 0;
     var resultLabel = isCorrect ? 'Correct' : (isPartial ? 'Partial credit' : 'Incorrect');
     var resultColor = isCorrect ? 'var(--green)' : (isPartial ? 'var(--amber)' : 'var(--crimson)');
     var diagramHtml = qDef.diagram ? '<div class="qdiagram">'+qDef.diagram+'</div>' : '';
-    var correctAns = answerKeyMap[qr.id];
+    var correctAns = expandAnswerDisplay(qDef, answerKeyMap[qr.id]);
     var correctAnsHtml = correctAns ? '<div style="margin-top:6px;"><span style="font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;">Correct Answer: </span><span style="font-family:\'SF Mono\',Consolas,monospace;font-size:14px;color:var(--green);font-weight:700;">'+correctAns+'</span></div>' : '';
     return '<div class="qcard" style="border-left:4px solid '+resultColor+';">'+
       '<div class="qcard-head"><span class="qnum">Question '+(idx+1)+'</span><span class="qmarks">'+qr.scored+'/'+qr.marks+' mark'+(qr.marks>1?'s':'')+'</span></div>'+
