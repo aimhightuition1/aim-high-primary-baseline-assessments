@@ -442,60 +442,60 @@ function numberBoxes(items) {
 
 const QUESTIONS = [
   // A — Numbers (Q1-5)
-  { id:1, sec:"A", text:"Write this number in digits.", display:"Fourteen",
+  { id:1, ans:"C", sec:"A", text:"Write this number in digits.", display:"Fourteen",
     opts:["41","40","14","4"] },
-  { id:2, sec:"A", text:"Write one more than:", display:"19",
+  { id:2, ans:"D", sec:"A", text:"Write one more than:", display:"19",
     opts:["18","21","17","20"] },
-  { id:3, sec:"A", text:"Write one less than:", display:"30",
+  { id:3, ans:"C", sec:"A", text:"Write one less than:", display:"30",
     opts:["31","28","29","20"] },
-  { id:4, sec:"A", text:"Put these numbers in order, smallest first.", display:numberBoxes([15,7,23,11]),
+  { id:4, ans:"B", sec:"A", text:"Put these numbers in order, smallest first.", display:numberBoxes([15,7,23,11]),
     opts:["15, 7, 11, 23","7, 11, 15, 23","23, 15, 11, 7","7, 15, 11, 23"] },
-  { id:5, sec:"A", text:"Which sign goes in the gap?", display:"16 ___ 61",
+  { id:5, ans:"B", sec:"A", text:"Which sign goes in the gap?", display:"16 ___ 61",
     opts:["=","<","+",">"] },
 
   // B — Counting (Q6-8)
-  { id:6, sec:"B", text:"Count in 2s. What is the missing number?", display:numberBoxes([2,4,6,"?",10]),
+  { id:6, ans:"D", sec:"B", text:"Count in 2s. What is the missing number?", display:numberBoxes([2,4,6,"?",10]),
     opts:["9","7","5","8"] },
-  { id:7, sec:"B", text:"Count in 5s. What is the missing number?", display:numberBoxes([5,10,15,"?",25]),
+  { id:7, ans:"C", sec:"B", text:"Count in 5s. What is the missing number?", display:numberBoxes([5,10,15,"?",25]),
     opts:["18","21","20","22"] },
-  { id:8, sec:"B", text:"Count in 10s. What is the missing number?", display:numberBoxes([10,20,"?",40,50]),
+  { id:8, ans:"D", sec:"B", text:"Count in 10s. What is the missing number?", display:numberBoxes([10,20,"?",40,50]),
     opts:["35","25","32","30"],
     checkpoint:"Well done! Keep going! 🌟" },
 
   // C — Addition (Q9-12)
-  { id:9,  sec:"C", text:"Work out:", display:"5 + 3 = ?",
+  { id:9,  ans:"D", sec:"C", text:"Work out:", display:"5 + 3 = ?",
     opts:["7","9","6","8"] },
-  { id:10, sec:"C", text:"Work out:", display:"9 + 6 = ?",
+  { id:10, ans:"C", sec:"C", text:"Work out:", display:"9 + 6 = ?",
     opts:["16","14","15","13"] },
-  { id:11, sec:"C", text:"Work out:", display:"14 + 5 = ?",
+  { id:11, ans:"D", sec:"C", text:"Work out:", display:"14 + 5 = ?",
     opts:["18","20","21","19"] },
-  { id:12, sec:"C", text:"Work out:", display:"23 + 10 = ?",
+  { id:12, ans:"C", sec:"C", text:"Work out:", display:"23 + 10 = ?",
     opts:["34","24","33","32"] },
 
   // D — Subtraction (Q13-15)
-  { id:13, sec:"D", text:"Work out:", display:"10 − 4 = ?",
+  { id:13, ans:"D", sec:"D", text:"Work out:", display:"10 − 4 = ?",
     opts:["5","4","7","6"] },
-  { id:14, sec:"D", text:"Work out:", display:"16 − 7 = ?",
+  { id:14, ans:"B", sec:"D", text:"Work out:", display:"16 − 7 = ?",
     opts:["8","9","7","10"] },
-  { id:15, sec:"D", text:"Work out:", display:"35 − 10 = ?",
+  { id:15, ans:"C", sec:"D", text:"Work out:", display:"35 − 10 = ?",
     opts:["26","24","25","20"] },
 
   // E — Shapes (Q16-18)
-  { id:16, sec:"E", text:"How many sides does this shape have?",
+  { id:16, ans:"D", sec:"E", text:"How many sides does this shape have?",
     display:`<div style="display:flex;justify-content:center;padding:10px 0">
   <svg width="140" height="130" viewBox="0 0 140 130">
     <polygon points="70,10 130,120 10,120" fill="#FFF3E0" stroke="#7B3F00" stroke-width="4"/>
   </svg>
 </div>`,
     opts:["4 sides","2 sides","5 sides","3 sides"] },
-  { id:17, sec:"E", text:"How many corners does this shape have?",
+  { id:17, ans:"C", sec:"E", text:"How many corners does this shape have?",
     display:`<div style="display:flex;justify-content:center;padding:10px 0">
   <svg width="180" height="120" viewBox="0 0 180 120">
     <rect x="10" y="10" width="160" height="100" fill="#FFF3E0" stroke="#7B3F00" stroke-width="4"/>
   </svg>
 </div>`,
     opts:["3 corners","2 corners","4 corners","6 corners"] },
-  { id:18, sec:"E", text:"What is this 3D shape called?",
+  { id:18, ans:"B", sec:"E", text:"What is this 3D shape called?",
     display:`<div style="display:flex;justify-content:center;padding:10px 0">
   <svg width="160" height="160" viewBox="0 0 160 160">
     <polygon points="40,60 100,60 120,40 60,40" fill="#FFE9A0" stroke="#7B3F00" stroke-width="3" stroke-linejoin="round"/>
@@ -506,9 +506,9 @@ const QUESTIONS = [
     opts:["Cuboid","Cube","Sphere","Cone"] },
 
   // F — Fractions (Q19-21)
-  { id:19, sec:"F", text:"What is half of 10?", display:"Half of 10 = ?",
+  { id:19, ans:"C", sec:"F", text:"What is half of 10?", display:"Half of 10 = ?",
     opts:["4","6","5","2"] },
-  { id:20, sec:"F", text:"8 sweets are shared equally into 4 groups. How many sweets are in one group?",
+  { id:20, ans:"D", sec:"F", text:"8 sweets are shared equally into 4 groups. How many sweets are in one group?",
     display:`<div style="display:flex;justify-content:center;gap:10px;padding:10px 0;flex-wrap:wrap">
   <svg width="30" height="30"><circle cx="15" cy="15" r="13" fill="#E91E63"/></svg>
   <svg width="30" height="30"><circle cx="15" cy="15" r="13" fill="#E91E63"/></svg>
@@ -520,7 +520,7 @@ const QUESTIONS = [
   <svg width="30" height="30"><circle cx="15" cy="15" r="13" fill="#E91E63"/></svg>
 </div>`,
     opts:["4","8","1","2"] },
-  { id:21, sec:"F", text:"What fraction of this shape is shaded?",
+  { id:21, ans:"C", sec:"F", text:"What fraction of this shape is shaded?",
     display:`<div style="display:flex;justify-content:center;padding:10px 0">
   <svg width="120" height="120" viewBox="0 0 120 120">
     <rect x="0" y="0" width="58" height="58" fill="#7B3F00"/>
@@ -533,7 +533,7 @@ const QUESTIONS = [
     checkpoint:"Nearly there! Amazing work! 🎉" },
 
   // G — Measurement & Money (Q22-24)
-  { id:22, sec:"G", text:"Look at the rulers below. Which line is the longest?",
+  { id:22, ans:"D", sec:"G", text:"Look at the rulers below. Which line is the longest?",
     display:`<div style="font-size:14px;font-weight:600;margin-bottom:12px;color:#555">Compare the lengths:</div>
 <div style="margin-bottom:10px;display:flex;align-items:center;gap:10px">
   <span style="font-weight:700;min-width:20px">A</span>
@@ -551,7 +551,7 @@ const QUESTIONS = [
   <span style="font-size:13px;color:#555">30 cm</span>
 </div>`,
     opts:["They are the same","A: 10 cm","B: 20 cm","C: 30 cm"] },
-  { id:23, sec:"G", text:"Add these coins together.",
+  { id:23, ans:"D", sec:"G", text:"Add these coins together.",
     display:`<div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;padding:8px 0">
   <!-- 10p coin -->
   <svg width="80" height="80" viewBox="0 0 80 80">
@@ -577,7 +577,7 @@ const QUESTIONS = [
 </div>`,
     opts:["20p","15p","12p","17p"] },
 
-  { id:24, sec:"G", text:"What time does this clock show?",
+  { id:24, ans:"D", sec:"G", text:"What time does this clock show?",
     display:`<div style="display:flex;justify-content:center;padding:8px 0">
   <svg width="180" height="180" viewBox="0 0 180 180">
     <!-- Clock face -->
@@ -613,12 +613,12 @@ const QUESTIONS = [
     opts:["Half past 6","Half past 3","12 o'clock","6 o'clock"] },
 
   // H — Times Tables & Data (Q25-28)
-  { id:25, sec:"H", text:"Work out:", display:"2 × 5 = ?",
+  { id:25, ans:"C", sec:"H", text:"Work out:", display:"2 × 5 = ?",
     opts:["7","15","10","12"] },
-  { id:26, sec:"H", text:"Work out:", display:"10 × 3 = ?",
+  { id:26, ans:"D", sec:"H", text:"Work out:", display:"10 × 3 = ?",
     opts:["13","33","23","30"] },
 
-  { id:27, sec:"H", text:"Look at the table. Which fruit got the most votes?",
+  { id:27, ans:"C", sec:"H", text:"Look at the table. Which fruit got the most votes?",
     display:`<table style="width:100%;border-collapse:collapse;font-size:15px;text-align:left;margin-top:4px">
 <tr style="background:#37474F;color:white">
   <th style="padding:9px 14px">Fruit</th>
@@ -639,7 +639,7 @@ const QUESTIONS = [
 </table>`,
     opts:["Grapes","Bananas","Apples","They all got the same"] },
 
-  { id:28, sec:"H", text:"Look at the tally chart. How many children chose Cat?",
+  { id:28, ans:"D", sec:"H", text:"Look at the tally chart. How many children chose Cat?",
     display:`<table style="width:100%;border-collapse:collapse;font-size:15px;text-align:left">
 <tr style="background:#37474F;color:white">
   <th style="padding:9px 14px">Pet</th>
